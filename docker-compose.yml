@@ -10,3 +10,13 @@ services:
         - "3307:3306"
       volumes:
         - "/my/own/datadir:/var/lib/mysql"
+
+    phpmyadmin:
+      depends_on:
+       - mysql
+      image: phpmyadmin/phpmyadmin
+      restart: always
+      ports:
+       - '8080:80'
+      environment:
+        PMA_HOST: mysql
