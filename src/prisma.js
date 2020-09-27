@@ -1,13 +1,13 @@
 const { PrismaClient } = require("@prisma/client")
 
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
 
 async function main() {
   // ... you will write your Prisma Client queries here
-  await prisma.person.create({data:{
-      
-      First_Name:"test14"
-  }})
+  // await prisma.person.create({data:{
+  //     Person_ID:2,
+  //     First_Name:"test14"
+  // }})
 }
 
 main()

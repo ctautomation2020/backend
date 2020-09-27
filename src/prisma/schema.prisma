@@ -8,7 +8,7 @@ datasource db {
 }
 
 model person {
-  Person_ID                                                                Int                         @id @default(autoincrement())
+  Person_ID                                                                Int                         @id 
   Prefix_Ref                                                               Int?
   First_Name                                                               String?
   Last_Name                                                                String?

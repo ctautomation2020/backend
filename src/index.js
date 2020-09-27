@@ -1,25 +1,25 @@
 const express=require('express')
-require('./db/mysql')
+import {prisma} from './prisma'
 
 const app=express();
 app.use(express.json())
 
-//maintenance mode
 // app.use((req,res,next)=>{
 //     res.status(503).send("maintenance error");
+  
 // })
 
-// sample get
+
 app.get('/',(req,res)=>{
-  res.send("get req");
+  res.send("hello world");
 })
 
-//sample post
-app.post('/',(req,res)=>{
-  res.send("post req")
+app.get('/person',async (req,res)=>{
+    const persons = await prisma.person.findMany()
+    res.send(persons)
 })
 
 const PORT=process.env.PORT||3000;
 
-app.listen(PORT,()=>console.log("server is up in" + PORT))
 
+app.listen(PORT,()=>console.log("server is up in" + PORT))
