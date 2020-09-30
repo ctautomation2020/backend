@@ -1,0 +1,95 @@
+type Query {
+  allPersons: [Person!]!
+  person(data: personInput!): Person!
+}
+
+type Mutation {
+  createPerson(data: createPersonInput!): Person!
+  updatePerson(data: updatePersonInput!): Person!
+}
+
+type Person {
+  Person_ID: Int!
+  Prefix_Ref: Int
+  First_Name: String
+  Last_Name: String
+  Gender_Ref: Int
+  DOB: String
+  Community_Ref: Int
+  Caste: String
+  Primary_MailID: String
+  Secondary_MailID: String
+  Aadhar_Card: Int
+  PAN_Card: String
+  Passport_Number: String
+  Primary_ContactNumber: Int
+  Secondary_ContactNumber: String
+  Intercom_Number: String
+  Alias_NameL: String
+  Address_Line1: String
+  Address_Line2: String
+  Address_Line3: String
+  Address_Line4: String
+  Marital_Status_Ref: Int
+  Room_Num: String
+}
+
+input personInput {
+  id: ID!
+}
+
+input createPersonInput {
+  Person_ID: Int!
+  Prefix_Ref: Int
+  First_Name: String
+  Last_Name: String
+  Gender_Ref: Int
+  DOB: String
+  Community_Ref: Int
+  Caste: String
+  Primary_MailID: String
+  Secondary_MailID: String
+  Aadhar_Card: Int
+  PAN_Card: String
+  Passport_Number: String
+  Primary_ContactNumber: Int
+  Secondary_ContactNumber: String
+  Intercom_Number: String
+  Alias_NameL: String
+  Address_Line1: String
+  Address_Line2: String
+  Address_Line3: String
+  Address_Line4: String
+  Marital_Status_Ref: Int
+  Room_Num: String
+}
+
+input updatePersonInput {
+  Prefix_Ref: Int
+  First_Name: String
+  Last_Name: String
+  Gender_Ref: Int
+  DOB: String
+  Community_Ref: Int
+  Caste: String
+  Primary_MailID: String
+  Secondary_MailID: String
+  Aadhar_Card: Int
+  PAN_Card: String
+  Passport_Number: String
+  Primary_ContactNumber: Int
+  Secondary_ContactNumber: String
+  Intercom_Number: String
+  Alias_NameL: String
+  Address_Line1: String
+  Address_Line2: String
+  Address_Line3: String
+  Address_Line4: String
+  Marital_Status_Ref: Int
+  Room_Num: String
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

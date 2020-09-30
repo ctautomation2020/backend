@@ -1,25 +1,23 @@
-const express=require('express')
-import {prisma} from './prisma'
+import {ApolloServer, gql} from 'apollo-server'
 
-const app=express();
-app.use(express.json())
-
-// app.use((req,res,next)=>{
-//     res.status(503).send("maintenance error");
-  
-// })
+import {readFileSync} from 'fs'
+import {join} from 'path'
 
 
-app.get('/',(req,res)=>{
-  res.send("hello world");
+import resolvers from './graphql/index'
+
+const { PrismaClient } = require("@prisma/client")
+
+
+
+const server = new ApolloServer({
+  typeDefs: gql(readFileSync(join(__dirname, "../schema.graphql"), "utf8")),
+  resolvers,
+  context: ({ req }) => ({
+    prisma: new PrismaClient()
+  })
 })
 
-app.get('/person',async (req,res)=>{
-    const persons = await prisma.person.findMany()
-    res.send(persons)
+server.listen({port: process.env.PORT||4000},()=>{
+  console.log("server is up")
 })
-
-const PORT=process.env.PORT||3000;
-
-
-app.listen(PORT,()=>console.log("server is up in" + PORT))
