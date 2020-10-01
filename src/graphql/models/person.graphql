@@ -35,11 +35,13 @@ type Person {
     #Photo                                                                 binary?
     Marital_Status_Ref: Int
     Room_Num: String
+    #references
+    Person_Qualification: [Person_Qualification!]!
 
 }
 
 input personInput {
-    id: ID!
+    Person_ID: Int!
 }
 
 input createPersonInput {

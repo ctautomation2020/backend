@@ -7,6 +7,8 @@ const fs = require('fs');
 const loadedFiles = loadFilesSync(path.join(__dirname, 'models/**/*.graphql'))
 const resolversArray = loadFilesSync(path.join(__dirname, './resolvers'));
 
+//console.log(resolversArray)
+
 const typeDefs = mergeTypeDefs(loadedFiles);
 const printedTypeDefs = print(typeDefs);
 fs.writeFileSync('schema.graphql', printedTypeDefs)

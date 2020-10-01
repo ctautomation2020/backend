@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client")
+
 module.exports={
     Query:{
 
@@ -9,7 +9,7 @@ module.exports={
         async person(parent, args, {prisma}, info){
             return await prisma.person.findOne({
                 where: {
-                    id: args.data.id
+                    Person_ID: args.data.Person_ID
                 }
             })
         }
@@ -22,6 +22,17 @@ module.exports={
             return await prisma.person.create({data})
         }
 
+    },
+
+    Person: {
+
+        async Person_Qualification(parent, {data}, {prisma}, info) {
+            return await prisma.person_qualification.findMany({
+                where: {
+                    Person_ID: parent.Person_ID
+                }
+            })
+        }
     }
 }
 
