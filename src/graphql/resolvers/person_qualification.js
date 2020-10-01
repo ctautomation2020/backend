@@ -30,6 +30,16 @@ module.exports = {
                     ...mydata
                 }
             })
-        }
+        },
+
+        async updatePersonQualification(parent, {data}, {prisma}, info) {
+            const{Qualification_ID,...mydata} = data
+            return await prisma.person_qualification.update({
+                where:{
+                    Qualification_ID:data.Qualification_ID
+                },
+                data:mydata
+            })
+        },
     }
 }

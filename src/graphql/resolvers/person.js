@@ -20,7 +20,17 @@ module.exports={
         
         async createPerson(parent, {data}, {prisma}, info) {
             return await prisma.person.create({data})
-        }
+        },
+
+        async updatePerson(parent, {data}, {prisma}, info) {
+            const{Person_ID,...mydata} = data
+            return await prisma.person.update({
+                where:{
+                    Person_ID:data.Person_ID
+                },
+                data:mydata
+            })
+        },
 
     },
 

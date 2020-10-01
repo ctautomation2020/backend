@@ -5,6 +5,7 @@ type Query {
 
 type Mutation {
     createPersonQualification(data: Person_QualificationInput!): Person_Qualification!
+    updatePersonQualification(data: Person_QualificationUpdateInput!): Person_Qualification!
 
 }
 
@@ -27,6 +28,22 @@ type Person_Qualification {
 input Person_QualificationInput {
   Qualification_ID: Int                
   Person_ID: Int!
+  Qualification_Level_Ref: Int
+  Degree_Ref: Int
+  Branch_Ref: Int
+  Institution: String
+  University: String
+  Start_Date: Int
+  End_Date: Int
+  Class_Obtained_Ref: Int
+  Thesis_Title: String
+  Specialization: String
+  Faculty_Research: String
+}
+
+input Person_QualificationUpdateInput {      
+  Qualification_ID: Int!          
+  Person_ID: Int
   Qualification_Level_Ref: Int
   Degree_Ref: Int
   Branch_Ref: Int

@@ -73,7 +73,8 @@ input createPersonInput {
     Room_Num: String
 }
 
-input updatePersonInput {                     
+input updatePersonInput {      
+    Person_ID: Int!                    
     Prefix_Ref: Int
     First_Name: String
     Last_Name: String
