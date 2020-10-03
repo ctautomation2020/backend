@@ -23,13 +23,13 @@ type Person {
   Caste: String
   Primary_MailID: String
   Secondary_MailID: String
-  Aadhar_Card: Int
+  Aadhar_Card: Float
   PAN_Card: String
   Passport_Number: String
   Primary_ContactNumber: Int
   Secondary_ContactNumber: String
   Intercom_Number: String
-  Alias_NameL: String
+  Alias_Name: String
   Address_Line1: String
   Address_Line2: String
   Address_Line3: String
@@ -54,13 +54,13 @@ input createPersonInput {
   Caste: String
   Primary_MailID: String
   Secondary_MailID: String
-  Aadhar_Card: Int
+  Aadhar_Card: Float
   PAN_Card: String
   Passport_Number: String
   Primary_ContactNumber: Int
   Secondary_ContactNumber: String
   Intercom_Number: String
-  Alias_NameL: String
+  Alias_Name: String
   Address_Line1: String
   Address_Line2: String
   Address_Line3: String
@@ -80,13 +80,13 @@ input updatePersonInput {
   Caste: String
   Primary_MailID: String
   Secondary_MailID: String
-  Aadhar_Card: Int
+  Aadhar_Card: Float
   PAN_Card: String
   Passport_Number: String
   Primary_ContactNumber: Int
   Secondary_ContactNumber: String
   Intercom_Number: String
-  Alias_NameL: String
+  Alias_Name: String
   Address_Line1: String
   Address_Line2: String
   Address_Line3: String

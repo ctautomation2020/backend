@@ -13,11 +13,12 @@ const { PrismaClient } = require("@prisma/client")
 const server = new ApolloServer({
   typeDefs: gql(readFileSync(join(__dirname, "../schema.graphql"), "utf8")),
   resolvers,
-  context: ({ req }) => ({
-    prisma: new PrismaClient()
+  context: async ({ req }) => ({
+    prisma: await new PrismaClient()
   })
 })
 
 server.listen({port: process.env.PORT||4000},()=>{
   console.log("server is up")
 })
+ //
