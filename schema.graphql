@@ -3,6 +3,7 @@ type Query {
   person(data: personInput!): Person!
   qualification(data: Qualification_InputQuery!): Person_Qualification!
   personQualifications(data: Person_QualificationsInputQuery): [Person_Qualification]
+  personReference(data: Person_Reference_Input): [Person_Reference_Table]
 }
 
 type Mutation {
@@ -149,6 +150,19 @@ input Qualification_InputQuery {
 
 input Person_QualificationsInputQuery {
   Person_ID: Int!
+}
+
+type Person_Reference_Table {
+  Reference_ID: Int!
+  Ref_Code: Int
+  Category: String
+  Ref_Name: String
+  Description: String
+}
+
+input Person_Reference_Input {
+  Reference_ID: Int
+  Category: String
 }
 
 schema {

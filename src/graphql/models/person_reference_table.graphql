@@ -1,0 +1,16 @@
+type Query {
+    personReference(data:Person_Reference_Input): [Person_Reference_Table]
+}
+
+type Person_Reference_Table {
+  Reference_ID: Int!                       
+  Ref_Code: Int                  
+  Category: String
+  Ref_Name: String
+  Description: String
+}
+
+input Person_Reference_Input {
+    Reference_ID: Int
+    Category: String
+}

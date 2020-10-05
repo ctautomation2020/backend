@@ -320,7 +320,7 @@ model person_qualification {
 
 model person_reference_table {
   Reference_ID                                                                                   Int                       @default(autoincrement()) @id
-  Ref_Code                                                                                       Int?                      @unique
+  Ref_Code                                                                                       Int?                      
   Category                                                                                       String?
   Ref_Name                                                                                       String?
   Description                                                                                    String?
