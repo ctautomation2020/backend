@@ -9,6 +9,11 @@ const fun = async()=> {
                 connect:{
                     Person_ID:1
                 }
+            },
+            person_reference_table_person_qualification_Branch_RefToperson_reference_table:{
+                connect:{
+                    Reference_ID:null
+                }
             }
         }
     }))
