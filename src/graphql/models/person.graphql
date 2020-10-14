@@ -1,6 +1,6 @@
 type Query {
     allPersons: [Person!]! 
-    person(data:personInput!): Person!
+    person: Person!
 }
 
 type Mutation {

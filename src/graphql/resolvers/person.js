@@ -1,3 +1,4 @@
+import getPersonID from "../auth/getPersonID"
 
 module.exports={
     Query:{
@@ -6,10 +7,11 @@ module.exports={
             return await prisma.person.findMany()
         },
 
-        async person(parent, args, {prisma}, info){
+        async person(parent, args, {prisma,req}, info){
+            const Person_ID = getPersonID(req)
             return await prisma.person.findOne({
                 where: {
-                    Person_ID: args.data.Person_ID
+                    Person_ID
                 }
             })
         }

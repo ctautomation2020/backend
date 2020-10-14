@@ -1,16 +1,54 @@
 type Query {
+  login(data: credentialQueryInput!): loginPayload!
   allPersons: [Person!]!
-  person(data: personInput!): Person!
+  person: Person!
   qualification(data: Qualification_InputQuery!): Person_Qualification!
   personQualifications(data: Person_QualificationsInputQuery): [Person_Qualification]
   personReference(data: Person_Reference_Input): [Person_Reference_Table]
 }
 
 type Mutation {
+  createUser(data: createCredentialsInput!): credentialPayload
+  updateUser(data: updateCredentialsInput!): credentialPayload
   createPerson(data: createPersonInput!): Person!
   updatePerson(data: updatePersonInput!): Person!
   createPersonQualification(data: Person_QualificationInput!): Person_Qualification!
   updatePersonQualification(data: Person_QualificationUpdateInput!): Person_Qualification!
+}
+
+type credentials {
+  Credentials_ID: Int
+  Person_ID: Int!
+  Username: String!
+  Password: String!
+  person: Person!
+}
+
+input createCredentialsInput {
+  Person_ID: Int!
+  Username: String!
+  Password: String!
+}
+
+type credentialPayload {
+  Credentials_ID: Int
+  Person_ID: Int!
+  Username: String!
+}
+
+input updateCredentialsInput {
+  Person_ID: Int!
+  Username: String
+  Password: String
+}
+
+input credentialQueryInput {
+  Username: String!
+  Password: String!
+}
+
+type loginPayload {
+  token: String!
 }
 
 type Person {

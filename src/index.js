@@ -14,7 +14,8 @@ const server = new ApolloServer({
   typeDefs: gql(readFileSync(join(__dirname, "../schema.graphql"), "utf8")),
   resolvers,
   context: async ({ req }) => ({
-    prisma: await new PrismaClient()
+    prisma: await new PrismaClient(),
+    req
   })
 })
 
