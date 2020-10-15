@@ -23,7 +23,7 @@ type Person {
     Aadhar_Card: Float
     PAN_Card: String
     Passport_Number: String
-    Primary_ContactNumber: Int
+    Primary_ContactNumber: String
     Secondary_ContactNumber: String
     Intercom_Number: String
     Alias_Name: String
@@ -59,7 +59,7 @@ input createPersonInput {
     Aadhar_Card: Float
     PAN_Card: String
     Passport_Number: String
-    Primary_ContactNumber: Int
+    Primary_ContactNumber: String
     Secondary_ContactNumber: String
     Intercom_Number: String
     Alias_Name: String
@@ -88,7 +88,7 @@ input updatePersonInput {
     Aadhar_Card: Float
     PAN_Card: String
     Passport_Number: String
-    Primary_ContactNumber: Int
+    Primary_ContactNumber: String
     Secondary_ContactNumber: String
     Intercom_Number: String
     Alias_Name: String

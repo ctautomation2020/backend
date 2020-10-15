@@ -21,7 +21,7 @@ model person {
   Aadhar_Card                                                              Int?
   PAN_Card                                                                 String?
   Passport_Number                                                          String?
-  Primary_ContactNumber                                                    Int?
+  Primary_ContactNumber                                                    String?
   Secondary_ContactNumber                                                  String?
   Intercom_Number                                                          String?
   Alias_Name                                                               String?
