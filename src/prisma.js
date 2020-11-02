@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 const fun = async()=> {
     console.log(await prisma.person.update({
         where:{
-            
+
                     Person_ID:1
                 },
             data:{

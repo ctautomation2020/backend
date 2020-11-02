@@ -89,7 +89,7 @@ module.exports={
                     }
                 }
             }
-            console.log(ref_data)
+            
             return await prisma.person.update({
                 where:{
                     Person_ID:data.Person_ID

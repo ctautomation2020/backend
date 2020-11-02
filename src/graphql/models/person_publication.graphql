@@ -1,0 +1,74 @@
+type Query {
+    publication: Person_Publication
+    person_publications: [Person_Publication]
+}
+
+type Mutation {
+    createPersonPublication(data: Person_PublicationInput!): Person_Publication!
+    updatePersonPublication(data: Person_PublicationUpdateInput!): Person_Publication!
+    deletePersonPublication(data: Person_PublicationDeleteInput!): Person_Publication!
+}
+
+type Person_Publication {
+  Publication_ID: Int!                     
+  Person_ID: Int!
+  Publication_Type_Ref: Int
+  Level_Ref: Int
+  Paper_Title: String
+  First_Author: String
+  Second_Author: String
+  Other_Authors: String
+  Journal_Name: String
+  Volume: Int
+  Issue: Int
+  DOI: String
+  Year_Of_Publish: Int
+  Start_Page_No: Int
+  End_Page_No: Int
+  Publisher: String
+  Impact_Factor: Float
+}
+
+input Person_PublicationInput {
+  Publication_ID: Int                    
+  Person_ID: Int!
+  Publication_Type_Ref: Int
+  Level_Ref: Int
+  Paper_Title: String
+  First_Author: String
+  Second_Author: String
+  Other_Authors: String
+  Journal_Name: String
+  Volume: Int
+  Issue: Int
+  DOI: String
+  Year_Of_Publish: Int
+  Start_Page_No: Int
+  End_Page_No: Int
+  Publisher: String
+  Impact_Factor: Float
+}
+
+input Person_PublicationUpdateInput {
+  Publication_ID: Int!                    
+  Person_ID: Int
+  Publication_Type_Ref: Int
+  Level_Ref: Int
+  Paper_Title: String
+  First_Author: String
+  Second_Author: String
+  Other_Authors: String
+  Journal_Name: String
+  Volume: Int
+  Issue: Int
+  DOI: String
+  Year_Of_Publish: Int
+  Start_Page_No: Int
+  End_Page_No: Int
+  Publisher: String
+  Impact_Factor: Float
+}
+
+input Person_PublicationDeleteInput{
+    Publication_ID: Int!
+}

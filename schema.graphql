@@ -2,6 +2,8 @@ type Query {
   login(data: credentialQueryInput!): loginPayload!
   allPersons: [Person!]!
   person: Person!
+  publication: Person_Publication
+  person_publications: [Person_Publication]
   qualification(data: Qualification_InputQuery!): Person_Qualification!
   personQualifications(data: Person_QualificationsInputQuery): [Person_Qualification]
   personReference(data: Person_Reference_Input): [Person_Reference_Table]
@@ -12,6 +14,9 @@ type Mutation {
   updateUser(data: updateCredentialsInput!): credentialPayload
   createPerson(data: createPersonInput!): Person!
   updatePerson(data: updatePersonInput!): Person!
+  createPersonPublication(data: Person_PublicationInput!): Person_Publication!
+  updatePersonPublication(data: Person_PublicationUpdateInput!): Person_Publication!
+  deletePersonPublication(data: Person_PublicationDeleteInput!): Person_Publication!
   createPersonQualification(data: Person_QualificationInput!): Person_Qualification!
   updatePersonQualification(data: Person_QualificationUpdateInput!): Person_Qualification!
 }
@@ -132,6 +137,70 @@ input updatePersonInput {
   Address_Line4: String
   Marital_Status_Ref: Int
   Room_Num: String
+}
+
+type Person_Publication {
+  Publication_ID: Int!
+  Person_ID: Int!
+  Publication_Type_Ref: Int
+  Level_Ref: Int
+  Paper_Title: String
+  First_Author: String
+  Second_Author: String
+  Other_Authors: String
+  Journal_Name: String
+  Volume: Int
+  Issue: Int
+  DOI: String
+  Year_Of_Publish: Int
+  Start_Page_No: Int
+  End_Page_No: Int
+  Publisher: String
+  Impact_Factor: Float
+}
+
+input Person_PublicationInput {
+  Publication_ID: Int
+  Person_ID: Int!
+  Publication_Type_Ref: Int
+  Level_Ref: Int
+  Paper_Title: String
+  First_Author: String
+  Second_Author: String
+  Other_Authors: String
+  Journal_Name: String
+  Volume: Int
+  Issue: Int
+  DOI: String
+  Year_Of_Publish: Int
+  Start_Page_No: Int
+  End_Page_No: Int
+  Publisher: String
+  Impact_Factor: Float
+}
+
+input Person_PublicationUpdateInput {
+  Publication_ID: Int!
+  Person_ID: Int
+  Publication_Type_Ref: Int
+  Level_Ref: Int
+  Paper_Title: String
+  First_Author: String
+  Second_Author: String
+  Other_Authors: String
+  Journal_Name: String
+  Volume: Int
+  Issue: Int
+  DOI: String
+  Year_Of_Publish: Int
+  Start_Page_No: Int
+  End_Page_No: Int
+  Publisher: String
+  Impact_Factor: Float
+}
+
+input Person_PublicationDeleteInput {
+  Publication_ID: Int!
 }
 
 type Person_Qualification {
