@@ -101,5 +101,16 @@ module.exports = {
                 }
             })
         },
+
+        async deletePersonQualification(parent, {data}, {prisma}, info){
+
+            return await prisma.person_qualification.delete({
+                where:{
+                    Qualification_ID:data.Qualification_ID
+                }
+            })
+            
+        }
+        
     }
 }

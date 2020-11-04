@@ -6,6 +6,7 @@ type Query {
 type Mutation {
     createPersonQualification(data: Person_QualificationInput!): Person_Qualification!
     updatePersonQualification(data: Person_QualificationUpdateInput!): Person_Qualification!
+    deletePersonQualification(data: Qualification_InputQuery!): Person_Qualification
 
 }
 

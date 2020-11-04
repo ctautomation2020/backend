@@ -19,6 +19,7 @@ type Mutation {
   deletePersonPublication(data: Person_PublicationDeleteInput!): Person_Publication!
   createPersonQualification(data: Person_QualificationInput!): Person_Qualification!
   updatePersonQualification(data: Person_QualificationUpdateInput!): Person_Qualification!
+  deletePersonQualification(data: Qualification_InputQuery!): Person_Qualification
 }
 
 type credentials {
