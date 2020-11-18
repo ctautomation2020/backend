@@ -7,7 +7,7 @@ module.exports={
                 }
             })
         },
-        async publication(parent, args, {prisma}, info) {
+        async person_publications(parent, args, {prisma}, info) {
             return await prisma.person_publication.findMany({
                 where:{
                     Person_ID: args.data.Person_ID
