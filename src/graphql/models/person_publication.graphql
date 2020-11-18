@@ -1,6 +1,6 @@
 type Query {
-    publication: Person_Publication
-    person_publications: [Person_Publication]
+    publication(data: Person_PublicationQueryInput!): Person_Publication
+    person_publications(data: Person_QueryInput!): [Person_Publication]
 }
 
 type Mutation {
@@ -71,4 +71,12 @@ input Person_PublicationUpdateInput {
 
 input Person_PublicationDeleteInput{
     Publication_ID: Int!
+}
+
+input Person_PublicationQueryInput{
+    Publication_ID: Int!
+}
+
+input Person_QueryInput{
+    Person_ID: Int!
 }

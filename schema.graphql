@@ -2,8 +2,8 @@ type Query {
   login(data: credentialQueryInput!): loginPayload!
   allPersons: [Person!]!
   person: Person!
-  publication: Person_Publication
-  person_publications: [Person_Publication]
+  publication(data: Person_PublicationQueryInput!): Person_Publication
+  person_publications(data: Person_QueryInput!): [Person_Publication]
   qualification(data: Qualification_InputQuery!): Person_Qualification!
   personQualifications(data: Person_QualificationsInputQuery): [Person_Qualification]
   personReference(data: Person_Reference_Input): [Person_Reference_Table]
@@ -202,6 +202,14 @@ input Person_PublicationUpdateInput {
 
 input Person_PublicationDeleteInput {
   Publication_ID: Int!
+}
+
+input Person_PublicationQueryInput {
+  Publication_ID: Int!
+}
+
+input Person_QueryInput {
+  Person_ID: Int!
 }
 
 type Person_Qualification {
