@@ -3,7 +3,7 @@ import {ApolloServer, gql} from 'apollo-server'
 import {readFileSync} from 'fs'
 import {join} from 'path'
 
-
+import getPersonID from './graphql/auth/getPersonID'
 import resolvers from './graphql/index'
 
 const { PrismaClient } = require("@prisma/client")
@@ -15,6 +15,7 @@ const server = new ApolloServer({
   resolvers,
   context: async ({ req }) => ({
     prisma: await new PrismaClient(),
+    auth: getPersonID,
     req
   })
 })

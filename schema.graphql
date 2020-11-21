@@ -2,6 +2,8 @@ type Query {
   login(data: credentialQueryInput!): loginPayload!
   allPersons: [Person!]!
   person: Person!
+  experience(data: experienceQueryInput): person_experience
+  person_experiences(data: PersonQueryInput): [person_experience]
   publication(data: Person_PublicationQueryInput!): Person_Publication
   person_publications(data: Person_QueryInput!): [Person_Publication]
   qualification(data: Qualification_InputQuery!): Person_Qualification!
@@ -14,6 +16,9 @@ type Mutation {
   updateUser(data: updateCredentialsInput!): credentialPayload
   createPerson(data: createPersonInput!): Person!
   updatePerson(data: updatePersonInput!): Person!
+  createPersonExperience(data: experienceInput!): person_experience!
+  updatePersonExperience(data: experienceUpdateInput!): person_experience!
+  deletePersonExperience(data: experienceDeleteInput!): person_experience!
   createPersonPublication(data: Person_PublicationInput!): Person_Publication!
   updatePersonPublication(data: Person_PublicationUpdateInput!): Person_Publication!
   deletePersonPublication(data: Person_PublicationDeleteInput!): Person_Publication!
@@ -138,6 +143,54 @@ input updatePersonInput {
   Address_Line4: String
   Marital_Status_Ref: Int
   Room_Num: String
+}
+
+type person_experience {
+  Experience_ID: Int!
+  Person_ID: Int!
+  Designation_Ref: Int
+  Organization: String
+  Department: String
+  Start_Date: String
+  End_Date: String
+  Emp_Category_Ref: Int
+  Work_Nature_Ref: Int
+  Position_Held: String
+}
+
+input experienceQueryInput {
+  Experience_ID: Int!
+}
+
+input PersonQueryInput {
+  Person_ID: Int!
+}
+
+input experienceInput {
+  Designation_Ref: Int
+  Organization: String
+  Department: String
+  Start_Date: String
+  End_Date: String
+  Emp_Category_Ref: Int
+  Work_Nature_Ref: Int
+  Position_Held: String
+}
+
+input experienceUpdateInput {
+  Experience_ID: Int!
+  Designation_Ref: Int
+  Organization: String
+  Department: String
+  Start_Date: String
+  End_Date: String
+  Emp_Category_Ref: Int
+  Work_Nature_Ref: Int
+  Position_Held: String
+}
+
+input experienceDeleteInput {
+  Experience_ID: Int!
 }
 
 type Person_Publication {
