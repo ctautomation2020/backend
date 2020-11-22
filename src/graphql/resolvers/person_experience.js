@@ -60,6 +60,7 @@ module.exports = {
         async updatePersonExperience(parent, {data}, {prisma,auth,req}, info) {
             const {Experience_ID,Designation_Ref,Emp_Category_Ref,Work_Nature_Ref, ...noref_data} = data
             const ref_data = noref_data
+            
             const Person_ID = auth(req)
 
             if(Designation_Ref){

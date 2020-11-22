@@ -2,6 +2,8 @@ type Query {
   login(data: credentialQueryInput!): loginPayload!
   allPersons: [Person!]!
   person: Person!
+  award(data: awardQueryInput!): person_award
+  personAwards(data: personAwardQueryInput!): [person_award]
   experience(data: experienceQueryInput): person_experience
   person_experiences(data: PersonQueryInput): [person_experience]
   publication(data: Person_PublicationQueryInput!): Person_Publication
@@ -16,6 +18,9 @@ type Mutation {
   updateUser(data: updateCredentialsInput!): credentialPayload
   createPerson(data: createPersonInput!): Person!
   updatePerson(data: updatePersonInput!): Person!
+  createPersonAward(data: awardInput!): person_award!
+  updatePersonAward(data: awardUpdateInput!): person_award!
+  deletePersonAward(data: awardDeleteInput!): person_award!
   createPersonExperience(data: experienceInput!): person_experience!
   updatePersonExperience(data: experienceUpdateInput!): person_experience!
   deletePersonExperience(data: experienceDeleteInput!): person_experience!
@@ -143,6 +148,45 @@ input updatePersonInput {
   Address_Line4: String
   Marital_Status_Ref: Int
   Room_Num: String
+}
+
+type person_award {
+  Award_ID: Int!
+  Person_ID: Int!
+  Title: String
+  Organization: String
+  Place: String
+  Start_Year: Int
+  Details: String
+}
+
+input awardQueryInput {
+  Award_ID: Int!
+}
+
+input personAwardQueryInput {
+  Person_ID: Int!
+}
+
+input awardInput {
+  Title: String
+  Organization: String
+  Place: String
+  Start_Year: Int
+  Details: String
+}
+
+input awardUpdateInput {
+  Award_ID: Int!
+  Title: String
+  Organization: String
+  Place: String
+  Start_Year: Int
+  Details: String
+}
+
+input awardDeleteInput {
+  Award_ID: Int!
 }
 
 type person_experience {

@@ -1,0 +1,49 @@
+type Query {
+    award(data: awardQueryInput!): person_award
+    personAwards(data: personAwardQueryInput!): [person_award]
+}
+
+type Mutation {
+    createPersonAward(data: awardInput!): person_award!
+    updatePersonAward(data: awardUpdateInput!): person_award!
+    deletePersonAward(data: awardDeleteInput!): person_award!
+}
+
+type person_award {
+    Award_ID: Int!     
+    Person_ID: Int!
+    Title: String
+    Organization: String
+    Place: String
+    Start_Year: Int
+    Details: String
+}
+
+input awardQueryInput {
+    Award_ID: Int!     
+}
+
+input personAwardQueryInput {
+    Person_ID: Int!
+}
+
+input awardInput {
+    Title: String
+    Organization: String
+    Place: String
+    Start_Year: Int
+    Details: String
+}
+
+input awardUpdateInput {
+    Award_ID: Int!
+    Title: String
+    Organization: String
+    Place: String
+    Start_Year: Int
+    Details: String
+}
+
+input awardDeleteInput {
+    Award_ID: Int!
+}
