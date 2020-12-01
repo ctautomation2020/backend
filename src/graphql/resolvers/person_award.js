@@ -53,7 +53,20 @@ module.exports = {
                     Award_ID: data.Award_ID
                 }
             })
-        }
+        },
+        uploadPersonAward: async (_, { file }) => {
+            const { createReadStream, filename } = await file;
+      
+            await new Promise(res =>
+              createReadStream()
+                .pipe(createWriteStream(path.join(__dirname, "../awards", filename)))
+                .on("close", res)
+            );
+      
+            files.push(filename);
+      
+            return true;
+          }
     }
 
 }
