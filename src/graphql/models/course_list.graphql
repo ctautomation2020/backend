@@ -1,0 +1,20 @@
+type Query {
+    course(data: courseQueryInput!): course_list
+    allCourses: [course_list]
+}
+
+
+type course_list {
+  course_code: String!                      
+  stream: Int!
+  regulation: Int!
+  semester: Int!
+  title: String!
+  credit: Int!
+  objectives: String
+
+}
+
+input courseQueryInput {
+    course_code: String!
+}

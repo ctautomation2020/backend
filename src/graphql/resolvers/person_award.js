@@ -1,3 +1,5 @@
+let fs = require('fs')
+let path = require('path')
 module.exports = {
     Query: {
         async award(parent, {data}, {prisma}, info) {
@@ -20,6 +22,17 @@ module.exports = {
     Mutation: {
         async createPersonAward(parent, {data}, {prisma,auth,req}, info) {
             const Person_ID = auth(req)
+            const { createReadStream, filename } = await data.File;
+      
+            await new Promise(res =>
+                createReadStream()
+                .pipe(fs.createWriteStream(path.join(__dirname, "../awards", filename)))
+                .on("close", res)
+            );
+      
+            //files.push(filename);
+            console.log(createReadStream)
+            const {File, ...no_refdata} = data
             return await prisma.person_awards.create({
                 data:{
                     person:{
@@ -27,9 +40,10 @@ module.exports = {
                             Person_ID:Person_ID
                         }
                     },
-                    ...data
+                    ...no_refdata
                 }
             })
+            
         },
 
         async updatePersonAward(parent, {data}, {prisma,auth,req}, info) {
@@ -58,13 +72,15 @@ module.exports = {
             const { createReadStream, filename } = await file;
       
             await new Promise(res =>
-              createReadStream()
-                .pipe(createWriteStream(path.join(__dirname, "../awards", filename)))
+                createReadStream()
+                .pipe(fs.createWriteStream(path.join(__dirname, "../awards", filename)))
                 .on("close", res)
             );
       
-            files.push(filename);
-      
+            //files.push(filename);
+            console.log(createReadStream)
+
+
             return true;
           }
     }
