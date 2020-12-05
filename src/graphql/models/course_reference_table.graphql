@@ -1,0 +1,16 @@
+type Query {
+    courseReference(data:Course_Reference_Input): [Course_Reference_Table]
+}
+
+type Course_Reference_Table {
+  reference_id: Int!
+  ref_code: Int!                          
+  category: String
+  ref_name: String
+  description: String
+}
+
+input Course_Reference_Input {
+    reference_id: Int
+    category: String
+}

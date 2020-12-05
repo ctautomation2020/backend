@@ -1,0 +1,24 @@
+type subj_allot {
+  sallot_id: Int!    
+  staff_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  class_room: String
+  student_count: Int
+}
+
+type Query {
+    staffCourses(data: staffCoursesQueryInput!): [subj_allot]
+    courseDetails(data: courseDetailsQueryInput!): subj_allot
+}
+
+input staffCoursesQueryInput {
+    staff_id: Int!
+    session_ref: Int
+}
+
+input courseDetailsQueryInput {
+    sallot_id: Int!
+    
+}

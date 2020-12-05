@@ -1,4 +1,7 @@
 type Query {
+  course(data: courseQueryInput!): course_list
+  allCourses: [course_list]
+  courseReference(data: Course_Reference_Input): [Course_Reference_Table]
   login(data: credentialQueryInput!): loginPayload!
   allPersons: [Person!]!
   person: Person!
@@ -11,6 +14,35 @@ type Query {
   qualification(data: Qualification_InputQuery!): Person_Qualification!
   personQualifications(data: Person_QualificationsInputQuery): [Person_Qualification]
   personReference(data: Person_Reference_Input): [Person_Reference_Table]
+  staffCourses(data: staffCoursesQueryInput!): [subj_allot]
+  courseDetails(data: courseDetailsQueryInput!): subj_allot
+}
+
+type course_list {
+  course_code: String!
+  stream: Int!
+  regulation: Int!
+  semester: Int!
+  title: String!
+  credit: Int!
+  objectives: String
+}
+
+input courseQueryInput {
+  course_code: String!
+}
+
+type Course_Reference_Table {
+  reference_id: Int!
+  ref_code: Int!
+  category: String
+  ref_name: String
+  description: String
+}
+
+input Course_Reference_Input {
+  reference_id: Int
+  category: String
 }
 
 type Mutation {
@@ -21,6 +53,7 @@ type Mutation {
   createPersonAward(data: awardInput!): person_award!
   updatePersonAward(data: awardUpdateInput!): person_award!
   deletePersonAward(data: awardDeleteInput!): person_award!
+  uploadPersonAward(file: Upload!): Boolean
   createPersonExperience(data: experienceInput!): person_experience!
   updatePersonExperience(data: experienceUpdateInput!): person_experience!
   deletePersonExperience(data: experienceDeleteInput!): person_experience!
@@ -174,6 +207,7 @@ input awardInput {
   Place: String
   Start_Year: Int
   Details: String
+  File: Upload
 }
 
 input awardUpdateInput {
@@ -376,6 +410,25 @@ type Person_Reference_Table {
 input Person_Reference_Input {
   Reference_ID: Int
   Category: String
+}
+
+type subj_allot {
+  sallot_id: Int!
+  staff_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  class_room: String
+  student_count: Int
+}
+
+input staffCoursesQueryInput {
+  staff_id: Int!
+  session_ref: Int
+}
+
+input courseDetailsQueryInput {
+  sallot_id: Int!
 }
 
 schema {
