@@ -62,6 +62,7 @@ input custom_type {
   group_ref: Int!
   session_ref: Int!
   assess_num: Int!
+  entry_date: String
   section: [section]
 }
 
@@ -77,7 +78,7 @@ input questions {
   question_img: String
   blooms_level: Int!
   co_num: Int!
-  mark: Int!
+  marks: Int!
 }
 
 input assesmentQueryInput {
