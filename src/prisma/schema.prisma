@@ -7,471 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model person {
-  Person_ID                                                                Int                         @id
-  Prefix_Ref                                                               Int?
-  First_Name                                                               String?
-  Last_Name                                                                String?
-  Gender_Ref                                                               Int?
-  DOB                                                                      DateTime?
-  Community_Ref                                                            Int?
-  Caste                                                                    String?
-  Primary_MailID                                                           String?
-  Secondary_MailID                                                         String?
-  Aadhar_Card                                                              Int?
-  PAN_Card                                                                 String?
-  Passport_Number                                                          String?
-  Primary_ContactNumber                                                    String?
-  Secondary_ContactNumber                                                  String?
-  Intercom_Number                                                          String?
-  Alias_Name                                                               String?
-  Address_Line1                                                            String?
-  Address_Line2                                                            String?
-  Address_Line3                                                            String?
-  Address_Line4                                                            String?
-  // This type is currently not supported.
-  // Photo                                                                 binary?
-  Marital_Status_Ref                                                       Int?
-  Room_Num                                                                 String?
-  person_reference_table_person_Community_RefToperson_reference_table      person_reference_table?     @relation("person_Community_RefToperson_reference_table", fields: [Community_Ref], references: [Ref_Code])
-  person_reference_table_person_Gender_RefToperson_reference_table         person_reference_table?     @relation("person_Gender_RefToperson_reference_table", fields: [Gender_Ref], references: [Ref_Code])
-  person_reference_table_person_Marital_Status_RefToperson_reference_table person_reference_table?     @relation("person_Marital_Status_RefToperson_reference_table", fields: [Marital_Status_Ref], references: [Ref_Code])
-  person_reference_table_person_Prefix_RefToperson_reference_table         person_reference_table?     @relation("person_Prefix_RefToperson_reference_table", fields: [Prefix_Ref], references: [Ref_Code])
-  credentials                                                              credentials[]
-  person_academic                                                          person_academic[]
-  person_additional_duties                                                 person_additional_duties[]
-  person_awards                                                            person_awards[]
-  person_events_attended                                                   person_events_attended[]
-  person_experience                                                        person_experience[]
-  person_guestlecture                                                      person_guestlecture[]
-  person_membership                                                        person_membership[]
-  person_patents                                                           person_patents[]
-  person_project_allocation                                                person_project_allocation[]
-  person_project_proposal                                                  person_project_proposal[]
-  person_publication                                                       person_publication[]
-  person_qualification                                                     person_qualification[]
-  person_responsibility                                                    person_responsibility[]
-  person_scholardetails                                                    person_scholardetails[]
-  person_specialization                                                    person_specialization[]
-  person_supervision                                                       person_supervision[]
-  person_travel_history                                                    person_travel_history[]
-
-  @@index([Community_Ref], name: "Community_Reference_ID_FK_idx")
-  @@index([Gender_Ref], name: "Gender_Reference_ID_FK_idx")
-  @@index([Marital_Status_Ref], name: "Marital_Status_Reference_ID_FK_idx")
-  @@index([Prefix_Ref], name: "Prefix_Reference_ID_FK_idx")
-}
-
-model person_academic {
-  Academic_ID                                                                   Int                     @default(autoincrement()) @id
-  Person_ID                                                                     Int
-  Course_Code                                                                   String?
-  Session                                                                       String?
-  Semester                                                                      Int?
-  Group                                                                         String?
-  Degree_Ref                                                                    Int?
-  Branch_Ref                                                                    Int?
-  Class_Time                                                                    DateTime?
-  Class_Type_Ref                                                                Int?
-  person_reference_table_person_academic_Branch_RefToperson_reference_table     person_reference_table? @relation("person_academic_Branch_RefToperson_reference_table", fields: [Branch_Ref], references: [Ref_Code])
-  person_reference_table_person_academic_Class_Type_RefToperson_reference_table person_reference_table? @relation("person_academic_Class_Type_RefToperson_reference_table", fields: [Class_Type_Ref], references: [Ref_Code])
-  person_course_details                                                         person_course_details?  @relation(fields: [Course_Code], references: [Course_Code])
-  person_reference_table_person_academic_Degree_RefToperson_reference_table     person_reference_table? @relation("person_academic_Degree_RefToperson_reference_table", fields: [Degree_Ref], references: [Ref_Code])
-  person                                                                        person                  @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Branch_Ref], name: "Branch_Reference_ID_FK_idx")
-  @@index([Class_Type_Ref], name: "Class_Type_Reference_ID_FK2_idx")
-  @@index([Course_Code], name: "Course_Code_FK_idx")
-  @@index([Degree_Ref], name: "Degree_Reference_ID_FK2_idx")
-  @@index([Person_ID], name: "Person_ID_FK219")
-}
-
-model person_additional_duties {
-  Duty_ID       Int       @default(autoincrement()) @id
-  Person_ID     Int
-  Duty_Allotted String?
-  Organization  String?
-  Description   String?
-  Start_Date    DateTime?
-  End_Date      DateTime?
-  person        person    @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Person_ID], name: "Person_ID_FK213")
-}
-
-model person_awards {
-  Award_ID     Int     @default(autoincrement()) @id
-  Person_ID    Int
-  Title        String?
-  Organization String?
-  Place        String?
-  Start_Year   Int?
-  Details      String?
-  person       person  @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Person_ID], name: "Person_ID_FK218")
-}
-
-model person_course_details {
-  Course_ID       Int               @default(autoincrement()) @unique
-  Course_Code     String            @unique
-  Course_Name     String?
-  Regulation      Int?
-  Credit          Int?
-  person_academic person_academic[]
-
-  @@id([Course_ID, Course_Code])
-}
-
-model person_events_attended {
-  Event_ID                                                                                       Int                     @default(autoincrement()) @id
-  Person_ID                                                                                      Int
-  Event_Type_Ref                                                                                 Int?
-  Level_Ref                                                                                      Int?
-  Event_Title                                                                                    String?
-  Hosting_Organization                                                                           String?
-  Place                                                                                          String?
-  Participation_Status_Ref                                                                       Int?
-  Role                                                                                           String?
-  Start_Date                                                                                     DateTime?
-  End_Date                                                                                       DateTime?
-  Funding_Agency                                                                                 String?
-  No_Of_Participants                                                                             Int?
-  // This type is currently not supported.
-  // Summary_File                                                                                binary?
-  // This type is currently not supported.
-  // Event_Schedule                                                                              binary?
-  // This type is currently not supported.
-  // Participants_Lists                                                                          binary?
-  // This type is currently not supported.
-  // Budget                                                                                      binary?
-  person_reference_table_person_events_attended_Event_Type_RefToperson_reference_table           person_reference_table? @relation("person_events_attended_Event_Type_RefToperson_reference_table", fields: [Event_Type_Ref], references: [Ref_Code])
-  person_reference_table_person_events_attended_Level_RefToperson_reference_table                person_reference_table? @relation("person_events_attended_Level_RefToperson_reference_table", fields: [Level_Ref], references: [Ref_Code])
-  person_reference_table_person_events_attended_Participation_Status_RefToperson_reference_table person_reference_table? @relation("person_events_attended_Participation_Status_RefToperson_reference_table", fields: [Participation_Status_Ref], references: [Ref_Code])
-  person                                                                                         person                  @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Event_Type_Ref], name: "Event_Type_Reference_ID_FK_idx")
-  @@index([Participation_Status_Ref], name: "Participation_Status_Reference_ID_FK_idx")
-  @@index([Person_ID], name: "Person_ID_FK2110")
-  @@index([Level_Ref], name: "Status_Reference_ID_FK_idx")
-}
-
-model person_experience {
-  Experience_ID                                                                     Int                     @default(autoincrement()) @id
-  Person_ID                                                                         Int
-  Designation_Ref                                                                   Int?
-  Organization                                                                      String?
-  Department                                                                        String?
-  Start_Date                                                                        DateTime?
-  End_Date                                                                          DateTime?
-  Emp_Category_Ref                                                                  Int?
-  Work_Nature_Ref                                                                   Int?
-  Position_Held                                                                     String?
-  person_reference_table_person_experience_Designation_RefToperson_reference_table  person_reference_table? @relation("person_experience_Designation_RefToperson_reference_table", fields: [Designation_Ref], references: [Ref_Code])
-  person_reference_table_person_experience_Emp_Category_RefToperson_reference_table person_reference_table? @relation("person_experience_Emp_Category_RefToperson_reference_table", fields: [Emp_Category_Ref], references: [Ref_Code])
-  person                                                                            person                  @relation(fields: [Person_ID], references: [Person_ID])
-  person_reference_table_person_experience_Work_Nature_RefToperson_reference_table  person_reference_table? @relation("person_experience_Work_Nature_RefToperson_reference_table", fields: [Work_Nature_Ref], references: [Ref_Code])
-
-  @@index([Designation_Ref], name: "Designation_Reference_ID_FK_idx")
-  @@index([Emp_Category_Ref], name: "Emp_category_Reference_ID_FK_idx")
-  @@index([Person_ID], name: "Person_ID_FK2")
-  @@index([Work_Nature_Ref], name: "Work_Nature_Reference_ID_FK_idx")
-}
-
-model person_guestlecture {
-  GuestLecture_ID        Int                     @default(autoincrement()) @id
-  Person_ID              Int
-  Level_Ref              Int?
-  Topic                  String?
-  Programme              String?
-  Organization           String?
-  Place                  String?
-  Start_Date             DateTime?
-  person_reference_table person_reference_table? @relation(fields: [Level_Ref], references: [Ref_Code])
-  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Level_Ref], name: "Level_Reference_ID_FK_idx")
-  @@index([Person_ID], name: "Person_ID_FK215")
-}
-
-model person_membership {
-  Member_ID              Int                     @default(autoincrement()) @id
-  Person_ID              Int
-  Prof_Body              String?
-  Membership_NUM         String?
-  Member_Type            Int?
-  Sart_Date              DateTime?
-  End_Date               DateTime?
-  person_reference_table person_reference_table? @relation(fields: [Member_Type], references: [Ref_Code])
-  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Member_Type], name: "Member_Type_Reference_FK_idx")
-  @@index([Person_ID], name: "Person_ID_FK210")
-}
-
-model person_patents {
-  Patent_ID              Int                     @default(autoincrement()) @id
-  Person_ID              Int
-  Title                  String?
-  Patent_Number          String?
-  Start_Date             DateTime?
-  Place                  String?
-  Patent_Status_Ref      Int?
-  person_reference_table person_reference_table? @relation(fields: [Patent_Status_Ref], references: [Ref_Code])
-  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Patent_Status_Ref], name: "Patent_Status_idx")
-  @@index([Person_ID], name: "Person_ID_FK217")
-}
-
-model person_project_allocation {
-  Project_ID              Int       @default(autoincrement()) @id
-  Person_ID               Int
-  Qualification_Level_Ref Int?
-  Batch_ID                String?
-  Reg_Num                 Int?
-  Title                   String?
-  Project_Domain          String?
-  Start_Date              DateTime?
-  End_Date                DateTime?
-  person                  person    @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Person_ID], name: "Person_ID_FK213")
-}
-
-model person_project_proposal {
-  Proposal_ID                                                                             Int                     @default(autoincrement()) @id
-  Person_ID                                                                               Int
-  Title                                                                                   String?
-  Project_Type_Ref                                                                        Int?
-  PI_Name                                                                                 String?
-  COI1_Name                                                                               String?
-  COI2_Name                                                                               String?
-  Status_Ref                                                                              Int?
-  Fund_Agency                                                                             String?
-  TotalSanctionedAmount                                                                   Float?
-  Start_Date                                                                              DateTime?
-  End_Date                                                                                DateTime?
-  Dept                                                                                    String?
-  Co_Dept                                                                                 String?
-  Co_Institution                                                                          String?
-  Abstract                                                                                String?
-  person                                                                                  person                  @relation(fields: [Person_ID], references: [Person_ID])
-  person_reference_table_person_project_proposal_Project_Type_RefToperson_reference_table person_reference_table? @relation("person_project_proposal_Project_Type_RefToperson_reference_table", fields: [Project_Type_Ref], references: [Ref_Code])
-  person_reference_table_person_project_proposal_Status_RefToperson_reference_table       person_reference_table? @relation("person_project_proposal_Status_RefToperson_reference_table", fields: [Status_Ref], references: [Ref_Code])
-
-  @@index([Person_ID], name: "Person_ID_FK212")
-  @@index([Status_Ref], name: "Status_Reference_ID_FK_idx")
-  @@index([Project_Type_Ref], name: "Type_Reference_ID_FK_idx")
-}
-
-model person_publication {
-  Publication_ID                                                                         Int                     @default(autoincrement()) @id
-  Person_ID                                                                              Int
-  Publication_Type_Ref                                                                   Int?
-  Level_Ref                                                                              Int?
-  Paper_Title                                                                            String?
-  First_Author                                                                           String?
-  Second_Author                                                                          String?
-  Other_Authors                                                                          String?
-  Journal_Name                                                                           String?
-  Volume                                                                                 Int?
-  Issue                                                                                  Int?
-  DOI                                                                                    String?
-  Year_Of_Publish                                                                        Int?
-  Start_Page_No                                                                          Int?
-  End_Page_No                                                                            Int?
-  Publisher                                                                              String?
-  Impact_Factor                                                                          Float?
-  person_reference_table_person_publication_Level_RefToperson_reference_table            person_reference_table? @relation("person_publication_Level_RefToperson_reference_table", fields: [Level_Ref], references: [Ref_Code])
-  person                                                                                 person                  @relation(fields: [Person_ID], references: [Person_ID])
-  person_reference_table_person_publication_Publication_Type_RefToperson_reference_table person_reference_table? @relation("person_publication_Publication_Type_RefToperson_reference_table", fields: [Publication_Type_Ref], references: [Ref_Code])
-
-  @@index([Level_Ref], name: "Level_Reference_ID_FK_idx")
-  @@index([Person_ID], name: "Person_ID_FK20")
-  @@index([Publication_Type_Ref], name: "Type_Reference_ID_FK1_idx")
-}
-
-model person_qualification {
-  Qualification_ID                                                                            Int                     @default(autoincrement()) @id
-  Person_ID                                                                                   Int
-  Qualification_Level_Ref                                                                     Int?
-  Degree_Ref                                                                                  Int?
-  Branch_Ref                                                                                  Int?
-  Institution                                                                                 String?
-  University                                                                                  String?
-  Start_Date                                                                                  Int?
-  End_Date                                                                                    Int?
-  Class_Obtained_Ref                                                                          Int?
-  Thesis_Title                                                                                String?
-  Specialization                                                                              String?
-  Faculty_Research                                                                            String?
-  person_reference_table_person_qualification_Branch_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Branch_RefToperson_reference_table", fields: [Branch_Ref], references: [Ref_Code])
-  person_reference_table_person_qualification_Class_Obtained_RefToperson_reference_table      person_reference_table? @relation("person_qualification_Class_Obtained_RefToperson_reference_table", fields: [Class_Obtained_Ref], references: [Ref_Code])
-  person_reference_table_person_qualification_Degree_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Degree_RefToperson_reference_table", fields: [Degree_Ref], references: [Ref_Code])
-  person                                                                                      person                  @relation(fields: [Person_ID], references: [Person_ID])
-  person_reference_table_person_qualification_Qualification_Level_RefToperson_reference_table person_reference_table? @relation("person_qualification_Qualification_Level_RefToperson_reference_table", fields: [Qualification_Level_Ref], references: [Ref_Code])
-
-  @@index([Branch_Ref], name: "Branch_Reference_ID_FK_idx")
-  @@index([Class_Obtained_Ref], name: "Class_Reference_ID_FK_idx")
-  @@index([Degree_Ref], name: "Degree_Reference_ID_FK_idx")
-  @@index([Person_ID], name: "Person_ID_FK1")
-  @@index([Qualification_Level_Ref], name: "Qualify_Level_Reference_ID_FK_idx")
-}
-
-model person_reference_table {
-  Reference_ID                                                                                   Int                       @default(autoincrement()) @id
-  Ref_Code                                                                                       Int                       @unique
-  Category                                                                                       String?
-  Ref_Name                                                                                       String?
-  Description                                                                                    String?
-  person_person_Community_RefToperson_reference_table                                            person[]                  @relation("person_Community_RefToperson_reference_table")
-  person_person_Gender_RefToperson_reference_table                                               person[]                  @relation("person_Gender_RefToperson_reference_table")
-  person_person_Marital_Status_RefToperson_reference_table                                       person[]                  @relation("person_Marital_Status_RefToperson_reference_table")
-  person_person_Prefix_RefToperson_reference_table                                               person[]                  @relation("person_Prefix_RefToperson_reference_table")
-  person_academic_person_academic_Branch_RefToperson_reference_table                             person_academic[]         @relation("person_academic_Branch_RefToperson_reference_table")
-  person_academic_person_academic_Class_Type_RefToperson_reference_table                         person_academic[]         @relation("person_academic_Class_Type_RefToperson_reference_table")
-  person_academic_person_academic_Degree_RefToperson_reference_table                             person_academic[]         @relation("person_academic_Degree_RefToperson_reference_table")
-  person_events_attended_person_events_attended_Event_Type_RefToperson_reference_table           person_events_attended[]  @relation("person_events_attended_Event_Type_RefToperson_reference_table")
-  person_events_attended_person_events_attended_Level_RefToperson_reference_table                person_events_attended[]  @relation("person_events_attended_Level_RefToperson_reference_table")
-  person_events_attended_person_events_attended_Participation_Status_RefToperson_reference_table person_events_attended[]  @relation("person_events_attended_Participation_Status_RefToperson_reference_table")
-  person_experience_person_experience_Designation_RefToperson_reference_table                    person_experience[]       @relation("person_experience_Designation_RefToperson_reference_table")
-  person_experience_person_experience_Emp_Category_RefToperson_reference_table                   person_experience[]       @relation("person_experience_Emp_Category_RefToperson_reference_table")
-  person_experience_person_experience_Work_Nature_RefToperson_reference_table                    person_experience[]       @relation("person_experience_Work_Nature_RefToperson_reference_table")
-  person_guestlecture                                                                            person_guestlecture[]
-  person_membership                                                                              person_membership[]
-  person_patents                                                                                 person_patents[]
-  person_project_proposal_person_project_proposal_Project_Type_RefToperson_reference_table       person_project_proposal[] @relation("person_project_proposal_Project_Type_RefToperson_reference_table")
-  person_project_proposal_person_project_proposal_Status_RefToperson_reference_table             person_project_proposal[] @relation("person_project_proposal_Status_RefToperson_reference_table")
-  person_publication_person_publication_Level_RefToperson_reference_table                        person_publication[]      @relation("person_publication_Level_RefToperson_reference_table")
-  person_publication_person_publication_Publication_Type_RefToperson_reference_table             person_publication[]      @relation("person_publication_Publication_Type_RefToperson_reference_table")
-  person_qualification_person_qualification_Branch_RefToperson_reference_table                   person_qualification[]    @relation("person_qualification_Branch_RefToperson_reference_table")
-  person_qualification_person_qualification_Class_Obtained_RefToperson_reference_table           person_qualification[]    @relation("person_qualification_Class_Obtained_RefToperson_reference_table")
-  person_qualification_person_qualification_Degree_RefToperson_reference_table                   person_qualification[]    @relation("person_qualification_Degree_RefToperson_reference_table")
-  person_qualification_person_qualification_Qualification_Level_RefToperson_reference_table      person_qualification[]    @relation("person_qualification_Qualification_Level_RefToperson_reference_table")
-  person_responsibility                                                                          person_responsibility[]
-  person_scholardetails_person_reference_tableToperson_scholardetails_Fellowship_Received_Ref    person_scholardetails[]   @relation("person_reference_tableToperson_scholardetails_Fellowship_Received_Ref")
-  person_scholardetails_person_reference_tableToperson_scholardetails_Guide_Type_Ref             person_scholardetails[]   @relation("person_reference_tableToperson_scholardetails_Guide_Type_Ref")
-  person_scholardetails_person_reference_tableToperson_scholardetails_Registration_Mode_Ref      person_scholardetails[]   @relation("person_reference_tableToperson_scholardetails_Registration_Mode_Ref")
-  person_scholardetails_person_reference_tableToperson_scholardetails_Status_Ref                 person_scholardetails[]   @relation("person_reference_tableToperson_scholardetails_Status_Ref")
-  person_supervision_person_reference_tableToperson_supervision_Degree_Ref                       person_supervision[]      @relation("person_reference_tableToperson_supervision_Degree_Ref")
-  person_supervision_person_reference_tableToperson_supervision_Guide_Type_Ref                   person_supervision[]      @relation("person_reference_tableToperson_supervision_Guide_Type_Ref")
-  person_supervision_person_reference_tableToperson_supervision_Status_Ref                       person_supervision[]      @relation("person_reference_tableToperson_supervision_Status_Ref")
-}
-
-model person_responsibility {
-  Responsibility_ID      Int                     @default(autoincrement()) @id
-  Person_ID              Int
-  Responsibility_Ref     Int?
-  Description            String?
-  Start_Date             DateTime?
-  End_Date               DateTime?
-  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
-  person_reference_table person_reference_table? @relation(fields: [Responsibility_Ref], references: [Ref_Code])
-
-  @@index([Person_ID], name: "Person_ID_FK211")
-  @@index([Responsibility_Ref], name: "Responsibility_Type_Reference_FK_idx")
-}
-
-model person_scholardetails {
-  Scholar_ID                                                                                   Int                     @default(autoincrement()) @id
-  Person_ID                                                                                    Int
-  Reg_No                                                                                       String?
-  Scholar_Name                                                                                 String?
-  Title                                                                                        String?
-  Status_Ref                                                                                   Int?
-  Guide_Type_Ref                                                                               Int?
-  Fellowship_Received_Ref                                                                      Int?
-  Fellowship_Agency                                                                            String?
-  Fellowship_Amount                                                                            Float?
-  Year_Of_Registration                                                                         DateTime?
-  Research_Area                                                                                String?
-  Registration_Mode_Ref                                                                        Int?
-  Fellowship_Name                                                                              String?
-  Fellowship_Year                                                                              DateTime?
-  Year_Of_Completion                                                                           DateTime?
-  person_reference_table_person_reference_tableToperson_scholardetails_Fellowship_Received_Ref person_reference_table? @relation("person_reference_tableToperson_scholardetails_Fellowship_Received_Ref", fields: [Fellowship_Received_Ref], references: [Ref_Code])
-  person_reference_table_person_reference_tableToperson_scholardetails_Guide_Type_Ref          person_reference_table? @relation("person_reference_tableToperson_scholardetails_Guide_Type_Ref", fields: [Guide_Type_Ref], references: [Ref_Code])
-  person                                                                                       person                  @relation(fields: [Person_ID], references: [Person_ID])
-  person_reference_table_person_reference_tableToperson_scholardetails_Registration_Mode_Ref   person_reference_table? @relation("person_reference_tableToperson_scholardetails_Registration_Mode_Ref", fields: [Registration_Mode_Ref], references: [Ref_Code])
-  person_reference_table_person_reference_tableToperson_scholardetails_Status_Ref              person_reference_table? @relation("person_reference_tableToperson_scholardetails_Status_Ref", fields: [Status_Ref], references: [Ref_Code])
-
-  @@index([Fellowship_Received_Ref], name: "Fellowship_Received_Ref_FK_idx")
-  @@index([Guide_Type_Ref], name: "Guide_Type_Reference_ID_FK_idx")
-  @@index([Person_ID], name: "Person_ID_FK214")
-  @@index([Registration_Mode_Ref], name: "Registration_Mode_Ref_FK_idx")
-  @@index([Status_Ref], name: "Status_Reference_ID_FK_idx")
-}
-
-model person_specialization {
-  Specialization_ID Int     @default(autoincrement()) @id
-  Person_ID         Int
-  AOS1              String?
-  AOS2              String?
-  AOS3              String?
-  AOS4              String?
-  AOS5              String?
-  person            person  @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Person_ID], name: "Person_ID_FK213")
-}
-
-model person_supervision {
-  Supervision_ID                                                                   Int                     @default(autoincrement()) @id
-  Person_ID                                                                        Int
-  Degree_Ref                                                                       Int?
-  Guide_Type_Ref                                                                   Int?
-  Reg_No                                                                           Int?
-  Start_Year                                                                       Int?
-  End_Year                                                                         Int?
-  Status_Ref                                                                       Int?
-  person_reference_table_person_reference_tableToperson_supervision_Degree_Ref     person_reference_table? @relation("person_reference_tableToperson_supervision_Degree_Ref", fields: [Degree_Ref], references: [Ref_Code])
-  person_reference_table_person_reference_tableToperson_supervision_Guide_Type_Ref person_reference_table? @relation("person_reference_tableToperson_supervision_Guide_Type_Ref", fields: [Guide_Type_Ref], references: [Ref_Code])
-  person                                                                           person                  @relation(fields: [Person_ID], references: [Person_ID])
-  person_reference_table_person_reference_tableToperson_supervision_Status_Ref     person_reference_table? @relation("person_reference_tableToperson_supervision_Status_Ref", fields: [Status_Ref], references: [Ref_Code])
-
-  @@index([Degree_Ref], name: "Degree_Reference_ID_FK1_idx")
-  @@index([Guide_Type_Ref], name: "Guide_Type_Reference_ID_FK2_idx")
-  @@index([Person_ID], name: "Person_ID_FK213")
-  @@index([Status_Ref], name: "Status_Reference_ID_FK2_idx")
-}
-
-model person_travel_history {
-  Travel_ID    Int       @default(autoincrement()) @id
-  Person_ID    Int
-  Title        String?
-  Start_Date   DateTime?
-  End_Date     DateTime?
-  Organization String?
-  Place        String?
-  Agency       String?
-  Purpose      String?
-  person       person    @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Person_ID], name: "Person_ID_FK216")
-}
-
-model user_info {
-  user_ID     Int       @default(autoincrement()) @id
-  username    Int
-  user_role   String?
-  password    String?
-  status      String?
-  create_time DateTime? @default(now())
-}
-
-model credentials {
-  Credentials_ID Int    @default(autoincrement()) @id
-  Person_ID      Int
-  Username       String @unique
-  Password       String
-  person         person @relation(fields: [Person_ID], references: [Person_ID])
-
-  @@index([Person_ID], name: "Person_ID")
-}
-
 model course_artimat {
-  cartimat_id Int         @default(autoincrement()) @id
+  cartimat_id Int         @id @default(autoincrement())
   course_code String
   conum       Int
   costmt      String
@@ -496,7 +33,7 @@ model course_artimat {
 }
 
 model course_assesseval {
-  cassesseval_id                                                               Int                    @default(autoincrement()) @id
+  cassesseval_id                                                               Int                    @id @default(autoincrement())
   course_code                                                                  String
   group_ref                                                                    Int
   session_ref                                                                  Int
@@ -516,19 +53,19 @@ model course_assesseval {
 }
 
 model course_assessment {
-  cassess_id                                                                   Int                    @default(autoincrement()) @id
+  cassess_id                                                                   Int                    @id @default(autoincrement())
   course_code                                                                  String
   group_ref                                                                    Int
   session_ref                                                                  Int
   assess_num                                                                   Int
   question_num                                                                 String
-  // This type is currently not supported.
-  // question_stmt                                                             binary?
+  question_stmt                                                                String?
   question_img                                                                 String?
   blooms_level                                                                 Int
   co_num                                                                       Int
   marks                                                                        Int
   entry_date                                                                   DateTime
+  section                                                                      String
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   course_reference_table_course_assessment_group_refTocourse_reference_table   course_reference_table @relation("course_assessment_group_refTocourse_reference_table", fields: [group_ref], references: [ref_code])
   course_reference_table_course_assessment_session_refTocourse_reference_table course_reference_table @relation("course_assessment_session_refTocourse_reference_table", fields: [session_ref], references: [ref_code])
@@ -539,7 +76,7 @@ model course_assessment {
 }
 
 model course_assigneval {
-  cassigneval_id                                                               Int                    @default(autoincrement()) @id
+  cassigneval_id                                                               Int                    @id @default(autoincrement())
   course_code                                                                  String
   group_ref                                                                    Int
   session_ref                                                                  Int
@@ -559,7 +96,7 @@ model course_assigneval {
 }
 
 model course_assignment {
-  cassign_id                                                                   Int                    @default(autoincrement()) @id
+  cassign_id                                                                   Int                    @id @default(autoincrement())
   course_code                                                                  String
   group_ref                                                                    Int
   session_ref                                                                  Int
@@ -567,7 +104,7 @@ model course_assignment {
   assign_num                                                                   Int
   question_num                                                                 String
   // This type is currently not supported.
-  // question_stmt                                                             binary?
+  // question_stmt                                                             blob?
   question_img                                                                 String?
   co_num                                                                       Int
   marks                                                                        Int
@@ -602,7 +139,7 @@ model course_attendance {
 }
 
 model course_cacomp {
-  ccacomp_id                                                               Int                    @default(autoincrement()) @id
+  ccacomp_id                                                               Int                    @id @default(autoincrement())
   course_code                                                              String
   group_ref                                                                Int
   session_ref                                                              Int
@@ -618,7 +155,7 @@ model course_cacomp {
 }
 
 model course_extcalc {
-  cextcalc_id                                                               Int                    @default(autoincrement()) @id
+  cextcalc_id                                                               Int                    @id @default(autoincrement())
   course_code                                                               String
   group_ref                                                                 Int
   session_ref                                                               Int
@@ -637,7 +174,7 @@ model course_extcalc {
 }
 
 model course_extcomp {
-  cextcomp_id                                                               Int                    @default(autoincrement()) @id
+  cextcomp_id                                                               Int                    @id @default(autoincrement())
   course_code                                                               String
   group_ref                                                                 Int
   session_ref                                                               Int
@@ -655,7 +192,7 @@ model course_extcomp {
 }
 
 model course_internalcalc {
-  cintcalc_id                                                                    Int                    @default(autoincrement()) @id
+  cintcalc_id                                                                    Int                    @id @default(autoincrement())
   course_code                                                                    String
   group_ref                                                                      Int
   session_ref                                                                    Int
@@ -675,7 +212,7 @@ model course_internalcalc {
 }
 
 model course_lessonplan {
-  clp_id                                                                       Int                    @default(autoincrement()) @id
+  clp_id                                                                       Int                    @id @default(autoincrement())
   course_code                                                                  String
   group_ref                                                                    Int
   session_ref                                                                  Int
@@ -718,7 +255,7 @@ model course_list {
 }
 
 model course_reference_table {
-  reference_id                                                                              Int                          @default(autoincrement()) @id
+  reference_id                                                                              Int                          @id @default(autoincrement())
   ref_code                                                                                  Int                          @unique
   category                                                                                  String?
   ref_name                                                                                  String?
@@ -748,7 +285,7 @@ model course_reference_table {
 }
 
 model course_registered_students {
-  cregst_id                                                                             Int                    @default(autoincrement()) @id
+  cregst_id                                                                             Int                    @id @default(autoincrement())
   course_code                                                                           String
   reg_no                                                                                Int
   group_ref                                                                             Int
@@ -765,7 +302,7 @@ model course_registered_students {
 }
 
 model course_topic {
-  ctopic_id         Int                 @default(autoincrement()) @id
+  ctopic_id         Int                 @id @default(autoincrement())
   course_code       String
   module_num        Int
   topic_num         String
@@ -775,6 +312,460 @@ model course_topic {
   course_lessonplan course_lessonplan[]
 
   @@index([course_code], name: "code_fk_idx")
+}
+
+model credentials {
+  Credentials_ID Int    @id @default(autoincrement())
+  Person_ID      Int
+  Username       String @unique
+  Password       String
+  person         person @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Person_ID], name: "Person_ID")
+}
+
+model person {
+  Person_ID                                                                Int                         @id
+  Prefix_Ref                                                               Int?
+  First_Name                                                               String?
+  Last_Name                                                                String?
+  Gender_Ref                                                               Int?
+  DOB                                                                      DateTime?
+  Community_Ref                                                            Int?
+  Caste                                                                    String?
+  Primary_MailID                                                           String?
+  Secondary_MailID                                                         String?
+  Aadhar_Card                                                              Int?
+  PAN_Card                                                                 String?
+  Passport_Number                                                          String?
+  Primary_ContactNumber                                                    String?
+  Secondary_ContactNumber                                                  String?
+  Intercom_Number                                                          String?
+  Alias_Name                                                               String?
+  Address_Line1                                                            String?
+  Address_Line2                                                            String?
+  Address_Line3                                                            String?
+  Address_Line4                                                            String?
+  // This type is currently not supported.
+  // Photo                                                                 blob?
+  Marital_Status_Ref                                                       Int?
+  Room_Num                                                                 String?
+  person_reference_table_person_Community_RefToperson_reference_table      person_reference_table?     @relation("person_Community_RefToperson_reference_table", fields: [Community_Ref], references: [Ref_Code])
+  person_reference_table_person_Gender_RefToperson_reference_table         person_reference_table?     @relation("person_Gender_RefToperson_reference_table", fields: [Gender_Ref], references: [Ref_Code])
+  person_reference_table_person_Marital_Status_RefToperson_reference_table person_reference_table?     @relation("person_Marital_Status_RefToperson_reference_table", fields: [Marital_Status_Ref], references: [Ref_Code])
+  person_reference_table_person_Prefix_RefToperson_reference_table         person_reference_table?     @relation("person_Prefix_RefToperson_reference_table", fields: [Prefix_Ref], references: [Ref_Code])
+  credentials                                                              credentials[]
+  person_academic                                                          person_academic[]
+  person_additional_duties                                                 person_additional_duties[]
+  person_awards                                                            person_awards[]
+  person_events_attended                                                   person_events_attended[]
+  person_experience                                                        person_experience[]
+  person_guestlecture                                                      person_guestlecture[]
+  person_membership                                                        person_membership[]
+  person_patents                                                           person_patents[]
+  person_project_allocation                                                person_project_allocation[]
+  person_project_proposal                                                  person_project_proposal[]
+  person_publication                                                       person_publication[]
+  person_qualification                                                     person_qualification[]
+  person_responsibility                                                    person_responsibility[]
+  person_scholardetails                                                    person_scholardetails[]
+  person_specialization                                                    person_specialization[]
+  person_supervision                                                       person_supervision[]
+  person_travel_history                                                    person_travel_history[]
+
+  @@index([Community_Ref], name: "Community_Reference_ID_FK_idx")
+  @@index([Gender_Ref], name: "Gender_Reference_ID_FK_idx")
+  @@index([Marital_Status_Ref], name: "Marital_Status_Reference_ID_FK_idx")
+  @@index([Prefix_Ref], name: "Prefix_Reference_ID_FK_idx")
+}
+
+model person_academic {
+  Academic_ID                                                                   Int                     @id @default(autoincrement())
+  Person_ID                                                                     Int
+  Course_Code                                                                   String?
+  Session                                                                       String?
+  Semester                                                                      Int?
+  Group                                                                         String?
+  Degree_Ref                                                                    Int?
+  Branch_Ref                                                                    Int?
+  Class_Time                                                                    DateTime?
+  Class_Type_Ref                                                                Int?
+  person_reference_table_person_academic_Branch_RefToperson_reference_table     person_reference_table? @relation("person_academic_Branch_RefToperson_reference_table", fields: [Branch_Ref], references: [Ref_Code])
+  person_reference_table_person_academic_Class_Type_RefToperson_reference_table person_reference_table? @relation("person_academic_Class_Type_RefToperson_reference_table", fields: [Class_Type_Ref], references: [Ref_Code])
+  person_course_details                                                         person_course_details?  @relation(fields: [Course_Code], references: [Course_Code])
+  person_reference_table_person_academic_Degree_RefToperson_reference_table     person_reference_table? @relation("person_academic_Degree_RefToperson_reference_table", fields: [Degree_Ref], references: [Ref_Code])
+  person                                                                        person                  @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Branch_Ref], name: "Branch_Reference_ID_FK_idx")
+  @@index([Class_Type_Ref], name: "Class_Type_Reference_ID_FK2_idx")
+  @@index([Course_Code], name: "Course_Code_FK_idx")
+  @@index([Degree_Ref], name: "Degree_Reference_ID_FK2_idx")
+  @@index([Person_ID], name: "Person_ID_FK219")
+}
+
+model person_additional_duties {
+  Duty_ID       Int       @id @default(autoincrement())
+  Person_ID     Int
+  Duty_Allotted String?
+  Organization  String?
+  Description   String?
+  Start_Date    DateTime?
+  End_Date      DateTime?
+  person        person    @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Person_ID], name: "Person_ID_FK213")
+}
+
+model person_awards {
+  Award_ID     Int     @id @default(autoincrement())
+  Person_ID    Int
+  Title        String?
+  Organization String?
+  Place        String?
+  Start_Year   Int?
+  Details      String?
+  person       person  @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Person_ID], name: "Person_ID_FK218")
+}
+
+model person_course_details {
+  Course_ID       Int               @unique @default(autoincrement())
+  Course_Code     String            @unique
+  Course_Name     String?
+  Regulation      Int?
+  Credit          Int?
+  person_academic person_academic[]
+
+  @@id([Course_ID, Course_Code])
+}
+
+model person_events_attended {
+  Event_ID                                                                                       Int                     @id @default(autoincrement())
+  Person_ID                                                                                      Int
+  Event_Type_Ref                                                                                 Int?
+  Level_Ref                                                                                      Int?
+  Event_Title                                                                                    String?
+  Hosting_Organization                                                                           String?
+  Place                                                                                          String?
+  Participation_Status_Ref                                                                       Int?
+  Role                                                                                           String?
+  Start_Date                                                                                     DateTime?
+  End_Date                                                                                       DateTime?
+  Funding_Agency                                                                                 String?
+  No_Of_Participants                                                                             Int?
+  // This type is currently not supported.
+  // Summary_File                                                                                blob?
+  // This type is currently not supported.
+  // Event_Schedule                                                                              blob?
+  // This type is currently not supported.
+  // Participants_Lists                                                                          blob?
+  // This type is currently not supported.
+  // Budget                                                                                      blob?
+  person_reference_table_person_events_attended_Event_Type_RefToperson_reference_table           person_reference_table? @relation("person_events_attended_Event_Type_RefToperson_reference_table", fields: [Event_Type_Ref], references: [Ref_Code])
+  person_reference_table_person_events_attended_Level_RefToperson_reference_table                person_reference_table? @relation("person_events_attended_Level_RefToperson_reference_table", fields: [Level_Ref], references: [Ref_Code])
+  person_reference_table_person_events_attended_Participation_Status_RefToperson_reference_table person_reference_table? @relation("person_events_attended_Participation_Status_RefToperson_reference_table", fields: [Participation_Status_Ref], references: [Ref_Code])
+  person                                                                                         person                  @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Event_Type_Ref], name: "Event_Type_Reference_ID_FK_idx")
+  @@index([Participation_Status_Ref], name: "Participation_Status_Reference_ID_FK_idx")
+  @@index([Person_ID], name: "Person_ID_FK2110")
+  @@index([Level_Ref], name: "Status_Reference_ID_FK_idx")
+}
+
+model person_experience {
+  Experience_ID                                                                     Int                     @id @default(autoincrement())
+  Person_ID                                                                         Int
+  Designation_Ref                                                                   Int?
+  Organization                                                                      String?
+  Department                                                                        String?
+  Start_Date                                                                        DateTime?
+  End_Date                                                                          DateTime?
+  Emp_Category_Ref                                                                  Int?
+  Work_Nature_Ref                                                                   Int?
+  Position_Held                                                                     String?
+  person_reference_table_person_experience_Designation_RefToperson_reference_table  person_reference_table? @relation("person_experience_Designation_RefToperson_reference_table", fields: [Designation_Ref], references: [Ref_Code])
+  person_reference_table_person_experience_Emp_Category_RefToperson_reference_table person_reference_table? @relation("person_experience_Emp_Category_RefToperson_reference_table", fields: [Emp_Category_Ref], references: [Ref_Code])
+  person                                                                            person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_experience_Work_Nature_RefToperson_reference_table  person_reference_table? @relation("person_experience_Work_Nature_RefToperson_reference_table", fields: [Work_Nature_Ref], references: [Ref_Code])
+
+  @@index([Designation_Ref], name: "Designation_Reference_ID_FK_idx")
+  @@index([Emp_Category_Ref], name: "Emp_category_Reference_ID_FK_idx")
+  @@index([Person_ID], name: "Person_ID_FK2")
+  @@index([Work_Nature_Ref], name: "Work_Nature_Reference_ID_FK_idx")
+}
+
+model person_guestlecture {
+  GuestLecture_ID        Int                     @id @default(autoincrement())
+  Person_ID              Int
+  Level_Ref              Int?
+  Topic                  String?
+  Programme              String?
+  Organization           String?
+  Place                  String?
+  Start_Date             DateTime?
+  person_reference_table person_reference_table? @relation(fields: [Level_Ref], references: [Ref_Code])
+  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Level_Ref], name: "Level_Reference_ID_FK_idx")
+  @@index([Person_ID], name: "Person_ID_FK215")
+}
+
+model person_membership {
+  Member_ID              Int                     @id @default(autoincrement())
+  Person_ID              Int
+  Prof_Body              String?
+  Membership_NUM         String?
+  Member_Type            Int?
+  Sart_Date              DateTime?
+  End_Date               DateTime?
+  person_reference_table person_reference_table? @relation(fields: [Member_Type], references: [Ref_Code])
+  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Member_Type], name: "Member_Type_Reference_FK_idx")
+  @@index([Person_ID], name: "Person_ID_FK210")
+}
+
+model person_patents {
+  Patent_ID              Int                     @id @default(autoincrement())
+  Person_ID              Int
+  Title                  String?
+  Patent_Number          String?
+  Start_Date             DateTime?
+  Place                  String?
+  Patent_Status_Ref      Int?
+  person_reference_table person_reference_table? @relation(fields: [Patent_Status_Ref], references: [Ref_Code])
+  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Patent_Status_Ref], name: "Patent_Status_idx")
+  @@index([Person_ID], name: "Person_ID_FK217")
+}
+
+model person_project_allocation {
+  Project_ID              Int       @id @default(autoincrement())
+  Person_ID               Int
+  Qualification_Level_Ref Int?
+  Batch_ID                String?
+  Reg_Num                 Int?
+  Title                   String?
+  Project_Domain          String?
+  Start_Date              DateTime?
+  End_Date                DateTime?
+  person                  person    @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Person_ID], name: "Person_ID_FK213")
+}
+
+model person_project_proposal {
+  Proposal_ID                                                                             Int                     @id @default(autoincrement())
+  Person_ID                                                                               Int
+  Title                                                                                   String?
+  Project_Type_Ref                                                                        Int?
+  PI_Name                                                                                 String?
+  COI1_Name                                                                               String?
+  COI2_Name                                                                               String?
+  Status_Ref                                                                              Int?
+  Fund_Agency                                                                             String?
+  TotalSanctionedAmount                                                                   Float?
+  Start_Date                                                                              DateTime?
+  End_Date                                                                                DateTime?
+  Dept                                                                                    String?
+  Co_Dept                                                                                 String?
+  Co_Institution                                                                          String?
+  Abstract                                                                                String?
+  person                                                                                  person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_project_proposal_Project_Type_RefToperson_reference_table person_reference_table? @relation("person_project_proposal_Project_Type_RefToperson_reference_table", fields: [Project_Type_Ref], references: [Ref_Code])
+  person_reference_table_person_project_proposal_Status_RefToperson_reference_table       person_reference_table? @relation("person_project_proposal_Status_RefToperson_reference_table", fields: [Status_Ref], references: [Ref_Code])
+
+  @@index([Person_ID], name: "Person_ID_FK212")
+  @@index([Status_Ref], name: "Status_Reference_ID_FK_idx")
+  @@index([Project_Type_Ref], name: "Type_Reference_ID_FK_idx")
+}
+
+model person_publication {
+  Publication_ID                                                                         Int                     @id @default(autoincrement())
+  Person_ID                                                                              Int
+  Publication_Type_Ref                                                                   Int?
+  Level_Ref                                                                              Int?
+  Paper_Title                                                                            String?
+  First_Author                                                                           String?
+  Second_Author                                                                          String?
+  Other_Authors                                                                          String?
+  Journal_Name                                                                           String?
+  Volume                                                                                 Int?
+  Issue                                                                                  Int?
+  DOI                                                                                    String?
+  Year_Of_Publish                                                                        Int?
+  Start_Page_No                                                                          Int?
+  End_Page_No                                                                            Int?
+  Publisher                                                                              String?
+  Impact_Factor                                                                          Float?
+  person_reference_table_person_publication_Level_RefToperson_reference_table            person_reference_table? @relation("person_publication_Level_RefToperson_reference_table", fields: [Level_Ref], references: [Ref_Code])
+  person                                                                                 person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_publication_Publication_Type_RefToperson_reference_table person_reference_table? @relation("person_publication_Publication_Type_RefToperson_reference_table", fields: [Publication_Type_Ref], references: [Ref_Code])
+
+  @@index([Level_Ref], name: "Level_Reference_ID_FK_idx")
+  @@index([Person_ID], name: "Person_ID_FK20")
+  @@index([Publication_Type_Ref], name: "Type_Reference_ID_FK1_idx")
+}
+
+model person_qualification {
+  Qualification_ID                                                                            Int                     @id @default(autoincrement())
+  Person_ID                                                                                   Int
+  Qualification_Level_Ref                                                                     Int?
+  Degree_Ref                                                                                  Int?
+  Branch_Ref                                                                                  Int?
+  Institution                                                                                 String?
+  University                                                                                  String?
+  Start_Date                                                                                  Int?
+  End_Date                                                                                    Int?
+  Class_Obtained_Ref                                                                          Int?
+  Thesis_Title                                                                                String?
+  Specialization                                                                              String?
+  Faculty_Research                                                                            String?
+  person_reference_table_person_qualification_Branch_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Branch_RefToperson_reference_table", fields: [Branch_Ref], references: [Ref_Code])
+  person_reference_table_person_qualification_Class_Obtained_RefToperson_reference_table      person_reference_table? @relation("person_qualification_Class_Obtained_RefToperson_reference_table", fields: [Class_Obtained_Ref], references: [Ref_Code])
+  person_reference_table_person_qualification_Degree_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Degree_RefToperson_reference_table", fields: [Degree_Ref], references: [Ref_Code])
+  person                                                                                      person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_qualification_Qualification_Level_RefToperson_reference_table person_reference_table? @relation("person_qualification_Qualification_Level_RefToperson_reference_table", fields: [Qualification_Level_Ref], references: [Ref_Code])
+
+  @@index([Branch_Ref], name: "Branch_Reference_ID_FK_idx")
+  @@index([Class_Obtained_Ref], name: "Class_Reference_ID_FK_idx")
+  @@index([Degree_Ref], name: "Degree_Reference_ID_FK_idx")
+  @@index([Person_ID], name: "Person_ID_FK1")
+  @@index([Qualification_Level_Ref], name: "Qualify_Level_Reference_ID_FK_idx")
+}
+
+model person_reference_table {
+  Reference_ID                                                                                   Int                       @id @default(autoincrement())
+  Ref_Code                                                                                       Int                       @unique
+  Category                                                                                       String?
+  Ref_Name                                                                                       String?
+  Description                                                                                    String?
+  person_person_Community_RefToperson_reference_table                                            person[]                  @relation("person_Community_RefToperson_reference_table")
+  person_person_Gender_RefToperson_reference_table                                               person[]                  @relation("person_Gender_RefToperson_reference_table")
+  person_person_Marital_Status_RefToperson_reference_table                                       person[]                  @relation("person_Marital_Status_RefToperson_reference_table")
+  person_person_Prefix_RefToperson_reference_table                                               person[]                  @relation("person_Prefix_RefToperson_reference_table")
+  person_academic_person_academic_Branch_RefToperson_reference_table                             person_academic[]         @relation("person_academic_Branch_RefToperson_reference_table")
+  person_academic_person_academic_Class_Type_RefToperson_reference_table                         person_academic[]         @relation("person_academic_Class_Type_RefToperson_reference_table")
+  person_academic_person_academic_Degree_RefToperson_reference_table                             person_academic[]         @relation("person_academic_Degree_RefToperson_reference_table")
+  person_events_attended_person_events_attended_Event_Type_RefToperson_reference_table           person_events_attended[]  @relation("person_events_attended_Event_Type_RefToperson_reference_table")
+  person_events_attended_person_events_attended_Level_RefToperson_reference_table                person_events_attended[]  @relation("person_events_attended_Level_RefToperson_reference_table")
+  person_events_attended_person_events_attended_Participation_Status_RefToperson_reference_table person_events_attended[]  @relation("person_events_attended_Participation_Status_RefToperson_reference_table")
+  person_experience_person_experience_Designation_RefToperson_reference_table                    person_experience[]       @relation("person_experience_Designation_RefToperson_reference_table")
+  person_experience_person_experience_Emp_Category_RefToperson_reference_table                   person_experience[]       @relation("person_experience_Emp_Category_RefToperson_reference_table")
+  person_experience_person_experience_Work_Nature_RefToperson_reference_table                    person_experience[]       @relation("person_experience_Work_Nature_RefToperson_reference_table")
+  person_guestlecture                                                                            person_guestlecture[]
+  person_membership                                                                              person_membership[]
+  person_patents                                                                                 person_patents[]
+  person_project_proposal_person_project_proposal_Project_Type_RefToperson_reference_table       person_project_proposal[] @relation("person_project_proposal_Project_Type_RefToperson_reference_table")
+  person_project_proposal_person_project_proposal_Status_RefToperson_reference_table             person_project_proposal[] @relation("person_project_proposal_Status_RefToperson_reference_table")
+  person_publication_person_publication_Level_RefToperson_reference_table                        person_publication[]      @relation("person_publication_Level_RefToperson_reference_table")
+  person_publication_person_publication_Publication_Type_RefToperson_reference_table             person_publication[]      @relation("person_publication_Publication_Type_RefToperson_reference_table")
+  person_qualification_person_qualification_Branch_RefToperson_reference_table                   person_qualification[]    @relation("person_qualification_Branch_RefToperson_reference_table")
+  person_qualification_person_qualification_Class_Obtained_RefToperson_reference_table           person_qualification[]    @relation("person_qualification_Class_Obtained_RefToperson_reference_table")
+  person_qualification_person_qualification_Degree_RefToperson_reference_table                   person_qualification[]    @relation("person_qualification_Degree_RefToperson_reference_table")
+  person_qualification_person_qualification_Qualification_Level_RefToperson_reference_table      person_qualification[]    @relation("person_qualification_Qualification_Level_RefToperson_reference_table")
+  person_responsibility                                                                          person_responsibility[]
+  person_scholardetails_person_reference_tableToperson_scholardetails_Fellowship_Received_Ref    person_scholardetails[]   @relation("person_reference_tableToperson_scholardetails_Fellowship_Received_Ref")
+  person_scholardetails_person_reference_tableToperson_scholardetails_Guide_Type_Ref             person_scholardetails[]   @relation("person_reference_tableToperson_scholardetails_Guide_Type_Ref")
+  person_scholardetails_person_reference_tableToperson_scholardetails_Registration_Mode_Ref      person_scholardetails[]   @relation("person_reference_tableToperson_scholardetails_Registration_Mode_Ref")
+  person_scholardetails_person_reference_tableToperson_scholardetails_Status_Ref                 person_scholardetails[]   @relation("person_reference_tableToperson_scholardetails_Status_Ref")
+  person_supervision_person_reference_tableToperson_supervision_Degree_Ref                       person_supervision[]      @relation("person_reference_tableToperson_supervision_Degree_Ref")
+  person_supervision_person_reference_tableToperson_supervision_Guide_Type_Ref                   person_supervision[]      @relation("person_reference_tableToperson_supervision_Guide_Type_Ref")
+  person_supervision_person_reference_tableToperson_supervision_Status_Ref                       person_supervision[]      @relation("person_reference_tableToperson_supervision_Status_Ref")
+}
+
+model person_responsibility {
+  Responsibility_ID      Int                     @id @default(autoincrement())
+  Person_ID              Int
+  Responsibility_Ref     Int?
+  Description            String?
+  Start_Date             DateTime?
+  End_Date               DateTime?
+  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table person_reference_table? @relation(fields: [Responsibility_Ref], references: [Ref_Code])
+
+  @@index([Person_ID], name: "Person_ID_FK211")
+  @@index([Responsibility_Ref], name: "Responsibility_Type_Reference_FK_idx")
+}
+
+model person_scholardetails {
+  Scholar_ID                                                                                   Int                     @id @default(autoincrement())
+  Person_ID                                                                                    Int
+  Reg_No                                                                                       String?
+  Scholar_Name                                                                                 String?
+  Title                                                                                        String?
+  Status_Ref                                                                                   Int?
+  Guide_Type_Ref                                                                               Int?
+  Fellowship_Received_Ref                                                                      Int?
+  Fellowship_Agency                                                                            String?
+  Fellowship_Amount                                                                            Float?
+  Year_Of_Registration                                                                         DateTime?
+  Research_Area                                                                                String?
+  Registration_Mode_Ref                                                                        Int?
+  Fellowship_Name                                                                              String?
+  Fellowship_Year                                                                              DateTime?
+  Year_Of_Completion                                                                           DateTime?
+  person_reference_table_person_reference_tableToperson_scholardetails_Fellowship_Received_Ref person_reference_table? @relation("person_reference_tableToperson_scholardetails_Fellowship_Received_Ref", fields: [Fellowship_Received_Ref], references: [Ref_Code])
+  person_reference_table_person_reference_tableToperson_scholardetails_Guide_Type_Ref          person_reference_table? @relation("person_reference_tableToperson_scholardetails_Guide_Type_Ref", fields: [Guide_Type_Ref], references: [Ref_Code])
+  person                                                                                       person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_reference_tableToperson_scholardetails_Registration_Mode_Ref   person_reference_table? @relation("person_reference_tableToperson_scholardetails_Registration_Mode_Ref", fields: [Registration_Mode_Ref], references: [Ref_Code])
+  person_reference_table_person_reference_tableToperson_scholardetails_Status_Ref              person_reference_table? @relation("person_reference_tableToperson_scholardetails_Status_Ref", fields: [Status_Ref], references: [Ref_Code])
+
+  @@index([Fellowship_Received_Ref], name: "Fellowship_Received_Ref_FK_idx")
+  @@index([Guide_Type_Ref], name: "Guide_Type_Reference_ID_FK_idx")
+  @@index([Person_ID], name: "Person_ID_FK214")
+  @@index([Registration_Mode_Ref], name: "Registration_Mode_Ref_FK_idx")
+  @@index([Status_Ref], name: "Status_Reference_ID_FK_idx")
+}
+
+model person_specialization {
+  Specialization_ID Int     @id @default(autoincrement())
+  Person_ID         Int
+  AOS1              String?
+  AOS2              String?
+  AOS3              String?
+  AOS4              String?
+  AOS5              String?
+  person            person  @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Person_ID], name: "Person_ID_FK213")
+}
+
+model person_supervision {
+  Supervision_ID                                                                   Int                     @id @default(autoincrement())
+  Person_ID                                                                        Int
+  Degree_Ref                                                                       Int?
+  Guide_Type_Ref                                                                   Int?
+  Reg_No                                                                           Int?
+  Start_Year                                                                       Int?
+  End_Year                                                                         Int?
+  Status_Ref                                                                       Int?
+  person_reference_table_person_reference_tableToperson_supervision_Degree_Ref     person_reference_table? @relation("person_reference_tableToperson_supervision_Degree_Ref", fields: [Degree_Ref], references: [Ref_Code])
+  person_reference_table_person_reference_tableToperson_supervision_Guide_Type_Ref person_reference_table? @relation("person_reference_tableToperson_supervision_Guide_Type_Ref", fields: [Guide_Type_Ref], references: [Ref_Code])
+  person                                                                           person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_reference_tableToperson_supervision_Status_Ref     person_reference_table? @relation("person_reference_tableToperson_supervision_Status_Ref", fields: [Status_Ref], references: [Ref_Code])
+
+  @@index([Degree_Ref], name: "Degree_Reference_ID_FK1_idx")
+  @@index([Guide_Type_Ref], name: "Guide_Type_Reference_ID_FK2_idx")
+  @@index([Person_ID], name: "Person_ID_FK213")
+  @@index([Status_Ref], name: "Status_Reference_ID_FK2_idx")
+}
+
+model person_travel_history {
+  Travel_ID    Int       @id @default(autoincrement())
+  Person_ID    Int
+  Title        String?
+  Start_Date   DateTime?
+  End_Date     DateTime?
+  Organization String?
+  Place        String?
+  Agency       String?
+  Purpose      String?
+  person       person    @relation(fields: [Person_ID], references: [Person_ID])
+
+  @@index([Person_ID], name: "Person_ID_FK216")
 }
 
 model staff_list {
@@ -794,7 +785,7 @@ model student_list {
 }
 
 model subj_allot {
-  sallot_id     Int     @default(autoincrement()) @id
+  sallot_id     Int     @id @default(autoincrement())
   staff_id      Int
   course_code   String
   group_ref     Int
@@ -806,4 +797,13 @@ model subj_allot {
   @@index([group_ref], name: "group_fk_idx")
   @@index([session_ref], name: "session_fk_idx")
   @@index([staff_id], name: "staff_id_fk_idx")
+}
+
+model user_info {
+  user_ID     Int       @id @default(autoincrement())
+  username    Int
+  user_role   String?
+  password    String?
+  status      String?
+  create_time DateTime? @default(now())
 }

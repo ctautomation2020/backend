@@ -22,18 +22,9 @@ module.exports = {
     Mutation: {
         async createPersonAward(parent, {data}, {prisma,auth,req}, info) {
             const Person_ID = auth(req)
-            const { createReadStream, filename } = await data.File;
       
-            await new Promise(res =>
-                createReadStream()
-                .pipe(fs.createWriteStream(path.join(__dirname, "../awards", filename)))
-                .on("close", res)
-            );
-      
-            //files.push(filename);
-            console.log(createReadStream)
             const {File, ...no_refdata} = data
-            return await prisma.person_awards.create({
+            const award =  await prisma.person_awards.create({
                 data:{
                     person:{
                         connect:{
@@ -43,7 +34,24 @@ module.exports = {
                     ...no_refdata
                 }
             })
-            
+
+            const { createReadStream, filename } = await data.File;
+
+            if (!fs.existsSync(path.join(__dirname, "../../public", Person_ID.toString()))){
+                fs.mkdirSync(path.join(__dirname, "../../public", Person_ID.toString()));
+            }
+
+            const ext = path.extname(filename)
+
+            const name = "Award" + award.Award_ID + ext
+
+            await new Promise(res =>
+                createReadStream()
+                .pipe(fs.createWriteStream(path.join(__dirname, "../../public/", Person_ID.toString(), name)))
+                .on("close", res)
+            );
+
+            return award;
         },
 
         async updatePersonAward(parent, {data}, {prisma,auth,req}, info) {
@@ -71,6 +79,7 @@ module.exports = {
         uploadPersonAward: async (_, { file }) => {
             const { createReadStream, filename } = await file;
       
+            
             await new Promise(res =>
                 createReadStream()
                 .pipe(fs.createWriteStream(path.join(__dirname, "../awards", filename)))

@@ -1,4 +1,6 @@
 type Query {
+  assesment(data: assesmentQueryInput!): [course_assessment]
+  courseAssessment(data: courseQueryInput!): [course_assessment]
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]
   courseReference(data: Course_Reference_Input): [Course_Reference_Table]
@@ -18,34 +20,8 @@ type Query {
   courseDetails(data: courseDetailsQueryInput!): subj_allot
 }
 
-type course_list {
-  course_code: String!
-  stream: Int!
-  regulation: Int!
-  semester: Int!
-  title: String!
-  credit: Int!
-  objectives: String
-}
-
-input courseQueryInput {
-  course_code: String!
-}
-
-type Course_Reference_Table {
-  reference_id: Int!
-  ref_code: Int!
-  category: String
-  ref_name: String
-  description: String
-}
-
-input Course_Reference_Input {
-  reference_id: Int
-  category: String
-}
-
 type Mutation {
+  createAssesment(data: custom_type!): [course_assessment]
   createUser(data: createCredentialsInput!): credentialPayload
   updateUser(data: updateCredentialsInput!): credentialPayload
   createPerson(data: createPersonInput!): Person!
@@ -63,6 +39,81 @@ type Mutation {
   createPersonQualification(data: Person_QualificationInput!): Person_Qualification!
   updatePersonQualification(data: Person_QualificationUpdateInput!): Person_Qualification!
   deletePersonQualification(data: Qualification_InputQuery!): Person_Qualification
+}
+
+type course_assessment {
+  cassess_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assess_num: Int!
+  question_num: String!
+  question_stmt: String
+  question_img: String
+  blooms_level: Int!
+  co_num: Int!
+  marks: Int!
+  entry_date: String!
+  section: String!
+}
+
+input custom_type {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assess_num: Int!
+  section: [section]
+}
+
+input section {
+  name: String
+  section_mark: Int
+  questions: [questions]
+}
+
+input questions {
+  question_num: String!
+  question_stmt: String
+  question_img: String
+  blooms_level: Int!
+  co_num: Int!
+  mark: Int!
+}
+
+input assesmentQueryInput {
+  cassess_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+}
+
+input courseQueryInput {
+  course_code: String!
+  session_ref: Int!
+  group_ref: Int!
+}
+
+type course_list {
+  course_code: String!
+  stream: Int!
+  regulation: Int!
+  semester: Int!
+  title: String!
+  credit: Int!
+  objectives: String
+}
+
+type Course_Reference_Table {
+  reference_id: Int!
+  ref_code: Int!
+  category: String
+  ref_name: String
+  description: String
+}
+
+input Course_Reference_Input {
+  reference_id: Int
+  category: String
 }
 
 type credentials {
