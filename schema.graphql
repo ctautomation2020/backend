@@ -1,6 +1,5 @@
 type Query {
   assesment(data: assesmentQueryInput!): [course_assessment]
-  courseAssessment(data: courseQueryInput!): [course_assessment]
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]
   courseReference(data: Course_Reference_Input): [Course_Reference_Table]
@@ -62,7 +61,7 @@ input custom_type {
   group_ref: Int!
   session_ref: Int!
   assess_num: Int!
-  entry_date: String
+  entry_date: String!
   section: [section]
 }
 
@@ -82,16 +81,10 @@ input questions {
 }
 
 input assesmentQueryInput {
-  cassess_id: Int!
   course_code: String!
   group_ref: Int!
   session_ref: Int!
-}
-
-input courseQueryInput {
-  course_code: String!
-  session_ref: Int!
-  group_ref: Int!
+  assess_num: Int!
 }
 
 type course_list {
@@ -102,6 +95,10 @@ type course_list {
   title: String!
   credit: Int!
   objectives: String
+}
+
+input courseQueryInput {
+  course_code: String!
 }
 
 type Course_Reference_Table {

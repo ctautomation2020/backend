@@ -1,6 +1,5 @@
 type Query {
     assesment(data: assesmentQueryInput!): [course_assessment]
-    courseAssessment(data: courseQueryInput!): [course_assessment]
 }
 
 type Mutation {
@@ -49,15 +48,10 @@ input questions {
 
 }
 
-input assesmentQueryInput {
-    cassess_id: Int!  
+input assesmentQueryInput { 
     course_code: String!
     group_ref: Int!
     session_ref: Int!
+    assess_num: Int!
 }
 
-input courseQueryInput {
-    course_code: String!
-    session_ref: Int!
-    group_ref: Int!
-}
