@@ -1,5 +1,6 @@
 type Query {
-  assesment(data: assesmentQueryInput!): [course_assessment]
+  session_assessments(data: sessionQueryInput!): [Int]
+  assessment(data: assesmentQueryInput!): [course_assessment]
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]
   courseReference(data: Course_Reference_Input): [Course_Reference_Table]
@@ -20,7 +21,7 @@ type Query {
 }
 
 type Mutation {
-  createAssesment(data: custom_type!): [course_assessment]
+  createAssessment(data: custom_type!): [course_assessment]
   createUser(data: createCredentialsInput!): credentialPayload
   updateUser(data: updateCredentialsInput!): credentialPayload
   createPerson(data: createPersonInput!): Person!
@@ -85,6 +86,12 @@ input assesmentQueryInput {
   group_ref: Int!
   session_ref: Int!
   assess_num: Int!
+}
+
+input sessionQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
 }
 
 type course_list {

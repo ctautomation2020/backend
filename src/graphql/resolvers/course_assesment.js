@@ -1,17 +1,34 @@
 module.exports = {
     Query: {
-        async assesment(parent, {data}, {prisma}, info){
+        async assessment(parent, {data}, {prisma}, info){
             return await prisma.course_assessment.findMany({
                 where:{
                     ...data
                 }
             })
-            
+        },
+        async session_assessments(parent, {data}, {prisma}, info){
+            const a =  await prisma.course_assessment.findMany({
+                where:{
+                    ...data
+                },
+                select: {
+                    assess_num: true
+                },
+                distinct: ["assess_num"]
+            })
+            const assess = []
+            a.forEach((a)=>{
+                assess.push(a.assess_num)
+            })
+
+            return assess
         }
+
     },
 
     Mutation: {
-        async createAssesment(parent, {data}, {prisma}, info){
+        async createAssessment(parent, {data}, {prisma}, info){
             //console.log(JSON.stringify(data.section[0].questions[0],null,2))
             const {course_code,group_ref,session_ref,assess_num,entry_date, ...remData} = data
             remData.section.forEach(async(sec)=>{

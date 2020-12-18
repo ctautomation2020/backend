@@ -1,9 +1,10 @@
 type Query {
-    assesment(data: assesmentQueryInput!): [course_assessment]
+    session_assessments(data: sessionQueryInput!): [Int]
+    assessment(data: assesmentQueryInput!): [course_assessment]
 }
 
 type Mutation {
-    createAssesment(data: custom_type!): [course_assessment]
+    createAssessment(data: custom_type!): [course_assessment]
 }
 
 type course_assessment {
@@ -55,3 +56,8 @@ input assesmentQueryInput {
     assess_num: Int!
 }
 
+input sessionQueryInput { 
+    course_code: String!
+    group_ref: Int!
+    session_ref: Int!
+}
