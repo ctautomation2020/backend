@@ -154,6 +154,7 @@ input credentialQueryInput {
 
 type loginPayload {
   token: String!
+  Person_ID: Int!
 }
 
 type Person {

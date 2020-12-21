@@ -17,7 +17,8 @@ module.exports= {
             const token = await jwt.sign({Person_ID:user.Person_ID},"ct_admin")
             //console.log(token)
             return ({
-                token
+                token,
+                Person_ID:user.Person_ID
             })
         }
 
