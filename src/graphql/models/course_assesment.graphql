@@ -36,6 +36,8 @@ input custom_type{
 input section {
     name: String
     section_mark: Int
+    q_num: Int
+    type: String
     questions: [questions]
 }
 
