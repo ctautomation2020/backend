@@ -4,6 +4,9 @@ module.exports = {
             return await prisma.course_assesseval.findMany({
                 where:{
                     ...data
+                },
+                orderBy:{
+                    question_num:'asc'
                 }
             })
         }

@@ -1,0 +1,18 @@
+type Query {
+    registered_students(data: registered_studentsQueryInput!): [course_registered_students]
+}
+
+
+type course_registered_students {
+  cregst_id: Int!
+  course_code: String!
+  reg_no: Int!
+  group_ref: Int!
+  session_ref: Int!
+}
+
+input registered_studentsQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+}

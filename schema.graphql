@@ -5,6 +5,7 @@ type Query {
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]
   courseReference(data: Course_Reference_Input): [Course_Reference_Table]
+  registered_students(data: registered_studentsQueryInput!): [course_registered_students]
   login(data: credentialQueryInput!): loginPayload!
   allPersons: [Person!]!
   person: Person!
@@ -157,6 +158,20 @@ type Course_Reference_Table {
 input Course_Reference_Input {
   reference_id: Int
   category: String
+}
+
+type course_registered_students {
+  cregst_id: Int!
+  course_code: String!
+  reg_no: Int!
+  group_ref: Int!
+  session_ref: Int!
+}
+
+input registered_studentsQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
 }
 
 type credentials {
