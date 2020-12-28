@@ -59,10 +59,11 @@ module.exports = {
                         group_ref,
                         session_ref,
                         assess_num,
-                        reg_no
+                        reg_no,
+                        question_num: ques.question_num
                     },
                     data:{
-                        ...ques
+                        mark:ques.mark
                     }
                 })
             })
