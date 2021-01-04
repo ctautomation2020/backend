@@ -160,12 +160,18 @@ input Course_Reference_Input {
   category: String
 }
 
+type student_list {
+  reg_no: Int
+  name: String
+}
+
 type course_registered_students {
   cregst_id: Int!
   course_code: String!
   reg_no: Int!
   group_ref: Int!
   session_ref: Int!
+  student: student_list
 }
 
 input registered_studentsQueryInput {

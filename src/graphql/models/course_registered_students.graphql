@@ -2,6 +2,10 @@ type Query {
     registered_students(data: registered_studentsQueryInput!): [course_registered_students]
 }
 
+type student_list {
+  reg_no: Int
+  name: String
+}
 
 type course_registered_students {
   cregst_id: Int!
@@ -9,6 +13,7 @@ type course_registered_students {
   reg_no: Int!
   group_ref: Int!
   session_ref: Int!
+  student: student_list
 }
 
 input registered_studentsQueryInput {
