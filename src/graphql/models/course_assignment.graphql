@@ -1,4 +1,5 @@
 type Query {
+  session_assignments(data: sessionQueryInput!): [Int]
   assignment(data: assignmentQueryInput!): [course_assignment]
 }
 

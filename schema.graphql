@@ -2,6 +2,7 @@ type Query {
   session_assessments(data: sessionQueryInput!): [Int]
   assessment(data: assesmentQueryInput!): [course_assessment]
   assess_evaluation(data: assess_evaluationQueryInput!): [course_assesseval]
+  session_assignments(data: sessionQueryInput!): [Int]
   assignment(data: assignmentQueryInput!): [course_assignment]
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]

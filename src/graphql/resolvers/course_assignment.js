@@ -10,6 +10,24 @@ module.exports = {
                 }
             })
         },
+        async session_assignments(parent, {data}, {prisma}, info){
+            const a =  await prisma.course_assignment.findMany({
+                where:{
+                    ...data
+                },
+                select: {
+                    assign_num: true
+                },
+                distinct: ["assign_num"]
+            })
+            const assign= []
+            a.forEach((a)=>{
+                assign.push(a.assign_num)
+                
+            })
+
+            return assign
+        }
     },
 
     Mutation: {
