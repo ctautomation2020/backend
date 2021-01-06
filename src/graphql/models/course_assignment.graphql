@@ -1,0 +1,50 @@
+type Query {
+  assignment(data: assignmentQueryInput!): [course_assignment]
+}
+
+type Mutation {
+    createAssignment(data: custom_assignment_type!): [course_assignment]
+}
+
+
+type course_assignment {
+  cassign_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  entry_date: String!
+  assign_num: Int!
+  question_num: String!
+  question_stmt: String
+  question_img: String
+  co_num: Int!
+  marks: Int!
+  deadline: String!
+}
+
+
+input custom_assignment_type{
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  entry_date: String!
+  assign_num: Int!
+  deadline: String!
+  questions: [assign_questions]
+}
+
+input assign_questions {
+  question_num: String!
+  question_stmt: String
+  question_img: String
+  co_num: Int!
+  marks: Int!
+
+}
+
+input assignmentQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assign_num: Int!
+}

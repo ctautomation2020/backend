@@ -103,8 +103,7 @@ model course_assignment {
   entry_date                                                                   DateTime
   assign_num                                                                   Int
   question_num                                                                 String
-  // This type is currently not supported.
-  // question_stmt                                                             blob?
+  question_stmt                                                                String?
   question_img                                                                 String?
   co_num                                                                       Int
   marks                                                                        Int
