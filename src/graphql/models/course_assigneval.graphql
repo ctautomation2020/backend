@@ -1,0 +1,42 @@
+type Query {
+    assign_evaluation(data: assign_evaluationQueryInput!): [course_assigneval]
+}
+
+type Mutation {
+    createAssign_evaluation(data: assign_evaluationInput!): [course_assigneval]
+    updateAssign_evaluation(data: assign_evaluationInput!): [course_assigneval]
+    
+}
+
+type course_assigneval {
+  cassigneval_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assign_num: Int!
+  question_num: Int!
+  reg_no: Int!
+  mark: Float!
+}
+
+input assign_evaluationQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assign_num: Int!
+  reg_no: Int!
+}
+
+input assign_evaluationInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assign_num: Int!
+  reg_no: Int!
+  questions: [assign_question]
+}
+
+input assign_question {
+  question_num: Int!
+  mark: Float!
+}

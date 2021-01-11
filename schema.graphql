@@ -2,6 +2,7 @@ type Query {
   session_assessments(data: sessionQueryInput!): [Int]
   assessment(data: assesmentQueryInput!): [course_assessment]
   assess_evaluation(data: assess_evaluationQueryInput!): [course_assesseval]
+  assign_evaluation(data: assign_evaluationQueryInput!): [course_assigneval]
   session_assignments(data: sessionQueryInput!): [Int]
   assignment(data: assignmentQueryInput!): [course_assignment]
   course(data: courseQueryInput!): course_list
@@ -28,6 +29,8 @@ type Mutation {
   createAssessment(data: custom_type!): [course_assessment]
   createAssess_evaluation(data: assess_evaluationInput!): [course_assesseval]
   updateAssess_evaluation(data: assess_evaluationInput!): [course_assesseval]
+  createAssign_evaluation(data: assign_evaluationInput!): [course_assigneval]
+  updateAssign_evaluation(data: assign_evaluationInput!): [course_assigneval]
   createAssignment(data: custom_assignment_type!): [course_assignment]
   createUser(data: createCredentialsInput!): credentialPayload
   updateUser(data: updateCredentialsInput!): credentialPayload
@@ -133,6 +136,39 @@ input assess_evaluationInput {
 
 input question {
   question_num: String!
+  mark: Float!
+}
+
+type course_assigneval {
+  cassigneval_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assign_num: Int!
+  question_num: Int!
+  reg_no: Int!
+  mark: Float!
+}
+
+input assign_evaluationQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assign_num: Int!
+  reg_no: Int!
+}
+
+input assign_evaluationInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  assign_num: Int!
+  reg_no: Int!
+  questions: [assign_question]
+}
+
+input assign_question {
+  question_num: Int!
   mark: Float!
 }
 
