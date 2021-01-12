@@ -1,0 +1,42 @@
+type course_attendance {
+  cattend_id: Int!            
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  reg_no: Int!
+  date: String!
+  period: Int!
+  presence: String!
+}
+
+type Query {
+    attendance(data: course_attendanceQueryInput!) : course_attendance!
+
+}
+
+type Mutation {
+    create_attendance(data: create_attendanceInput!): Boolean!
+    update_attendance(data: create_attendanceInput!): Boolean!
+}
+
+input course_attendanceQueryInput {
+    course_code: String!
+    group_ref: Int!
+    session_ref: Int!
+    date: String
+    period: Int
+}
+
+input create_attendanceInput {
+    course_code: String!
+    group_ref: Int!
+    session_ref: Int!
+    date: String!
+    period: Int!
+    students: [student_attendance]!
+}
+
+input student_attendance {
+    reg_no: Int!
+    presence: String!
+}

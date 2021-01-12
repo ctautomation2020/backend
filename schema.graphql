@@ -5,6 +5,7 @@ type Query {
   assign_evaluation(data: assign_evaluationQueryInput!): [course_assigneval]
   session_assignments(data: sessionQueryInput!): [Int]
   assignment(data: assignmentQueryInput!): [course_assignment]
+  attendance(data: course_attendanceQueryInput!): course_attendance!
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]
   courseReference(data: Course_Reference_Input): [Course_Reference_Table]
@@ -32,6 +33,8 @@ type Mutation {
   createAssign_evaluation(data: assign_evaluationInput!): [course_assigneval]
   updateAssign_evaluation(data: assign_evaluationInput!): [course_assigneval]
   createAssignment(data: custom_assignment_type!): [course_assignment]
+  create_attendance(data: create_attendanceInput!): Boolean!
+  update_attendance(data: create_attendanceInput!): Boolean!
   createUser(data: createCredentialsInput!): credentialPayload
   updateUser(data: updateCredentialsInput!): credentialPayload
   createPerson(data: createPersonInput!): Person!
@@ -210,6 +213,39 @@ input assignmentQueryInput {
   group_ref: Int!
   session_ref: Int!
   assign_num: Int!
+}
+
+type course_attendance {
+  cattend_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  reg_no: Int!
+  date: String!
+  period: Int!
+  presence: String!
+}
+
+input course_attendanceQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  date: String
+  period: Int
+}
+
+input create_attendanceInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  date: String!
+  period: Int!
+  students: [student_attendance]!
+}
+
+input student_attendance {
+  reg_no: Int!
+  presence: String!
 }
 
 type course_list {
