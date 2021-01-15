@@ -5,7 +5,7 @@ type Query {
   assign_evaluation(data: assign_evaluationQueryInput!): [course_assigneval]
   session_assignments(data: sessionQueryInput!): [Int]
   assignment(data: assignmentQueryInput!): [course_assignment]
-  attendance(data: course_attendanceQueryInput!): course_attendance!
+  attendance(data: course_attendanceQueryInput!): [course_attendance]!
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]
   courseReference(data: Course_Reference_Input): [Course_Reference_Table]
@@ -220,7 +220,7 @@ type course_attendance {
   course_code: String!
   group_ref: Int!
   session_ref: Int!
-  reg_no: Int!
+  student: student_list!
   date: String!
   period: Int!
   presence: String!

@@ -3,14 +3,14 @@ type course_attendance {
   course_code: String!
   group_ref: Int!
   session_ref: Int!
-  reg_no: Int!
+  student: student_list!
   date: String!
   period: Int!
   presence: String!
 }
 
 type Query {
-    attendance(data: course_attendanceQueryInput!) : course_attendance!
+    attendance(data: course_attendanceQueryInput!) : [course_attendance]!
 
 }
 

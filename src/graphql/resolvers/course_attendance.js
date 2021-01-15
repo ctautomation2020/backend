@@ -1,12 +1,12 @@
 module.exports={
     Query:{
         async attendance(parent, {data}, {prisma}, info) {
+            console.log(data)
+
+
             return await prisma.course_attendance.findMany({
                 where:{
                     ...data
-                },
-                orderBy:{
-                    reg_no:"asc"
                 }
             })
         }
@@ -55,7 +55,7 @@ module.exports={
             const {course_code,group_ref,session_ref,period,date, ...remData} = data
             
             remData.students.forEach(async(stud)=>{
-                console.log(stud)
+                
 
                     let a = await prisma.course_attendance.updateMany({
                         where: {
@@ -73,6 +73,15 @@ module.exports={
                     console.log(a)
                 })
             return true;
+        }
+    },
+    course_attendance: {
+        async student(parent, {data}, {prisma}, info) {
+            return await prisma.student_list.findOne({
+                where:{
+                    reg_no: parent.reg_no
+                }
+            })
         }
     }
 }
