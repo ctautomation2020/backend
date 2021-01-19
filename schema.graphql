@@ -24,6 +24,7 @@ type Query {
   personReference(data: Person_Reference_Input): [Person_Reference_Table]
   staffCourses(data: staffCoursesQueryInput!): [subj_allot]
   courseDetails(data: courseDetailsQueryInput!): subj_allot
+  auth_login(data: user_infoQueryInput!): loginPayload!
 }
 
 type Mutation {
@@ -52,6 +53,8 @@ type Mutation {
   createPersonQualification(data: Person_QualificationInput!): Person_Qualification!
   updatePersonQualification(data: Person_QualificationUpdateInput!): Person_Qualification!
   deletePersonQualification(data: Qualification_InputQuery!): Person_Qualification
+  auth_createUser(data: createUser_infoInput!): user_infoPayload
+  auth_updateUser(data: updateUser_infoInput!): user_infoPayload
 }
 
 type course_assessment {
@@ -660,6 +663,45 @@ input staffCoursesQueryInput {
 
 input courseDetailsQueryInput {
   sallot_id: Int!
+}
+
+type user_info {
+  user_ID: Int!
+  Person_ID: Int!
+  username: Int!
+  user_role: Int
+  password: String
+  status: String
+  create_time: String
+}
+
+input createUser_infoInput {
+  Person_ID: Int!
+  username: String!
+  password: String!
+  user_role: Int
+  status: String
+}
+
+type user_infoPayload {
+  user_ID: Int
+  Person_ID: Int!
+  username: String!
+  user_role: Int
+  status: String
+}
+
+input updateUser_infoInput {
+  Person_ID: Int!
+  username: String
+  password: String
+  user_role: Int
+  status: String
+}
+
+input user_infoQueryInput {
+  username: String!
+  password: String!
 }
 
 schema {

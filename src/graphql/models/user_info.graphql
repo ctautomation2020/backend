@@ -1,0 +1,52 @@
+type Query{
+    auth_login(data:user_infoQueryInput!): loginPayload!
+}
+
+type Mutation{
+    auth_createUser(data:createUser_infoInput!): user_infoPayload
+    auth_updateUser(data:updateUser_infoInput!): user_infoPayload
+}
+
+type user_info {
+  user_ID: Int!
+  Person_ID: Int!     
+  username: Int!
+  user_role: Int
+  password: String
+  status: String
+  create_time: String
+}
+
+input createUser_infoInput{
+  Person_ID: Int!
+  username: String! 
+  password: String!
+  user_role: Int
+  status: String
+}
+
+type user_infoPayload{
+  user_ID: Int 
+  Person_ID: Int!
+  username: String!
+  user_role: Int
+  status: String
+}
+
+input updateUser_infoInput{
+  Person_ID: Int!
+  username: String 
+  password: String
+  user_role: Int
+  status: String
+}
+
+input user_infoQueryInput{
+  username: String!
+  password: String!
+}
+
+type loginPayload{
+  token: String!
+  Person_ID: Int!
+}

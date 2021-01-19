@@ -371,6 +371,7 @@ model person {
   person_specialization                                                    person_specialization[]
   person_supervision                                                       person_supervision[]
   person_travel_history                                                    person_travel_history[]
+  user_info                                                                user_info?
 
   @@index([Community_Ref], name: "Community_Reference_ID_FK_idx")
   @@index([Gender_Ref], name: "Gender_Reference_ID_FK_idx")
@@ -800,9 +801,11 @@ model subj_allot {
 
 model user_info {
   user_ID     Int       @id @default(autoincrement())
-  username    Int
-  user_role   String?
+  Person_ID   Int       @unique
+  username    String    @unique
+  user_role   Int?
   password    String?
   status      String?
   create_time DateTime? @default(now())
+  person      person    @relation(fields: [Person_ID], references: [Person_ID])
 }

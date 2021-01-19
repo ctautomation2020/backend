@@ -1,6 +1,6 @@
 const jwt=require('jsonwebtoken')
 
-const getPersonID=(req)=>{
+const getPersonID=(req,role)=>{
     const header = req.headers.authorization
 
     if(!header){
@@ -9,6 +9,10 @@ const getPersonID=(req)=>{
 
     const token = header.replace('Bearer ','')
     const decoded = jwt.verify(token,"ct_admin")
+
+    if(decoded.user_role < role){
+        throw new Error("unauthorized privilege")
+    }
 
     return decoded.Person_ID
 }
