@@ -3,7 +3,7 @@
 ## MYSQL DB
   use "docker-compose up" if mysql is not installed in your system.
   
-# 19/1/2020
+# 19/1/2021
 ## Role-based Authentication
 
 1. login query is changed into auth_login. It returns the same jwt token but with the user_role encoded into it.
