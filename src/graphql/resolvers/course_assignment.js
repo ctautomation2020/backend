@@ -1,14 +1,19 @@
 module.exports = {
     Query: {
         async assignment(parent, {data}, {prisma}, info){
-            return await prisma.course_assignment.findMany({
-                where:{
-                    ...data
-                },
-                orderBy:{
-                    question_num:'asc'
-                }
-            })
+            // return await prisma.course_assignment.findMany({
+            //     where:{
+            //         ...data
+            //     },
+            //     orderBy:{
+            //         question_num:'asc'
+            //     }
+            // })
+            const result = await prisma.$queryRaw`SELECT * FROM course_assignment
+            WHERE course_code=${data.course_code} AND session_ref=${data.session_ref} AND group_ref=${data.group_ref} AND assign_num=${data.assign_num}
+            ORDER BY LENGTH(question_num), question_num`
+
+            return result
         },
         async session_assignments(parent, {data}, {prisma}, info){
             const a =  await prisma.course_assignment.findMany({
