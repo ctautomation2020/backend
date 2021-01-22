@@ -1,0 +1,51 @@
+type course_lessonplan {
+  clp_id: Int!             
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  actual_date: String!
+  period: Int!
+  course_ctopic_id: Int!
+  references: String
+  course_topic: course_topic
+}
+
+type Query {
+    course_lessonplan(data: course_lessonplanQueryInput!): [course_lessonplan]
+}
+
+type Mutation {
+    create_course_lessonplan(data: create_course_lessonplanInput!): course_lessonplan
+    update_course_lessonplan(data: update_course_lessonplanInput!): course_lessonplan
+    delete_course_lessonplan(data: delete_course_lessonplanInput!): course_lessonplan
+}
+
+input course_lessonplanQueryInput{
+    course_code: String!
+    group_ref: Int!
+    session_ref: Int!
+
+}
+
+input create_course_lessonplanInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  actual_date: String!
+  period: Int!
+  course_ctopic_id: Int!
+  references: String
+}
+
+input update_course_lessonplanInput {
+  clp_id: Int!
+  actual_date: String
+  period: Int
+  course_ctopic_id: Int
+  references: String
+}
+
+input delete_course_lessonplanInput {
+  clp_id: Int! 
+ 
+}

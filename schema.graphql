@@ -1,4 +1,27 @@
+type course_artimat {
+  cartimat_id: Int!
+  course_code: String!
+  conum: Int!
+  costmt: String!
+  po1: Int
+  po2: Int
+  po3: Int
+  po4: Int
+  po5: Int
+  po6: Int
+  po7: Int
+  po8: Int
+  po9: Int
+  po10: Int
+  po11: Int
+  po12: Int
+  ps1: Int
+  ps2: Int
+  ps3: Int
+}
+
 type Query {
+  course_artimat(data: course_artimatQueryInput): [course_artimat]
   session_assessments(data: sessionQueryInput!): [Int]
   assessment(data: assesmentQueryInput!): [course_assessment]
   assess_evaluation(data: assess_evaluationQueryInput!): [course_assesseval]
@@ -6,10 +29,12 @@ type Query {
   session_assignments(data: sessionQueryInput!): [Int]
   assignment(data: assignmentQueryInput!): [course_assignment]
   attendance(data: course_attendanceQueryInput!): [course_attendance]!
+  course_lessonplan(data: course_lessonplanQueryInput!): [course_lessonplan]
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]
   courseReference(data: Course_Reference_Input): [Course_Reference_Table]
   registered_students(data: registered_studentsQueryInput!): [course_registered_students]
+  course_topic(data: course_topicQueryInput!): [course_topic]
   login(data: credentialQueryInput!): loginPayload!
   allPersons: [Person!]!
   person: Person!
@@ -27,6 +52,10 @@ type Query {
   auth_login(data: user_infoQueryInput!): loginPayload!
 }
 
+input course_artimatQueryInput {
+  course_code: String!
+}
+
 type Mutation {
   createAssessment(data: custom_type!): [course_assessment]
   createAssess_evaluation(data: assess_evaluationInput!): [course_assesseval]
@@ -36,6 +65,9 @@ type Mutation {
   createAssignment(data: custom_assignment_type!): [course_assignment]
   create_attendance(data: create_attendanceInput!): Boolean!
   update_attendance(data: create_attendanceInput!): Boolean!
+  create_course_lessonplan(data: create_course_lessonplanInput!): course_lessonplan
+  update_course_lessonplan(data: update_course_lessonplanInput!): course_lessonplan
+  delete_course_lessonplan(data: delete_course_lessonplanInput!): course_lessonplan
   createUser(data: createCredentialsInput!): credentialPayload
   updateUser(data: updateCredentialsInput!): credentialPayload
   createPerson(data: createPersonInput!): Person!
@@ -251,6 +283,46 @@ input student_attendance {
   presence: String!
 }
 
+type course_lessonplan {
+  clp_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  actual_date: String!
+  period: Int!
+  course_ctopic_id: Int!
+  references: String
+  course_topic: course_topic
+}
+
+input course_lessonplanQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+}
+
+input create_course_lessonplanInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  actual_date: String!
+  period: Int!
+  course_ctopic_id: Int!
+  references: String
+}
+
+input update_course_lessonplanInput {
+  clp_id: Int!
+  actual_date: String
+  period: Int
+  course_ctopic_id: Int
+  references: String
+}
+
+input delete_course_lessonplanInput {
+  clp_id: Int!
+}
+
 type course_list {
   course_code: String!
   stream: Int!
@@ -296,6 +368,19 @@ input registered_studentsQueryInput {
   course_code: String!
   group_ref: Int!
   session_ref: Int!
+}
+
+type course_topic {
+  ctopic_id: Int!
+  course_code: String!
+  module_num: Int!
+  topic_num: String!
+  topic: String!
+  conum: Int!
+}
+
+input course_topicQueryInput {
+  course_code: String
 }
 
 type credentials {
@@ -667,7 +752,6 @@ input courseDetailsQueryInput {
 
 type user_info {
   user_ID: Int!
-  Person_ID: Int!
   username: Int!
   user_role: Int
   password: String
@@ -676,8 +760,7 @@ type user_info {
 }
 
 input createUser_infoInput {
-  Person_ID: Int!
-  username: String!
+  username: Int!
   password: String!
   user_role: Int
   status: String
@@ -685,22 +768,20 @@ input createUser_infoInput {
 
 type user_infoPayload {
   user_ID: Int
-  Person_ID: Int!
-  username: String!
+  username: Int!
   user_role: Int
   status: String
 }
 
 input updateUser_infoInput {
-  Person_ID: Int!
-  username: String
+  username: Int
   password: String
   user_role: Int
   status: String
 }
 
 input user_infoQueryInput {
-  username: String!
+  username: Int!
   password: String!
 }
 

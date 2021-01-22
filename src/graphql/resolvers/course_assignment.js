@@ -38,7 +38,7 @@ module.exports = {
     Mutation: {
         async createAssignment(parent, {data}, {prisma,auth,req}, info){
             
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
             const {course_code,group_ref,session_ref,assign_num,entry_date,deadline, ...remData} = data
             
             remData.questions.forEach(async(ques)=>{

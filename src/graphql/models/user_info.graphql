@@ -8,8 +8,7 @@ type Mutation{
 }
 
 type user_info {
-  user_ID: Int!
-  Person_ID: Int!     
+  user_ID: Int!    
   username: Int!
   user_role: Int
   password: String
@@ -18,8 +17,8 @@ type user_info {
 }
 
 input createUser_infoInput{
-  Person_ID: Int!
-  username: String! 
+  
+  username: Int! 
   password: String!
   user_role: Int
   status: String
@@ -27,22 +26,20 @@ input createUser_infoInput{
 
 type user_infoPayload{
   user_ID: Int 
-  Person_ID: Int!
-  username: String!
+  username: Int!
   user_role: Int
   status: String
 }
 
 input updateUser_infoInput{
-  Person_ID: Int!
-  username: String 
+  username: Int
   password: String
   user_role: Int
   status: String
 }
 
 input user_infoQueryInput{
-  username: String!
+  username: Int!
   password: String!
 }
 

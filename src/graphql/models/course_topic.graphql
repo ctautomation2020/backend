@@ -1,0 +1,18 @@
+type course_topic {
+  ctopic_id: Int!
+  course_code: String!
+  module_num: Int!
+  topic_num: String!
+  topic: String!
+  conum: Int!
+}
+
+type Query {
+    course_topic(data: course_topicQueryInput!): [course_topic]
+}
+
+input course_topicQueryInput {
+    course_code: String
+}
+
+

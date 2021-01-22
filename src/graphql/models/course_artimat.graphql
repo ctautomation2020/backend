@@ -1,0 +1,30 @@
+type course_artimat {
+  cartimat_id: Int!
+  course_code: String!
+  conum: Int!
+  costmt: String!
+  po1: Int
+  po2: Int
+  po3: Int
+  po4: Int
+  po5: Int
+  po6: Int
+  po7: Int
+  po8: Int
+  po9: Int
+  po10: Int
+  po11: Int
+  po12: Int
+  ps1: Int
+  ps2: Int
+  ps3: Int
+
+}
+
+type Query {
+    course_artimat(data: course_artimatQueryInput): [course_artimat] 
+}
+
+input course_artimatQueryInput {
+    course_code: String!
+}

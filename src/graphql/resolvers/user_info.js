@@ -20,7 +20,7 @@ module.exports= {
             //console.log(token)
             return ({
                 token,
-                Person_ID:user.Person_ID,
+                Person_ID:user.username,
                 user_role: user.user_role
             })
         }
@@ -31,15 +31,10 @@ module.exports= {
         
         async auth_createUser(parent,{data},{prisma},info){
             data.password = await bcrypt.hash(data.password,8)
-            const {Person_ID,...refData} = data
+            
             return await prisma.user_info.create({
                 data:{
-                    person:{
-                        connect:{
-                            Person_ID:data.Person_ID
-                        }
-                    },
-                    ...refData
+                    ...data
                 }
             })
         },
@@ -48,21 +43,16 @@ module.exports= {
             if(data.password){
                 data.password = await bcrypt.hash(data.password,8)
             }
-            const {Person_ID,...refData} = data
+            
             const cid = await prisma.user_info.findOne({where:{
-                Person_ID:data.Person_ID
+                username:data.username
             }})
             return await prisma.user_info.update({
                 where:{
                     user_ID: cid.user_ID
                 },
                 data:{
-                    person:{
-                        connect:{
-                            Person_ID:data.Person_ID
-                        }
-                    },
-                    ...refData
+                    ...data
                 }
             })
         }
