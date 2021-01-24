@@ -16,6 +16,8 @@ type Person {
     Gender_Ref: Int
     #Date and time format in DB
     DOB: String
+    Designation: Int
+    date_of_joining: String
     Community_Ref: Int
     Caste: String
     Primary_MailID: String
@@ -52,6 +54,8 @@ input createPersonInput {
     Gender_Ref: Int
     #Date and time format in DB
     DOB: String
+    Designation: Int
+    date_of_joining: String
     Community_Ref: Int
     Caste: String
     Primary_MailID: String
@@ -81,6 +85,8 @@ input updatePersonInput {
     Gender_Ref: Int
     #Date and time format in DB
     DOB: String
+    Designation: Int
+    date_of_joining: String
     Community_Ref: Int
     Caste: String
     Primary_MailID: String

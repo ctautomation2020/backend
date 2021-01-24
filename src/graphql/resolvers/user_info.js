@@ -16,7 +16,7 @@ module.exports= {
             if(!isMatch)
             throw "invalid password"
             
-            const token = jwt.sign({Person_ID:user.Person_ID,user_role: user.user_role },"ct_admin")
+            const token = jwt.sign({"username":user.username,"user_role": user.user_role},"ct_admin")
             //console.log(token)
             return ({
                 token,

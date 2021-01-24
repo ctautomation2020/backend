@@ -20,8 +20,12 @@ module.exports={
 
     Mutation: {
         
-        async createPerson(parent, {data}, {prisma}, info) {
-            const {Prefix_Ref,Gender_Ref,Community_Ref,Marital_Status_Ref,...noref_data} = data
+        async createPerson(parent, {data}, {prisma,req,auth}, info) {
+
+            const Person_ID = auth(req)
+
+
+            const {Prefix_Ref,Gender_Ref,Community_Ref,Marital_Status_Ref,Designation,...noref_data} = data
             const ref_data = noref_data
             if(Community_Ref){
                 ref_data.person_reference_table_person_Community_RefToperson_reference_table={
@@ -48,17 +52,35 @@ module.exports={
                 ref_data.person_reference_table_person_Prefix_RefToperson_reference_table={
                     connect:{
                         Reference_ID:Prefix_Ref 
+                    }
+                }
+            }
+            if(Designation){
+                ref_data.person_reference_table_person_DesignationToperson_reference_table={
+                    connect:{
+                        Reference_ID:Designation
                     }
                 }
             }
             return await prisma.person.create({data:{
-                ...ref_data
+                user_info:{
+                    connect:{
+                        username:Person_ID
+
+                    }
+                },
+                
             }
             })
         },
 
-        async updatePerson(parent, {data}, {prisma}, info) {
-            const{Person_ID,Prefix_Ref,Gender_Ref,Community_Ref,Marital_Status_Ref,...noref_data} = data
+        async updatePerson(parent, {data}, {prisma,auth,req}, info) {
+
+
+
+            const{Person_ID,Prefix_Ref,Gender_Ref,Community_Ref,Marital_Status_Ref,Designation,...noref_data} = data
+            
+            const Auth_Person_ID = auth(req)
 
             const ref_data = noref_data
             if(Community_Ref){
@@ -86,13 +108,20 @@ module.exports={
                 ref_data.person_reference_table_person_Prefix_RefToperson_reference_table={
                     connect:{
                         Reference_ID:Prefix_Ref 
+                    }
+                }
+            }
+            if(Designation){
+                ref_data.person_reference_table_person_DesignationToperson_reference_table={
+                    connect:{
+                        Reference_ID:Designation
                     }
                 }
             }
             
             return await prisma.person.update({
                 where:{
-                    Person_ID:data.Person_ID
+                    Person_ID:Auth_Person_ID
                 },
                 data:{
                     ...ref_data

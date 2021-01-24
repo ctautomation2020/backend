@@ -9,12 +9,13 @@ const getPersonID=(req,role)=>{
 
     const token = header.replace('Bearer ','')
     const decoded = jwt.verify(token,"ct_admin")
-
-    if(decoded.user_role < role){
+    
+    if(role && decoded.user_role < role){
         throw new Error("unauthorized privilege")
     }
 
-    return decoded.Person_ID
+
+    return decoded.username
 }
 
 export default getPersonID
