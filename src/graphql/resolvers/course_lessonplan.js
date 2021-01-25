@@ -57,7 +57,7 @@ module.exports={
             })
         },
 
-        async update_course_lessonplan(parent, {data}, {prisma,auth,req}, info){
+        async delete_course_lessonplan(parent, {data}, {prisma,auth,req}, info){
 
             const Person_ID = auth(req,2)
 
