@@ -29,6 +29,7 @@ type Query {
   session_assignments(data: sessionQueryInput!): [Int]
   assignment(data: assignmentQueryInput!): [course_assignment]
   attendance(data: course_attendanceQueryInput!): [course_attendance]!
+  course_cacomp(data: course_cacompQueryInput!): [course_cacomp]
   course_lessonplan(data: course_lessonplanQueryInput!): [course_lessonplan]
   course(data: courseQueryInput!): course_list
   allCourses: [course_list]
@@ -65,6 +66,9 @@ type Mutation {
   createAssignment(data: custom_assignment_type!): [course_assignment]
   create_attendance(data: create_attendanceInput!): Boolean!
   update_attendance(data: create_attendanceInput!): Boolean!
+  create_course_cacomp(data: create_course_cacompInput!): Boolean
+  update_course_cacomp(data: update_course_cacompInput!): Boolean
+  delete_course_cacomp(data: delete_course_cacompInput!): Boolean
   create_course_lessonplan(data: create_course_lessonplanInput!): course_lessonplan
   update_course_lessonplan(data: update_course_lessonplanInput!): course_lessonplan
   delete_course_lessonplan(data: delete_course_lessonplanInput!): course_lessonplan
@@ -281,6 +285,48 @@ input create_attendanceInput {
 input student_attendance {
   reg_no: Int!
   presence: String!
+}
+
+type course_cacomp {
+  ccacomp_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  type: Int!
+  number: Int!
+  weightage: Int!
+}
+
+input course_cacompQueryInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+}
+
+input create_course_cacompInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  compques: [compq]
+}
+
+input update_course_cacompInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  compques: [compq]
+}
+
+input delete_course_cacompInput {
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+}
+
+input compq {
+  type: Int!
+  number: Int!
+  weightage: Int!
 }
 
 type course_lessonplan {

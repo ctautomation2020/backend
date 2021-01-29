@@ -24,14 +24,14 @@ module.exports={
             if(Publication_Type_Ref){
                 ref_data.person_reference_table_person_publication_Publication_Type_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Publication_Type_Ref
+                        Ref_Code:Publication_Type_Ref
                     }
                 }
             }
             if(Level_Ref){
                 ref_data.person_reference_table_person_publication_Level_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Level_Ref
+                        Ref_Code:Level_Ref
                     }
                 }
             }
@@ -53,14 +53,14 @@ module.exports={
             if(Publication_Type_Ref){
                 ref_data.person_reference_table_person_publication_Publication_Type_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Publication_Type_Ref
+                        Ref_Code:Publication_Type_Ref
                     }
                 }
             }
             if(Level_Ref){
                 ref_data.person_reference_table_person_publication_Level_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Level_Ref
+                        Ref_Code:Level_Ref
                     }
                 }
             }

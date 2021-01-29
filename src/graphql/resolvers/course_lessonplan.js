@@ -28,12 +28,12 @@ module.exports={
                     },
                     course_reference_table_course_lessonplan_group_refTocourse_reference_table:{
                         connect: {
-                            reference_id: group_ref
+                            ref_code: group_ref
                         }
                     },
                     course_reference_table_course_lessonplan_session_refTocourse_reference_table:{
                         connect: {
-                            reference_id: session_ref
+                            ref_code: session_ref
                         }
                     },
                     ...remData

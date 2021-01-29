@@ -27,21 +27,21 @@ module.exports = {
             if(Designation_Ref){
                 ref_data.person_reference_table_person_experience_Designation_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Designation_Ref
+                        Ref_Code:Designation_Ref
                     }
                 }
             }
             if(Emp_Category_Ref){
                 ref_data.person_reference_table_person_experience_Emp_Category_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Emp_Category_Ref
+                        Ref_Code:Emp_Category_Ref
                     }
                 }
             }
             if(Work_Nature_Ref){
                 ref_data.person_reference_table_person_experience_Work_Nature_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Work_Nature_Ref
+                        Ref_Code:Work_Nature_Ref
                     }
                 }
             }
@@ -67,21 +67,21 @@ module.exports = {
             if(Designation_Ref){
                 ref_data.person_reference_table_person_experience_Designation_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Designation_Ref
+                        Ref_Code:Designation_Ref
                     }
                 }
             }
             if(Emp_Category_Ref){
                 ref_data.person_reference_table_person_experience_Emp_Category_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Emp_Category_Ref
+                        Ref_Code:Emp_Category_Ref
                     }
                 }
             }
             if(Work_Nature_Ref){
                 ref_data.person_reference_table_person_experience_Work_Nature_RefToperson_reference_table={
                     connect:{
-                        Reference_ID:Work_Nature_Ref
+                        Ref_Code:Work_Nature_Ref
                     }
                 }
             }

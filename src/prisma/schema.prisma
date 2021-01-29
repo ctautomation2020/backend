@@ -142,8 +142,9 @@ model course_cacomp {
   course_code                                                              String
   group_ref                                                                Int
   session_ref                                                              Int
-  component                                                                String
-  total_marks                                                              Int
+  type                                                                     Int
+  number                                                                   Int
+  weightage                                                                Int
   course_list                                                              course_list            @relation(fields: [course_code], references: [course_code])
   course_reference_table_course_cacomp_group_refTocourse_reference_table   course_reference_table @relation("course_cacomp_group_refTocourse_reference_table", fields: [group_ref], references: [ref_code])
   course_reference_table_course_cacomp_session_refTocourse_reference_table course_reference_table @relation("course_cacomp_session_refTocourse_reference_table", fields: [session_ref], references: [ref_code])
@@ -154,14 +155,25 @@ model course_cacomp {
 }
 
 model course_evaluation {
-  caval_id       Int    @id @default(autoincrement())
-  course_code    String
-  group_ref      Int
-  session_ref    Int
-  type           Int
-  total_mark     Int
-  marks_obtained Int
-  reg_no         Int
+  ceval_id                                                                     Int                    @id @default(autoincrement())
+  course_code                                                                  String
+  group_ref                                                                    Int
+  session_ref                                                                  Int
+  type                                                                         Int
+  total_mark                                                                   Int
+  marks_obtained                                                               Int
+  reg_no                                                                       Int
+  number                                                                       Int
+  weighted_mark                                                                Float?
+  course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
+  course_reference_table_course_evaluation_group_refTocourse_reference_table   course_reference_table @relation("course_evaluation_group_refTocourse_reference_table", fields: [group_ref], references: [ref_code])
+  student                                                                      student                @relation(fields: [reg_no], references: [Register_No])
+  course_reference_table_course_evaluation_session_refTocourse_reference_table course_reference_table @relation("course_evaluation_session_refTocourse_reference_table", fields: [session_ref], references: [ref_code])
+
+  @@index([group_ref], name: "Group_FK")
+  @@index([reg_no], name: "Reg_no_FK")
+  @@index([session_ref], name: "Session_FK")
+  @@index([course_code], name: "course_code_FK0")
 }
 
 model course_extcalc {
@@ -256,6 +268,7 @@ model course_list {
   course_assignment          course_assignment[]
   course_attendance          course_attendance[]
   course_cacomp              course_cacomp[]
+  course_evaluation          course_evaluation[]
   course_extcalc             course_extcalc[]
   course_extcomp             course_extcomp[]
   course_internalcalc        course_internalcalc[]
@@ -283,6 +296,8 @@ model course_reference_table {
   course_attendance_course_attendance_session_refTocourse_reference_table                   course_attendance[]          @relation("course_attendance_session_refTocourse_reference_table")
   course_cacomp_course_cacomp_group_refTocourse_reference_table                             course_cacomp[]              @relation("course_cacomp_group_refTocourse_reference_table")
   course_cacomp_course_cacomp_session_refTocourse_reference_table                           course_cacomp[]              @relation("course_cacomp_session_refTocourse_reference_table")
+  course_evaluation_course_evaluation_group_refTocourse_reference_table                     course_evaluation[]          @relation("course_evaluation_group_refTocourse_reference_table")
+  course_evaluation_course_evaluation_session_refTocourse_reference_table                   course_evaluation[]          @relation("course_evaluation_session_refTocourse_reference_table")
   course_extcalc_course_extcalc_group_refTocourse_reference_table                           course_extcalc[]             @relation("course_extcalc_group_refTocourse_reference_table")
   course_extcalc_course_extcalc_session_refTocourse_reference_table                         course_extcalc[]             @relation("course_extcalc_session_refTocourse_reference_table")
   course_extcomp_course_extcomp_group_refTocourse_reference_table                           course_extcomp[]             @relation("course_extcomp_group_refTocourse_reference_table")
@@ -468,16 +483,6 @@ model person_events_attended {
   Role                                                                                           String?
   Start_Date                                                                                     DateTime?
   End_Date                                                                                       DateTime?
-  Funding_Agency                                                                                 String?
-  No_Of_Participants                                                                             Int?
-  // This type is currently not supported.
-  // Summary_File                                                                                blob?
-  // This type is currently not supported.
-  // Event_Schedule                                                                              blob?
-  // This type is currently not supported.
-  // Participants_Lists                                                                          blob?
-  // This type is currently not supported.
-  // Budget                                                                                      blob?
   person_reference_table_person_events_attended_Event_Type_RefToperson_reference_table           person_reference_table? @relation("person_events_attended_Event_Type_RefToperson_reference_table", fields: [Event_Type_Ref], references: [Ref_Code])
   person_reference_table_person_events_attended_Level_RefToperson_reference_table                person_reference_table? @relation("person_events_attended_Level_RefToperson_reference_table", fields: [Level_Ref], references: [Ref_Code])
   person_reference_table_person_events_attended_Participation_Status_RefToperson_reference_table person_reference_table? @relation("person_events_attended_Participation_Status_RefToperson_reference_table", fields: [Participation_Status_Ref], references: [Ref_Code])
@@ -852,6 +857,7 @@ model student {
   person_reference_table_person_reference_tableTostudent_Registration_Mode_Ref     person_reference_table?       @relation("person_reference_tableTostudent_Registration_Mode_Ref", fields: [Registration_Mode_Ref], references: [Ref_Code])
   person_reference_table_person_reference_tableTostudent_Residential_Type_Ref      person_reference_table?       @relation("person_reference_tableTostudent_Residential_Type_Ref", fields: [Residential_Type_Ref], references: [Ref_Code])
   person_reference_table_person_reference_tableTostudent_Scholarship_Received_Ref  person_reference_table?       @relation("person_reference_tableTostudent_Scholarship_Received_Ref", fields: [Scholarship_Received_Ref], references: [Ref_Code])
+  course_evaluation                                                                course_evaluation[]
   student_awards                                                                   student_awards[]
   student_endsemmarks                                                              student_endsemmarks[]
   student_events_participated                                                      student_events_participated[]

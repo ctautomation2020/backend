@@ -1,0 +1,52 @@
+type course_cacomp {
+  ccacomp_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  type: Int!
+  number: Int!
+  weightage: Int!
+}
+
+type Query {
+    course_cacomp(data: course_cacompQueryInput!): [course_cacomp]
+}
+
+type Mutation {
+    create_course_cacomp(data: create_course_cacompInput!): Boolean
+    update_course_cacomp(data: update_course_cacompInput!): Boolean
+    delete_course_cacomp(data: delete_course_cacompInput!): Boolean
+}
+
+input course_cacompQueryInput {
+    course_code: String!
+    group_ref: Int!
+    session_ref: Int!
+}
+
+input create_course_cacompInput {
+    course_code: String!
+    group_ref: Int!
+    session_ref: Int!
+    compques: [compq]
+}
+
+input update_course_cacompInput {
+    course_code: String!
+    group_ref: Int!
+    session_ref: Int!
+    compques: [compq]
+}
+
+input delete_course_cacompInput {
+    course_code: String!
+    group_ref: Int!
+    session_ref: Int!
+}
+
+input compq {
+    type: Int!
+    number: Int!
+    weightage: Int!
+}
+
