@@ -16,6 +16,12 @@ module.exports = {
         async createAssess_evaluation(parent, {data}, {prisma,auth,req}, info) {
             const Person_ID = auth(req)
             const {course_code,group_ref,session_ref,assess_num,reg_no, ...remData} = data
+
+            let total = 0 
+
+            remData.questions.forEach(async(ques)=>{
+                total = total + ques.mark
+            })
             
             remData.questions.forEach(async(ques)=>{
                 await prisma.course_assesseval.create({
@@ -25,9 +31,9 @@ module.exports = {
                                 course_code
                             }
                         },
-                        student_list:{
+                        student:{
                             connect: {
-                                reg_no
+                                Register_No:reg_no
                             }
                         },
                         course_reference_table_course_assesseval_group_refTocourse_reference_table:{
@@ -44,6 +50,39 @@ module.exports = {
                         ...ques
                     }
                 })
+                
+                
+            })
+
+            await prisma.course_evaluation.create({
+                data:{
+                    course_list:{
+                        connect: {
+                            course_code
+                        }
+                    },
+                    student:{
+                        connect: {
+                            Register_No:reg_no
+                        }
+                    },
+                    course_reference_table_course_evaluation_group_refTocourse_reference_table:{
+                        connect: {
+                            ref_code: group_ref
+                        }
+                    },
+                    course_reference_table_course_evaluation_session_refTocourse_reference_table:{
+                        connect: {
+                            ref_code: session_ref
+                        }
+                    },
+                    type:1,
+                    total_mark: 100,
+                    marks_obtained: total,
+                    number: assess_num
+                    
+
+                }
             })
 
         },

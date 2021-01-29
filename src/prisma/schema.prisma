@@ -43,7 +43,7 @@ model course_assesseval {
   mark                                                                         Float
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   course_reference_table_course_assesseval_group_refTocourse_reference_table   course_reference_table @relation("course_assesseval_group_refTocourse_reference_table", fields: [group_ref], references: [ref_code])
-  student_list                                                                 student_list           @relation(fields: [reg_no], references: [reg_no])
+  student                                                                      student                @relation(fields: [reg_no], references: [Register_No])
   course_reference_table_course_assesseval_session_refTocourse_reference_table course_reference_table @relation("course_assesseval_session_refTocourse_reference_table", fields: [session_ref], references: [ref_code])
 
   @@index([course_code], name: "code_fk_idx")
@@ -86,7 +86,7 @@ model course_assigneval {
   mark                                                                         Float
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   course_reference_table_course_assigneval_group_refTocourse_reference_table   course_reference_table @relation("course_assigneval_group_refTocourse_reference_table", fields: [group_ref], references: [ref_code])
-  student_list                                                                 student_list           @relation(fields: [reg_no], references: [reg_no])
+  student                                                                      student                @relation(fields: [reg_no], references: [Register_No])
   course_reference_table_course_assigneval_session_refTocourse_reference_table course_reference_table @relation("course_assigneval_session_refTocourse_reference_table", fields: [session_ref], references: [ref_code])
 
   @@index([course_code], name: "code_fk_idx")
@@ -857,6 +857,8 @@ model student {
   person_reference_table_person_reference_tableTostudent_Registration_Mode_Ref     person_reference_table?       @relation("person_reference_tableTostudent_Registration_Mode_Ref", fields: [Registration_Mode_Ref], references: [Ref_Code])
   person_reference_table_person_reference_tableTostudent_Residential_Type_Ref      person_reference_table?       @relation("person_reference_tableTostudent_Residential_Type_Ref", fields: [Residential_Type_Ref], references: [Ref_Code])
   person_reference_table_person_reference_tableTostudent_Scholarship_Received_Ref  person_reference_table?       @relation("person_reference_tableTostudent_Scholarship_Received_Ref", fields: [Scholarship_Received_Ref], references: [Ref_Code])
+  course_assesseval                                                                course_assesseval[]
+  course_assigneval                                                                course_assigneval[]
   course_evaluation                                                                course_evaluation[]
   student_awards                                                                   student_awards[]
   student_endsemmarks                                                              student_endsemmarks[]
@@ -1014,8 +1016,6 @@ model student_internship {
 model student_list {
   reg_no                     Int                          @id
   name                       String
-  course_assesseval          course_assesseval[]
-  course_assigneval          course_assigneval[]
   course_attendance          course_attendance[]
   course_extcalc             course_extcalc[]
   course_internalcalc        course_internalcalc[]
