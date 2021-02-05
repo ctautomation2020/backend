@@ -14,11 +14,11 @@ module.exports = {
 
     Mutation: {
         async createAssign_evaluation(parent, {data}, {prisma,auth,req}, info) {
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
             const {course_code,group_ref,session_ref,assign_num,reg_no, ...remData} = data
             let total = 0 
 
-            remData.questions.forEach(async(ques)=>{
+            remData.questions.forEach((ques)=>{
                 total = total + ques.mark
             })
 

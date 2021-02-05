@@ -13,12 +13,27 @@ module.exports = {
     Mutation: {
         async create_course_cacomp(parent, { data }, { prisma, auth, req }, info) {
             const Person_ID = auth(req, 2)
-            console.log(Person_ID)
+            let myMap = new Map();
             const { course_code, group_ref, session_ref, ...remData } = data
             let flag = 1
+
+            const temp = await prisma.course_cacomp.findMany({
+                where: {
+                    course_code,
+                    group_ref,
+                    session_ref
+                }
+            })
+
+            
+        
+            // if(temp.length){
+            //     throw new Error("ca_comp already created")
+            // }
+
             remData.compques.forEach(async (ques) => {
-                console.log(ques)
-                
+                    let tynum = ques.type.toString()+ques.number.toString()
+                    myMap.set(tynum,ques.weightage)
                     await prisma.course_cacomp.create({
                         data: {
                             course_list: {
@@ -42,6 +57,74 @@ module.exports = {
             
             })
 
+            const stud_marks = await prisma.course_evaluation.findMany({
+    
+                where:{
+                    course_code, 
+                    group_ref,
+                    session_ref
+                },
+                distinct:["reg_no"]
+            })
+
+            stud_marks.forEach(async(stud)=>{
+                let temp = await prisma.course_evaluation.findMany({
+                    where:{
+                        course_code, 
+                        group_ref,
+                        session_ref,
+                        reg_no: stud.reg_no,
+                    }
+                })
+
+                
+                
+                temp.forEach(async(marks)=>{
+                    
+                    if(myMap.get(marks.type.toString()+marks.number.toString())){
+
+                        let weighted_mark = marks.marks_obtained / marks.total_mark * myMap.get(marks.type.toString()+marks.number.toString())
+                        
+                        await prisma.course_evaluation.updateMany({
+                            where:{
+                                course_code, 
+                                group_ref,
+                                session_ref,
+                                reg_no: marks.reg_no,
+                                type: marks.type,
+                                number: marks.number,
+
+                            },
+
+                            data: {
+                                weighted_mark: weighted_mark
+                            }
+
+                        })
+                    }
+
+                    else if(marks.type==3) {
+                        await prisma.course_evaluation.updateMany({
+                            where:{
+                                course_code, 
+                                group_ref,
+                                session_ref,
+                                reg_no: marks.reg_no,
+                                type: marks.type,
+                                number: marks.number,
+
+                            },
+
+                            data: {
+                                weighted_mark: marks.marks_obtained / marks.total_mark * 100
+                            }
+
+                        })
+                    }
+
+                })
+                
+            })
 
             return flag;
 
