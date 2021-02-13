@@ -45,8 +45,14 @@ module.exports={
         async update_course_lessonplan(parent, {data}, {prisma,auth,req}, info){
 
             const Person_ID = auth(req,2)
-            const {clp_id, ...remData} = data
-
+            const {clp_id,course_ctopic_id, ...remData} = data
+            if(course_ctopic_id){
+                remData.course_topic={
+                    connect:{
+                        ctopic_id:course_ctopic_id
+                    }
+                }
+            }
             return await prisma.course_lessonplan.update({
                 where:{
                     clp_id:data.clp_id

@@ -345,6 +345,7 @@ input course_lessonplanQueryInput {
   course_code: String!
   group_ref: Int!
   session_ref: Int!
+  actual_date: String
 }
 
 input create_course_lessonplanInput {
