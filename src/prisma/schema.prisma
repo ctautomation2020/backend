@@ -225,7 +225,7 @@ model course_internalcalc {
   total_marks                                                                    Float
   course_list                                                                    course_list            @relation(fields: [course_code], references: [course_code])
   course_reference_table_course_internalcalc_group_refTocourse_reference_table   course_reference_table @relation("course_internalcalc_group_refTocourse_reference_table", fields: [group_ref], references: [ref_code])
-  student_list                                                                   student_list           @relation(fields: [reg_no], references: [reg_no])
+  student                                                                        student                @relation(fields: [reg_no], references: [Register_No])
   course_reference_table_course_internalcalc_session_refTocourse_reference_table course_reference_table @relation("course_internalcalc_session_refTocourse_reference_table", fields: [session_ref], references: [ref_code])
 
   @@index([course_code], name: "code_fk11_idx")
@@ -861,6 +861,7 @@ model student {
   course_assesseval                                                                course_assesseval[]
   course_assigneval                                                                course_assigneval[]
   course_evaluation                                                                course_evaluation[]
+  course_internalcalc                                                              course_internalcalc[]
   student_awards                                                                   student_awards[]
   student_endsemmarks                                                              student_endsemmarks[]
   student_events_participated                                                      student_events_participated[]
@@ -1019,7 +1020,6 @@ model student_list {
   name                       String
   course_attendance          course_attendance[]
   course_extcalc             course_extcalc[]
-  course_internalcalc        course_internalcalc[]
   course_registered_students course_registered_students[]
 }
 
