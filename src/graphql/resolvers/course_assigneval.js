@@ -74,7 +74,7 @@ module.exports = {
                         }
                     },
                     type:2,
-                    total_mark: 100,
+                    total_mark: data.total_mark,
                     marks_obtained: total,
                     number: assign_num
                     

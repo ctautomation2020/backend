@@ -17,6 +17,7 @@ type course_assesseval {
   question_num: String!
   reg_no: Int!
   mark: Float!
+
 }
 
 input assess_evaluationQueryInput {
@@ -34,6 +35,7 @@ input assess_evaluationInput {
   assess_num: Int!
   reg_no: Int!
   questions: [question]
+  total_mark: Int
 }
 
 input question {
