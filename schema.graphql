@@ -67,7 +67,6 @@ type Mutation {
   create_attendance(data: create_attendanceInput!): Boolean!
   update_attendance(data: create_attendanceInput!): Boolean!
   create_course_cacomp(data: create_course_cacompInput!): Boolean
-  update_course_cacomp(data: update_course_cacompInput!): Boolean
   delete_course_cacomp(data: delete_course_cacompInput!): Boolean
   create_course_lessonplan(data: create_course_lessonplanInput!): course_lessonplan
   update_course_lessonplan(data: update_course_lessonplanInput!): course_lessonplan
@@ -174,6 +173,7 @@ input assess_evaluationInput {
   assess_num: Int!
   reg_no: Int!
   questions: [question]
+  total_mark: Int
 }
 
 input question {
@@ -207,6 +207,7 @@ input assign_evaluationInput {
   assign_num: Int!
   reg_no: Int!
   questions: [assign_question]
+  total_mark: Int
 }
 
 input assign_question {

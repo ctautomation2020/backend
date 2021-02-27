@@ -14,7 +14,6 @@ type Query {
 
 type Mutation {
     create_course_cacomp(data: create_course_cacompInput!): Boolean
-    update_course_cacomp(data: update_course_cacompInput!): Boolean
     delete_course_cacomp(data: delete_course_cacompInput!): Boolean
 }
 
