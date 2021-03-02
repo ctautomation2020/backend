@@ -49,14 +49,14 @@ module.exports = {
                                 course_code
                             }
                         },
-                        course_reference_table_course_assignment_group_refTocourse_reference_table:{
+                        person_reference_table_course_assignment_group_refToperson_reference_table:{
                             connect: {
-                                ref_code: group_ref
+                                Reference_ID: group_ref
                             }
                         },
-                        course_reference_table_course_assignment_session_refTocourse_reference_table:{
+                        person_reference_table_course_assignment_session_refToperson_reference_table:{
                             connect: {
-                                ref_code: session_ref
+                                Reference_ID: session_ref
                             }
                         },
                         assign_num,

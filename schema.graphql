@@ -48,6 +48,8 @@ type Query {
   qualification(data: Qualification_InputQuery!): Person_Qualification!
   personQualifications(data: Person_QualificationsInputQuery): [Person_Qualification]
   personReference(data: Person_Reference_Input): [Person_Reference_Table]
+  travel(data: travel): person_travel_history
+  persontravelhistorys(data: Person_QueryInput!): [person_travel_history]
   staffCourses(data: staffCoursesQueryInput!): [subj_allot]
   courseDetails(data: courseDetailsQueryInput!): subj_allot
   auth_login(data: user_infoQueryInput!): loginPayload!
@@ -88,6 +90,9 @@ type Mutation {
   createPersonQualification(data: Person_QualificationInput!): Person_Qualification!
   updatePersonQualification(data: Person_QualificationUpdateInput!): Person_Qualification!
   deletePersonQualification(data: Qualification_InputQuery!): Person_Qualification
+  createPersonTravelhistory(data: travelInput!): person_travel_history!
+  updatePersonTravelhistory(data: travelUpdateInput!): person_travel_history!
+  deletePersonTravelhistory(data: travelDeleteInput!): person_travel_history!
   auth_createUser(data: createUser_infoInput!): user_infoPayload
   auth_updateUser(data: updateUser_infoInput!): user_infoPayload
 }
@@ -501,7 +506,6 @@ input personInput {
 }
 
 input createPersonInput {
-  Person_ID: Int!
   Prefix_Ref: Int
   First_Name: String
   Last_Name: String
@@ -529,7 +533,6 @@ input createPersonInput {
 }
 
 input updatePersonInput {
-  Person_ID: Int!
   Prefix_Ref: Int
   First_Name: String
   Last_Name: String
@@ -783,6 +786,45 @@ type Person_Reference_Table {
 input Person_Reference_Input {
   Reference_ID: Int
   Category: String
+}
+
+type person_travel_history {
+  Travel_ID: Int!
+  Person_ID: Int!
+  Title: String
+  Organization: String
+  Place: String
+  Start_Date: String
+  End_Date: String
+  Agency: String
+}
+
+input travel {
+  Travel_ID: Int!
+}
+
+input travelInput {
+  Person_ID: Int!
+  Title: String
+  Organization: String
+  Place: String
+  Start_Date: String
+  End_Date: String
+  Agency: String
+}
+
+input travelUpdateInput {
+  Travel_ID: Int!
+  Title: String
+  Organization: String
+  Place: String
+  Start_Date: String
+  End_Date: String
+  Agency: String
+}
+
+input travelDeleteInput {
+  Travel_ID: Int!
 }
 
 type subj_allot {

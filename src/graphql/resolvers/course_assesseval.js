@@ -36,14 +36,14 @@ module.exports = {
                                 Register_No:reg_no
                             }
                         },
-                        course_reference_table_course_assesseval_group_refTocourse_reference_table:{
+                        person_reference_table_course_assignment_group_refToperson_reference_table:{
                             connect: {
-                                ref_code: group_ref
+                                Reference_ID: group_ref
                             }
                         },
-                        course_reference_table_course_assesseval_session_refTocourse_reference_table:{
+                        person_reference_table_course_assignment_session_refToperson_reference_table:{
                             connect: {
-                                ref_code: session_ref
+                                Reference_ID: session_ref
                             }
                         },
                         assess_num,
@@ -66,14 +66,14 @@ module.exports = {
                             Register_No:reg_no
                         }
                     },
-                    course_reference_table_course_evaluation_group_refTocourse_reference_table:{
+                    person_reference_table_course_assignment_group_refToperson_reference_table:{
                         connect: {
-                            ref_code: group_ref
+                            Reference_ID: group_ref
                         }
                     },
-                    course_reference_table_course_evaluation_session_refTocourse_reference_table:{
+                    person_reference_table_course_assignment_session_refToperson_reference_table:{
                         connect: {
-                            ref_code: session_ref
+                            Reference_ID: session_ref
                         }
                     },
                     type:1,

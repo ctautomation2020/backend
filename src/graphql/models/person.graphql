@@ -47,7 +47,7 @@ input personInput {
 }
 
 input createPersonInput {
-    Person_ID: Int!                        
+                            
     Prefix_Ref: Int
     First_Name: String
     Last_Name: String
@@ -78,7 +78,7 @@ input createPersonInput {
 }
 
 input updatePersonInput {      
-    Person_ID: Int!                    
+                  
     Prefix_Ref: Int
     First_Name: String
     Last_Name: String

@@ -24,28 +24,28 @@ module.exports = {
             if(Branch_Ref){
                 ref_data.person_reference_table_person_qualification_Branch_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Branch_Ref
+                        Reference_ID:Branch_Ref
                     }
                 }
             }
             if(Class_Obtained_Ref){
                 ref_data.person_reference_table_person_qualification_Class_Obtained_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Class_Obtained_Ref
+                        Reference_ID:Class_Obtained_Ref
                     }
                 }
             }
             if(Degree_Ref){
                 ref_data.person_reference_table_person_qualification_Degree_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Degree_Ref
+                        Reference_ID:Degree_Ref
                     }
                 }
             }
             if(Qualification_Level_Ref){
                 ref_data.person_reference_table_person_qualification_Qualification_Level_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Qualification_Level_Ref
+                        Reference_ID:Qualification_Level_Ref
                     }
                 }
             }
@@ -67,28 +67,28 @@ module.exports = {
             if(Branch_Ref){
                 ref_data.person_reference_table_person_qualification_Branch_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Branch_Ref
+                        Reference_ID:Branch_Ref
                     }
                 }
             }
             if(Class_Obtained_Ref){
                 ref_data.person_reference_table_person_qualification_Class_Obtained_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Class_Obtained_Ref
+                        Reference_ID:Class_Obtained_Ref
                     }
                 }
             }
             if(Degree_Ref){
                 ref_data.person_reference_table_person_qualification_Degree_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Degree_Ref
+                        Reference_ID:Degree_Ref
                     }
                 }
             }
             if(Qualification_Level_Ref){
                 ref_data.person_reference_table_person_qualification_Qualification_Level_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Qualification_Level_Ref
+                        Reference_ID:Qualification_Level_Ref
                     }
                 }
             }

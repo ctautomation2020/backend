@@ -49,14 +49,14 @@ module.exports = {
                                 course_code
                             }
                         },
-                        course_reference_table_course_cacomp_group_refTocourse_reference_table: {
+                        person_reference_table_course_cacomp_group_refToperson_reference_table: {
                             connect: {
-                                ref_code: group_ref
+                                Reference_ID: group_ref
                             }
                         },
-                        course_reference_table_course_cacomp_session_refTocourse_reference_table: {
+                        person_reference_table_course_cacomp_session_refToperson_reference_table: {
                             connect: {
-                                ref_code: session_ref
+                                Reference_ID: session_ref
                             }
                         },
                         ...ques
@@ -180,14 +180,14 @@ module.exports = {
                                 course_code
                             }
                         },
-                        course_reference_table_course_internalcalc_group_refTocourse_reference_table: {
+                        person_reference_table_course_internalcalc_group_refToperson_reference_table: {
                             connect: {
-                                ref_code: group_ref
+                                Reference_ID: group_ref
                             }
                         },
-                        course_reference_table_course_internalcalc_session_refTocourse_reference_table: {
+                        person_reference_table_course_internalcalc_session_refToperson_reference_table: {
                             connect: {
-                                ref_code: session_ref
+                                Reference_ID: session_ref
                             }
                         },
                         student: {

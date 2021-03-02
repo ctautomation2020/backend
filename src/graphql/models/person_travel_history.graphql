@@ -1,0 +1,57 @@
+type Query {
+    travel(data: travel): person_travel_history
+    persontravelhistorys(data: Person_QueryInput!): [person_travel_history]
+}
+
+type Mutation {
+    createPersonTravelhistory(data: travelInput!): person_travel_history!
+    updatePersonTravelhistory(data: travelUpdateInput!): person_travel_history!
+    deletePersonTravelhistory(data: travelDeleteInput!): person_travel_history!
+                                    
+}
+
+type person_travel_history {             
+    Travel_ID: Int!     
+    Person_ID: Int!
+    Title: String
+    Organization: String
+    Place: String
+    Start_Date: String
+    End_Date: String
+    Agency: String
+
+}
+
+input travel {
+    Travel_ID: Int!     
+}
+
+input Person_QueryInput {
+    Person_ID: Int!
+}
+
+input travelInput {
+    Person_ID: Int! 
+    Title: String
+    Organization: String
+    Place: String
+    Start_Date: String
+    End_Date: String
+    Agency: String
+    
+}
+
+input travelUpdateInput {
+    Travel_ID: Int!
+    Title: String
+    Organization: String
+    Place: String
+    Start_Date: String
+    End_Date: String
+    Agency: String
+    
+}
+
+input travelDeleteInput {
+    Travel_ID: Int!
+}

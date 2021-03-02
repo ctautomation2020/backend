@@ -22,7 +22,8 @@ module.exports={
         
         async createPerson(parent, {data}, {prisma,req,auth}, info) {
 
-            const Person_ID = auth(req,2)
+            const Person_ID = auth(req,1)
+            
 
 
             const {Prefix_Ref,Gender_Ref,Community_Ref,Marital_Status_Ref,Designation,...noref_data} = data
@@ -30,35 +31,35 @@ module.exports={
             if(Community_Ref){
                 ref_data.person_reference_table_person_Community_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Community_Ref
+                        Reference_ID:Community_Ref
                     }
                 }
             }
             if(Gender_Ref){
                 ref_data.person_reference_table_person_Gender_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Gender_Ref
+                        Reference_ID:Gender_Ref
                     }
                 }
             }
             if(Marital_Status_Ref){
                 ref_data.person_reference_table_person_Marital_Status_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Marital_Status_Ref
+                        Reference_ID:Marital_Status_Ref
                     }
                 }
             }
             if(Prefix_Ref){
                 ref_data.person_reference_table_person_Prefix_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Prefix_Ref 
+                        Reference_ID:Prefix_Ref 
                     }
                 }
             }
             if(Designation){
                 ref_data.person_reference_table_person_DesignationToperson_reference_table={
                     connect:{
-                        Ref_Code:Designation
+                        Reference_ID:Designation
                     }
                 }
             }
@@ -86,35 +87,35 @@ module.exports={
             if(Community_Ref){
                 ref_data.person_reference_table_person_Community_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Community_Ref
+                        Reference_ID:Community_Ref
                     }
                 }
             }
             if(Gender_Ref){
                 ref_data.person_reference_table_person_Gender_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Gender_Ref
+                        Reference_ID:Gender_Ref
                     }
                 }
             }
             if(Marital_Status_Ref){
                 ref_data.person_reference_table_person_Marital_Status_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Marital_Status_Ref
+                        Reference_ID:Marital_Status_Ref
                     }
                 }
             }
             if(Prefix_Ref){
                 ref_data.person_reference_table_person_Prefix_RefToperson_reference_table={
                     connect:{
-                        Ref_Code:Prefix_Ref 
+                        Reference_ID:Prefix_Ref 
                     }
                 }
             }
             if(Designation){
                 ref_data.person_reference_table_person_DesignationToperson_reference_table={
                     connect:{
-                        Ref_Code:Designation
+                        Reference_ID:Designation
                     }
                 }
             }
