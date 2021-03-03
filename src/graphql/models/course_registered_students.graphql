@@ -13,7 +13,40 @@ type course_registered_students {
   reg_no: Int!
   group_ref: Int!
   session_ref: Int!
-  student: student_list
+  student: Student
+}
+type Student{
+    Register_No: Int!
+    First_Name: String
+    Middle_Name: String
+    Last_Name: String
+    Gender_Ref: Int
+    DOB: String
+    Community_Ref: Int
+    Caste: String
+    MailID: String
+    Aadhar_Card: String
+    Primary_ContactNumber: String
+    Secondary_ContactNumber: String
+    Address_Line1: String
+    Address_Line2: String
+    Address_Line3: String
+    Address_Line4: String
+    Correspondence_Address: String
+    Photo: String
+    Residential_Type_Ref: Int
+    FA: Int
+    Programme_Ref: Int
+    Branch_Ref: Int
+    Registration_Mode_Ref: Int
+    Blood_Group_Ref: Int
+    GATE_Cutoff_Mark: Float
+    Admission_Date: String
+    Admission_Category_Ref: Int
+    Scholarship_Received_Ref: Int
+    Scholarship_Details: String
+    NSS_NSO_YRC_Volunteer_Ref: Int
+    Hostel_Block_Room: String
 }
 
 input registered_studentsQueryInput {

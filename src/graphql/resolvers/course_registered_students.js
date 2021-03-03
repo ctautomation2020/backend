@@ -13,9 +13,9 @@ module.exports = {
     },
     course_registered_students: {
         async student(parent, {data}, {prisma}, info) {
-            return await prisma.student_list.findOne({
+            return await prisma.student.findOne({
                 where:{
-                    reg_no: parent.reg_no
+                    Register_No: parent.reg_no
                 }
             })
         }

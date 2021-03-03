@@ -1,0 +1,23 @@
+type Query {
+    internal_calc(data: Internal_calc_input): [Internal_calc]
+}
+
+type Internal_calc{
+
+  cintcalc_id: Int!
+  course_code: String!
+  group_ref: Int!
+  session_ref: Int!
+  reg_no: Int!
+  ca: Float!
+  midterm: Float!
+  total_marks: Float!
+
+}
+
+input Internal_calc_input{
+  course_code: String
+  group_ref: Int
+  session_ref: Int
+  reg_no: Int
+}
