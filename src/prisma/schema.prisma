@@ -170,11 +170,13 @@ model course_evaluation {
   person_reference_table_course_evaluation_group_refToperson_reference_table   person_reference_table @relation("course_evaluation_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   student                                                                      student                @relation(fields: [reg_no], references: [Register_No])
   person_reference_table_course_evaluation_session_refToperson_reference_table person_reference_table @relation("course_evaluation_session_refToperson_reference_table", fields: [session_ref], references: [Reference_ID])
+  person_reference_table_course_evaluation_typeToperson_reference_table        person_reference_table @relation("course_evaluation_typeToperson_reference_table", fields: [type], references: [Reference_ID])
 
   @@index([group_ref], name: "Group_FK")
   @@index([reg_no], name: "Reg_no_FK")
   @@index([session_ref], name: "Session_FK")
   @@index([course_code], name: "course_code_FK0")
+  @@index([type], name: "course_evaluation_ibfk_5")
 }
 
 model course_extcalc {
@@ -626,6 +628,7 @@ model person_reference_table {
   course_cacomp_course_cacomp_session_refToperson_reference_table                                        course_cacomp[]               @relation("course_cacomp_session_refToperson_reference_table")
   course_evaluation_course_evaluation_group_refToperson_reference_table                                  course_evaluation[]           @relation("course_evaluation_group_refToperson_reference_table")
   course_evaluation_course_evaluation_session_refToperson_reference_table                                course_evaluation[]           @relation("course_evaluation_session_refToperson_reference_table")
+  course_evaluation_course_evaluation_typeToperson_reference_table                                       course_evaluation[]           @relation("course_evaluation_typeToperson_reference_table")
   course_internalcalc_course_internalcalc_group_refToperson_reference_table                              course_internalcalc[]         @relation("course_internalcalc_group_refToperson_reference_table")
   course_internalcalc_course_internalcalc_session_refToperson_reference_table                            course_internalcalc[]         @relation("course_internalcalc_session_refToperson_reference_table")
   course_lessonplan_course_lessonplan_group_refToperson_reference_table                                  course_lessonplan[]           @relation("course_lessonplan_group_refToperson_reference_table")

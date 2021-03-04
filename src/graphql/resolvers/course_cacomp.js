@@ -117,7 +117,7 @@ module.exports = {
                         })
                     }
 
-                    else if (marks.type == 1 && myMap.get("3" + marks.number.toString())) {
+                    else if (marks.type == 153 && myMap.get("168" + marks.number.toString())) {
                         
                         await prisma.course_evaluation.updateMany({
                             where: {
@@ -125,13 +125,17 @@ module.exports = {
                                 group_ref,
                                 session_ref,
                                 reg_no: stud.reg_no,
-                                type: { in: [1, 3] },
+                                type: { in: [153, 168] },
                                 number: marks.number,
 
                             },
 
                             data: {
-                                type: 3,
+                                person_reference_table_course_evaluation_typeToperson_reference_table:{
+                                    connect: {
+                                        Reference_ID: type
+                                    }
+                                },
                                 weighted_mark: marks.marks_obtained / marks.total_mark * 100
                             }
 
@@ -151,7 +155,7 @@ module.exports = {
                         group_ref,
                         session_ref,
                         reg_no: stud.reg_no,
-                        type: { not: 3 }
+                        type: { not: 168 }
                     }
                 })
 
@@ -164,7 +168,7 @@ module.exports = {
                         group_ref,
                         session_ref,
                         reg_no: stud.reg_no,
-                        type: 3
+                        type: 168
                     }
                 })
 
