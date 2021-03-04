@@ -1,8 +1,7 @@
 module.exports={
     Query:{
         async attendance(parent, {data}, {prisma}, info) {
-            console.log(data)
-
+           
 
             return await prisma.course_attendance.findMany({
                 where:{
@@ -70,18 +69,20 @@ module.exports={
                             presence: stud.presence
                         }
                     })
-                    console.log(a)
+                    
                 })
             return true;
         }
     },
     course_attendance: {
         async student(parent, {data}, {prisma}, info) {
-            return await prisma.student_list.findOne({
+            return await prisma.student.findOne({
+
                 where:{
-                    reg_no: parent.reg_no
+                    Register_No: parent.reg_no
                 }
             })
+            
         }
     }
 }
