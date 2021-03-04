@@ -118,28 +118,28 @@ module.exports = {
                     }
 
                     else if (marks.type == 153 && myMap.get("168" + marks.number.toString())) {
+
+                        await prisma.$queryRaw`UPDATE course_evaluation
+                        SET type=168,weighted_mark=${marks.marks_obtained / marks.total_mark * 100}
+                        WHERE course_code=${course_code} AND session_ref=${session_ref} AND group_ref=${group_ref} AND 
+                        reg_no=${stud.reg_no} AND type IN(153,168) AND number=${marks.number}`
                         
-                        await prisma.course_evaluation.updateMany({
-                            where: {
-                                course_code,
-                                group_ref,
-                                session_ref,
-                                reg_no: stud.reg_no,
-                                type: { in: [153, 168] },
-                                number: marks.number,
+                        // await prisma.course_evaluation.updateMany({
+                        //     where: {
+                        //         course_code,
+                        //         group_ref,
+                        //         session_ref,
+                        //         reg_no: stud.reg_no,
+                        //         type: { in: [153, 168] },
+                        //         number: marks.number,
 
-                            },
+                        //     },
 
-                            data: {
-                                person_reference_table_course_evaluation_typeToperson_reference_table:{
-                                    connect: {
-                                        Reference_ID: type
-                                    }
-                                },
-                                weighted_mark: marks.marks_obtained / marks.total_mark * 100
-                            }
+                        //     data: {
+                        //         ...ref_data
+                        //     }
 
-                        })
+                        // })
                     }
 
                 }

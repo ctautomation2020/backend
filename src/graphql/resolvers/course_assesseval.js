@@ -15,7 +15,7 @@ module.exports = {
     Mutation: {
         async createAssess_evaluation(parent, {data}, {prisma,auth,req}, info) {
             const Person_ID = auth(req,2)
-            const {course_code,group_ref,session_ref,assess_num,reg_no,type, ...remData} = data
+            const {course_code,group_ref,session_ref,assess_num,reg_no, ...remData} = data
 
             let total = 0 
 
@@ -78,7 +78,7 @@ module.exports = {
                     },
                     person_reference_table_course_evaluation_typeToperson_reference_table:{
                         connect: {
-                            Reference_ID: type
+                            Reference_ID: 153
                         }
                     },
                     
