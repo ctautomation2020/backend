@@ -63,12 +63,12 @@ module.exports = {
                             Register_No:reg_no
                         }
                     },
-                    person_reference_table_course_assigneval_group_refToperson_reference_table:{
+                    person_reference_table_course_evaluation_group_refToperson_reference_table:{
                         connect: {
                             Reference_ID: group_ref
                         }
                     },
-                    person_reference_table_course_assigneval_session_refToperson_reference_table:{
+                    person_reference_table_course_evaluation_session_refToperson_reference_table:{
                         connect: {
                             Reference_ID: session_ref
                         }
