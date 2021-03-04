@@ -120,7 +120,7 @@ model course_assignment {
 }
 
 model course_attendance {
-  cattend_id                                                                   Int                    @id
+  cattend_id                                                                   Int                    @id @default(autoincrement())
   course_code                                                                  String
   group_ref                                                                    Int
   session_ref                                                                  Int

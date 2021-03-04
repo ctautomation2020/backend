@@ -24,9 +24,9 @@ module.exports={
                                     course_code
                                 }
                             },
-                            student_list:{
+                            student:{
                                 connect: {
-                                    reg_no: stud.reg_no
+                                    Register_No: stud.reg_no
                                 }
                             },
                             person_reference_table_course_attendance_group_refToperson_reference_table:{

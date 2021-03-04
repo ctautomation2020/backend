@@ -2,8 +2,9 @@ type course_attendance {
   cattend_id: Int!            
   course_code: String!
   group_ref: Int!
+  reg_no: Int!
   session_ref: Int!
-  student: student_list!
+  student: Student!
   date: String!
   period: Int!
   presence: String!
