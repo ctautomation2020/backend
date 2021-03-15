@@ -104,8 +104,7 @@ model course_assignment {
   entry_date                                                                   DateTime
   assign_num                                                                   Int
   question_num                                                                 String
-  // This type is currently not supported.
-  // question_stmt                                                             blob?
+  question_stmt                                                                String?
   question_img                                                                 String?
   co_num                                                                       Int
   marks                                                                        Int
@@ -144,15 +143,18 @@ model course_cacomp {
   course_code                                                              String
   group_ref                                                                Int
   session_ref                                                              Int
-  component                                                                String
-  total_marks                                                              Int
+  type                                                                     Int
+  number                                                                   Int
+  weightage                                                                Int
   course_list                                                              course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_course_cacomp_group_refToperson_reference_table   person_reference_table @relation("course_cacomp_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   person_reference_table_course_cacomp_session_refToperson_reference_table person_reference_table @relation("course_cacomp_session_refToperson_reference_table", fields: [session_ref], references: [Reference_ID])
+  person_reference_table_course_cacomp_typeToperson_reference_table        person_reference_table @relation("course_cacomp_typeToperson_reference_table", fields: [type], references: [Reference_ID])
 
   @@index([course_code], name: "code_fk10_idx")
   @@index([group_ref], name: "group_fk10_idx")
   @@index([session_ref], name: "session_fk10_idx")
+  @@index([type], name: "type_fk10")
 }
 
 model course_evaluation {
@@ -176,7 +178,7 @@ model course_evaluation {
   @@index([reg_no], name: "Reg_no_FK")
   @@index([session_ref], name: "Session_FK")
   @@index([course_code], name: "course_code_FK0")
-  @@index([type], name: "course_evaluation_ibfk_5")
+  @@index([type], name: "course_evaluation_fk16")
 }
 
 model course_extcalc {
@@ -345,7 +347,13 @@ model person {
   person_project_allocation                                                person_project_allocation[]
   person_project_proposal                                                  person_project_proposal[]
   person_publication                                                       person_publication[]
+  person_qualification                                                     person_qualification[]
+  person_responsibility                                                    person_responsibility[]
+  person_scholardetails                                                    person_scholardetails[]
+  person_specialization                                                    person_specialization[]
+  person_supervision                                                       person_supervision[]
   person_travel_history                                                    person_travel_history[]
+  student                                                                  student[]
   subj_allot                                                               subj_allot[]
 
   @@index([Community_Ref], name: "Community_Reference_ID_FK_idx")
@@ -588,19 +596,24 @@ model person_publication {
 }
 
 model person_qualification {
-  Qualification_ID        Int     @id @default(autoincrement())
-  Person_ID               Int
-  Qualification_Level_Ref Int?
-  Degree_Ref              Int?
-  Branch_Ref              Int?
-  Institution             String?
-  University              String?
-  Start_Date              Int?
-  End_Date                Int?
-  Class_Obtained_Ref      Int?
-  Thesis_Title            String?
-  Specialization          String?
-  Faculty_Research        String?
+  Qualification_ID                                                                            Int                     @id @default(autoincrement())
+  Person_ID                                                                                   Int
+  Qualification_Level_Ref                                                                     Int?
+  Degree_Ref                                                                                  Int?
+  Branch_Ref                                                                                  Int?
+  Institution                                                                                 String?
+  University                                                                                  String?
+  Start_Date                                                                                  Int?
+  End_Date                                                                                    Int?
+  Class_Obtained_Ref                                                                          Int?
+  Thesis_Title                                                                                String?
+  Specialization                                                                              String?
+  Faculty_Research                                                                            String?
+  person_reference_table_person_qualification_Branch_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Branch_RefToperson_reference_table", fields: [Branch_Ref], references: [Reference_ID])
+  person_reference_table_person_qualification_Class_Obtained_RefToperson_reference_table      person_reference_table? @relation("person_qualification_Class_Obtained_RefToperson_reference_table", fields: [Class_Obtained_Ref], references: [Reference_ID])
+  person_reference_table_person_qualification_Degree_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Degree_RefToperson_reference_table", fields: [Degree_Ref], references: [Reference_ID])
+  person                                                                                      person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_qualification_Qualification_Level_RefToperson_reference_table person_reference_table? @relation("person_qualification_Qualification_Level_RefToperson_reference_table", fields: [Qualification_Level_Ref], references: [Reference_ID])
 
   @@index([Branch_Ref], name: "Branch_Reference_ID_FK_idx")
   @@index([Class_Obtained_Ref], name: "Class_Reference_ID_FK_idx")
@@ -626,6 +639,7 @@ model person_reference_table {
   course_attendance_course_attendance_session_refToperson_reference_table                                course_attendance[]           @relation("course_attendance_session_refToperson_reference_table")
   course_cacomp_course_cacomp_group_refToperson_reference_table                                          course_cacomp[]               @relation("course_cacomp_group_refToperson_reference_table")
   course_cacomp_course_cacomp_session_refToperson_reference_table                                        course_cacomp[]               @relation("course_cacomp_session_refToperson_reference_table")
+  course_cacomp_course_cacomp_typeToperson_reference_table                                               course_cacomp[]               @relation("course_cacomp_typeToperson_reference_table")
   course_evaluation_course_evaluation_group_refToperson_reference_table                                  course_evaluation[]           @relation("course_evaluation_group_refToperson_reference_table")
   course_evaluation_course_evaluation_session_refToperson_reference_table                                course_evaluation[]           @relation("course_evaluation_session_refToperson_reference_table")
   course_evaluation_course_evaluation_typeToperson_reference_table                                       course_evaluation[]           @relation("course_evaluation_typeToperson_reference_table")
@@ -656,6 +670,18 @@ model person_reference_table {
   person_project_proposal_person_project_proposal_Status_RefToperson_reference_table                     person_project_proposal[]     @relation("person_project_proposal_Status_RefToperson_reference_table")
   person_publication_person_publication_Level_RefToperson_reference_table                                person_publication[]          @relation("person_publication_Level_RefToperson_reference_table")
   person_publication_person_publication_Publication_Type_RefToperson_reference_table                     person_publication[]          @relation("person_publication_Publication_Type_RefToperson_reference_table")
+  person_qualification_person_qualification_Branch_RefToperson_reference_table                           person_qualification[]        @relation("person_qualification_Branch_RefToperson_reference_table")
+  person_qualification_person_qualification_Class_Obtained_RefToperson_reference_table                   person_qualification[]        @relation("person_qualification_Class_Obtained_RefToperson_reference_table")
+  person_qualification_person_qualification_Degree_RefToperson_reference_table                           person_qualification[]        @relation("person_qualification_Degree_RefToperson_reference_table")
+  person_qualification_person_qualification_Qualification_Level_RefToperson_reference_table              person_qualification[]        @relation("person_qualification_Qualification_Level_RefToperson_reference_table")
+  person_responsibility                                                                                  person_responsibility[]
+  person_scholardetails_person_reference_tableToperson_scholardetails_Fellowship_Received_Ref            person_scholardetails[]       @relation("person_reference_tableToperson_scholardetails_Fellowship_Received_Ref")
+  person_scholardetails_person_reference_tableToperson_scholardetails_Guide_Type_Ref                     person_scholardetails[]       @relation("person_reference_tableToperson_scholardetails_Guide_Type_Ref")
+  person_scholardetails_person_reference_tableToperson_scholardetails_Registration_Mode_Ref              person_scholardetails[]       @relation("person_reference_tableToperson_scholardetails_Registration_Mode_Ref")
+  person_scholardetails_person_reference_tableToperson_scholardetails_Status_Ref                         person_scholardetails[]       @relation("person_reference_tableToperson_scholardetails_Status_Ref")
+  person_supervision_person_reference_tableToperson_supervision_Degree_Ref                               person_supervision[]          @relation("person_reference_tableToperson_supervision_Degree_Ref")
+  person_supervision_person_reference_tableToperson_supervision_Guide_Type_Ref                           person_supervision[]          @relation("person_reference_tableToperson_supervision_Guide_Type_Ref")
+  person_supervision_person_reference_tableToperson_supervision_Status_Ref                               person_supervision[]          @relation("person_reference_tableToperson_supervision_Status_Ref")
   student_person_reference_tableTostudent_Admission_Category_Ref                                         student[]                     @relation("person_reference_tableTostudent_Admission_Category_Ref")
   student_person_reference_tableTostudent_Blood_Group_Ref                                                student[]                     @relation("person_reference_tableTostudent_Blood_Group_Ref")
   student_person_reference_tableTostudent_Branch_Ref                                                     student[]                     @relation("person_reference_tableTostudent_Branch_Ref")
@@ -680,34 +706,41 @@ model person_reference_table {
 }
 
 model person_responsibility {
-  Responsibility_ID  Int       @id @default(autoincrement())
-  Person_ID          Int
-  Responsibility_Ref Int?
-  Description        String?
-  Start_Date         DateTime?
-  End_Date           DateTime?
+  Responsibility_ID      Int                     @id @default(autoincrement())
+  Person_ID              Int
+  Responsibility_Ref     Int?
+  Description            String?
+  Start_Date             DateTime?
+  End_Date               DateTime?
+  person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table person_reference_table? @relation(fields: [Responsibility_Ref], references: [Reference_ID])
 
   @@index([Person_ID], name: "Person_ID_FK211")
   @@index([Responsibility_Ref], name: "Responsibility_Type_Reference_FK_idx")
 }
 
 model person_scholardetails {
-  Scholar_ID              Int       @id @default(autoincrement())
-  Person_ID               Int
-  Reg_No                  String?
-  Scholar_Name            String?
-  Title                   String?
-  Status_Ref              Int?
-  Guide_Type_Ref          Int?
-  Fellowship_Received_Ref Int?
-  Fellowship_Agency       String?
-  Fellowship_Amount       Float?
-  Year_Of_Registration    DateTime?
-  Research_Area           String?
-  Registration_Mode_Ref   Int?
-  Fellowship_Name         String?
-  Fellowship_Year         DateTime?
-  Year_Of_Completion      DateTime?
+  Scholar_ID                                                                                   Int                     @id @default(autoincrement())
+  Person_ID                                                                                    Int
+  Reg_No                                                                                       String?
+  Scholar_Name                                                                                 String?
+  Title                                                                                        String?
+  Status_Ref                                                                                   Int?
+  Guide_Type_Ref                                                                               Int?
+  Fellowship_Received_Ref                                                                      Int?
+  Fellowship_Agency                                                                            String?
+  Fellowship_Amount                                                                            Float?
+  Year_Of_Registration                                                                         DateTime?
+  Research_Area                                                                                String?
+  Registration_Mode_Ref                                                                        Int?
+  Fellowship_Name                                                                              String?
+  Fellowship_Year                                                                              DateTime?
+  Year_Of_Completion                                                                           DateTime?
+  person_reference_table_person_reference_tableToperson_scholardetails_Fellowship_Received_Ref person_reference_table? @relation("person_reference_tableToperson_scholardetails_Fellowship_Received_Ref", fields: [Fellowship_Received_Ref], references: [Reference_ID])
+  person_reference_table_person_reference_tableToperson_scholardetails_Guide_Type_Ref          person_reference_table? @relation("person_reference_tableToperson_scholardetails_Guide_Type_Ref", fields: [Guide_Type_Ref], references: [Reference_ID])
+  person                                                                                       person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_reference_tableToperson_scholardetails_Registration_Mode_Ref   person_reference_table? @relation("person_reference_tableToperson_scholardetails_Registration_Mode_Ref", fields: [Registration_Mode_Ref], references: [Reference_ID])
+  person_reference_table_person_reference_tableToperson_scholardetails_Status_Ref              person_reference_table? @relation("person_reference_tableToperson_scholardetails_Status_Ref", fields: [Status_Ref], references: [Reference_ID])
 
   @@index([Fellowship_Received_Ref], name: "Fellowship_Received_Ref_FK_idx")
   @@index([Guide_Type_Ref], name: "Guide_Type_Reference_ID_FK_idx")
@@ -724,19 +757,24 @@ model person_specialization {
   AOS3              String?
   AOS4              String?
   AOS5              String?
+  person            person  @relation(fields: [Person_ID], references: [Person_ID])
 
   @@index([Person_ID], name: "Person_ID_FK213")
 }
 
 model person_supervision {
-  Supervision_ID Int  @id @default(autoincrement())
-  Person_ID      Int
-  Degree_Ref     Int?
-  Guide_Type_Ref Int?
-  Reg_No         Int?
-  Start_Year     Int?
-  End_Year       Int?
-  Status_Ref     Int?
+  Supervision_ID                                                                   Int                     @id @default(autoincrement())
+  Person_ID                                                                        Int
+  Degree_Ref                                                                       Int?
+  Guide_Type_Ref                                                                   Int?
+  Reg_No                                                                           Int?
+  Start_Year                                                                       Int?
+  End_Year                                                                         Int?
+  Status_Ref                                                                       Int?
+  person_reference_table_person_reference_tableToperson_supervision_Degree_Ref     person_reference_table? @relation("person_reference_tableToperson_supervision_Degree_Ref", fields: [Degree_Ref], references: [Reference_ID])
+  person_reference_table_person_reference_tableToperson_supervision_Guide_Type_Ref person_reference_table? @relation("person_reference_tableToperson_supervision_Guide_Type_Ref", fields: [Guide_Type_Ref], references: [Reference_ID])
+  person                                                                           person                  @relation(fields: [Person_ID], references: [Person_ID])
+  person_reference_table_person_reference_tableToperson_supervision_Status_Ref     person_reference_table? @relation("person_reference_tableToperson_supervision_Status_Ref", fields: [Status_Ref], references: [Reference_ID])
 
   @@index([Degree_Ref], name: "Degree_Reference_ID_FK1_idx")
   @@index([Guide_Type_Ref], name: "Guide_Type_Reference_ID_FK2_idx")
@@ -800,6 +838,7 @@ model student {
   person_reference_table_person_reference_tableTostudent_Blood_Group_Ref           person_reference_table?       @relation("person_reference_tableTostudent_Blood_Group_Ref", fields: [Blood_Group_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableTostudent_Branch_Ref                person_reference_table?       @relation("person_reference_tableTostudent_Branch_Ref", fields: [Branch_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableTostudent_Community_Ref             person_reference_table?       @relation("person_reference_tableTostudent_Community_Ref", fields: [Community_Ref], references: [Reference_ID])
+  person                                                                           person?                       @relation(fields: [FA], references: [Person_ID])
   person_reference_table_person_reference_tableTostudent_Gender_Ref                person_reference_table?       @relation("person_reference_tableTostudent_Gender_Ref", fields: [Gender_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableTostudent_NSS_NSO_YRC_Volunteer_Ref person_reference_table?       @relation("person_reference_tableTostudent_NSS_NSO_YRC_Volunteer_Ref", fields: [NSS_NSO_YRC_Volunteer_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableTostudent_Programme_Ref             person_reference_table?       @relation("person_reference_tableTostudent_Programme_Ref", fields: [Programme_Ref], references: [Reference_ID])
@@ -826,6 +865,7 @@ model student {
   @@index([Blood_Group_Ref], name: "Blood_Group_FK_idx")
   @@index([Branch_Ref], name: "Branch_Reference_ID_FK_idx")
   @@index([Community_Ref], name: "Community_Reference_ID_FK_idx")
+  @@index([FA], name: "FA_Ref_FK23")
   @@index([Gender_Ref], name: "Gender_Reference_ID_FK_idx")
   @@index([Programme_Ref], name: "Programme_Reference_ID_FK_idx")
   @@index([Registration_Mode_Ref], name: "Registration_Mode_FK_idx")
@@ -1007,12 +1047,12 @@ model subj_allot {
 model user_info {
   user_ID       Int       @id @default(autoincrement())
   username      Int       @unique
-  user_role     Int?
+  user_role     String?
   password      String?
   status        String?
   create_time   DateTime? @default(now())
   refresh_token String?
-  updated_time  DateTime?
+  updated_time  DateTime? @default(now())
   person        person?
 }
 
