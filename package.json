@@ -24,7 +24,8 @@
     "graphql-tools": "^6.2.4",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.2",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "rand-token": "^1.0.1"
   },
   "devDependencies": {
     "@prisma/cli": "^2.7.1"

@@ -4,7 +4,9 @@ type Query{
 
 type Mutation{
     auth_createUser(data:createUser_infoInput!): user_infoPayload
+    auth_refreshToken(data:refreshToken_infoInput!): loginPayload
     auth_updateUser(data:updateUser_infoInput!): user_infoPayload
+    auth_logout: String
 }
 
 type user_info {
@@ -45,5 +47,12 @@ input user_infoQueryInput{
 
 type loginPayload{
   token: String!
+  refresh_token: String!
   Person_ID: Int!
 }
+
+input refreshToken_infoInput{
+  username: Int!
+  refresh_token: String!
+}
+

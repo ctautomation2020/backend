@@ -1005,13 +1005,15 @@ model subj_allot {
 }
 
 model user_info {
-  user_ID     Int       @id @default(autoincrement())
-  username    Int       @unique
-  user_role   Int?
-  password    String?
-  status      String?
-  create_time DateTime? @default(now())
-  person      person?
+  user_ID       Int       @id @default(autoincrement())
+  username      Int       @unique
+  user_role     Int?
+  password      String?
+  status        String?
+  create_time   DateTime? @default(now())
+  refresh_token String?
+  updated_time  DateTime?
+  person        person?
 }
 
 model alumni {

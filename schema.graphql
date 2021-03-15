@@ -95,7 +95,9 @@ type Mutation {
   updatePersonTravelhistory(data: travelUpdateInput!): person_travel_history!
   deletePersonTravelhistory(data: travelDeleteInput!): person_travel_history!
   auth_createUser(data: createUser_infoInput!): user_infoPayload
+  auth_refreshToken(data: refreshToken_infoInput!): loginPayload
   auth_updateUser(data: updateUser_infoInput!): user_infoPayload
+  auth_logout: String
 }
 
 type course_assessment {
@@ -524,6 +526,7 @@ input credentialQueryInput {
 type loginPayload {
   token: String!
   Person_ID: Int!
+  refresh_token: String!
 }
 
 type Person {
@@ -933,6 +936,11 @@ input updateUser_infoInput {
 input user_infoQueryInput {
   username: Int!
   password: String!
+}
+
+input refreshToken_infoInput {
+  username: Int!
+  refresh_token: String!
 }
 
 schema {
