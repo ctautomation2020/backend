@@ -19,7 +19,9 @@ module.exports={
 
     Mutation:{
         async createPersonPublication(parent, {data}, {prisma}, info) {
-            const {Person_ID,Publication_Type_Ref,Level_Ref, ...noref_data} = data
+            const Person_ID = auth(req,2)
+
+            const {Publication_Type_Ref,Level_Ref, ...noref_data} = data
             const ref_data = noref_data
             if(Publication_Type_Ref){
                 ref_data.person_reference_table_person_publication_Publication_Type_RefToperson_reference_table={
@@ -48,6 +50,7 @@ module.exports={
             })
         },
         async updatePersonPublication(parent, {data}, {prisma}, info) {
+            const Person_ID = auth(req,2)
             const {Publication_ID,Publication_Type_Ref,Level_Ref, ...noref_data} = data
             const ref_data = noref_data
             if(Publication_Type_Ref){
@@ -75,7 +78,8 @@ module.exports={
             })
         },
 
-        async deletePersonPublication(parent, {data}, {prisma}, info) { 
+        async deletePersonPublication(parent, {data}, {prisma}, info) {
+            const Person_ID = auth(req,2) 
             return await prisma.person_publication.delete({
                 where:{
                     Publication_ID:data.Publication_ID

@@ -89,7 +89,7 @@ module.exports = {
         },
 
         async updateAssign_evaluation(parent, {data}, {prisma,auth,req}, info) {
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
             const {course_code,group_ref,session_ref,assign_num,reg_no, ...remData} = data
             
             remData.questions.forEach(async(ques)=>{

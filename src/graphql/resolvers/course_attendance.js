@@ -12,7 +12,7 @@ module.exports={
     },
     Mutation: {
         async create_attendance(parent, {data}, {prisma,auth,req}, info) {
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
             const {course_code,group_ref,session_ref,period,date, ...remData} = data
             
             remData.students.forEach(async(stud)=>{
@@ -50,7 +50,7 @@ module.exports={
         },
 
         async update_attendance(parent, {data}, {prisma,auth,req}, info) {
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
             const {course_code,group_ref,session_ref,period,date, ...remData} = data
             
             remData.students.forEach(async(stud)=>{

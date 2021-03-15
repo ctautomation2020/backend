@@ -21,7 +21,7 @@ module.exports = {
         async createPersonExperience(parent, {data}, {prisma,auth,req}, info) {
             const {Experience_ID,Designation_Ref,Emp_Category_Ref,Work_Nature_Ref, ...noref_data} = data
             const ref_data = noref_data
-            const Person_ID = auth(req,3)
+            const Person_ID = auth(req,2)
             
 
             if(Designation_Ref){
@@ -62,7 +62,7 @@ module.exports = {
             const {Experience_ID,Designation_Ref,Emp_Category_Ref,Work_Nature_Ref, ...noref_data} = data
             const ref_data = noref_data
             
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
 
             if(Designation_Ref){
                 ref_data.person_reference_table_person_experience_Designation_RefToperson_reference_table={

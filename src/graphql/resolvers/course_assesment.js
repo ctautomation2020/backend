@@ -38,7 +38,7 @@ module.exports = {
     Mutation: {
         async createAssessment(parent, {data}, {prisma,auth,req}, info){
             //console.log(JSON.stringify(data.section[0].questions[0],null,2))
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
             const {course_code,group_ref,session_ref,assess_num,entry_date, ...remData} = data
             remData.section.forEach(async(sec)=>{
                 sec.questions.forEach(async(ques)=>{

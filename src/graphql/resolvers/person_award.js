@@ -21,7 +21,7 @@ module.exports = {
 
     Mutation: {
         async createPersonAward(parent, {data}, {prisma,auth,req}, info) {
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
       
             const {File, ...no_refdata} = data
             const award =  await prisma.person_awards.create({
@@ -55,7 +55,7 @@ module.exports = {
         },
 
         async updatePersonAward(parent, {data}, {prisma,auth,req}, info) {
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
             const {Award_ID, ...ref_data} = data 
             return await prisma.person_awards.update({
                 where:{
@@ -68,7 +68,7 @@ module.exports = {
         },
 
         async deletePersonAward(parent, {data}, {prisma,auth,req}, info) {
-            const Person_ID = auth(req)
+            const Person_ID = auth(req,2)
             
             return await prisma.person_awards.delete({
                 where:{

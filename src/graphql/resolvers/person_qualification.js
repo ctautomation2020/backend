@@ -19,7 +19,8 @@ module.exports = {
 
     Mutation: {
         async createPersonQualification(parent, {data}, {prisma}, info) {
-            const {Person_ID,Qualification_Level_Ref,Degree_Ref,Branch_Ref,Class_Obtained_Ref, ...noref_data} = data
+            const Person_ID = auth(req,2)
+            const {Qualification_Level_Ref,Degree_Ref,Branch_Ref,Class_Obtained_Ref, ...noref_data} = data
             const ref_data = noref_data
             if(Branch_Ref){
                 ref_data.person_reference_table_person_qualification_Branch_RefToperson_reference_table={
@@ -62,6 +63,7 @@ module.exports = {
         },
 
         async updatePersonQualification(parent, {data}, {prisma}, info) {
+            const Person_ID = auth(req,2)
             const {Qualification_ID,Qualification_Level_Ref,Degree_Ref,Branch_Ref,Class_Obtained_Ref, ...noref_data} = data
             const ref_data = noref_data
             if(Branch_Ref){
@@ -103,6 +105,7 @@ module.exports = {
         },
 
         async deletePersonQualification(parent, {data}, {prisma}, info){
+            const Person_ID = auth(req,2)
 
             return await prisma.person_qualification.delete({
                 where:{

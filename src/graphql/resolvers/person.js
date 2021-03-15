@@ -22,7 +22,7 @@ module.exports={
         
         async createPerson(parent, {data}, {prisma,req,auth}, info) {
 
-            const Person_ID = auth(req,1)
+            const Person_ID = auth(req,2)
             
 
 
@@ -81,7 +81,7 @@ module.exports={
 
             const{Person_ID,Prefix_Ref,Gender_Ref,Community_Ref,Marital_Status_Ref,Designation,...noref_data} = data
             
-            const Auth_Person_ID = auth(req)
+            const Auth_Person_ID = auth(req,2)
 
             const ref_data = noref_data
             if(Community_Ref){
@@ -135,9 +135,10 @@ module.exports={
     Person: {
 
         async Person_Qualification(parent, {data}, {prisma}, info) {
+            const Person_ID = auth(req,2)
             return await prisma.person_qualification.findMany({
                 where: {
-                    Person_ID: parent.Person_ID
+                    Person_ID: Person_ID
                 }
             })
         }
