@@ -20,7 +20,7 @@
       
  The auth function is changed accordingly that only the user with required previlege will be allowed to perform the mutation.
  
- eg: 
+ Eg: 
  
             async createPersonExperience(parent, {data}, {prisma,auth,req}, info) {
  
