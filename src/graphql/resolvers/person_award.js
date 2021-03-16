@@ -3,7 +3,7 @@ let path = require('path')
 module.exports = {
     Query: {
         async award(parent, {data}, {prisma}, info) {
-            return await prisma.person_awards.findOne({
+            return await prisma.person_awards.findUnique({
                 where:{
                     Award_ID: data.Award_ID
                 }

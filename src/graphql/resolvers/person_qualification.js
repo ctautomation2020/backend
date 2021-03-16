@@ -1,7 +1,7 @@
 module.exports = {
     Query: {
         async qualification(parent, args, {prisma}, info) {
-            return await prisma.person_qualification.findOne({
+            return await prisma.person_qualification.findUnique({
                 where:{
                     Qualification_ID: args.data.Qualification_ID
                 }

@@ -1,7 +1,7 @@
 module.exports= {
     Query: {
         async course(parent, {data}, {prisma}, info) {
-            return await prisma.course_list.findOne({
+            return await prisma.course_list.findUnique({
                 where:{
                     course_code: data.course_code
                 }

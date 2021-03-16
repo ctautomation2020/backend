@@ -1,7 +1,7 @@
 module.exports={
     Query:{
         async travel(parent, args, {prisma}, info) {
-            return await prisma.person_travel_history.findOne({
+            return await prisma.person_travel_history.findUnique({
                 where:{
                     Travel_ID: args.data.Travel_ID
                 }

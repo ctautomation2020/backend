@@ -65,7 +65,7 @@ module.exports = {
 
             if (user.refresh_token == data.refresh_token) {
 
-                const token = jwt.sign({ "username": user.username, "user_role": user.user_role }, "ct_admin", { expiresIn: 600 })
+                const token = jwt.sign({ "username": user.username, "user_role": user.user_role, "expiresIN": Date.now() + 600 }, "ct_admin", { expiresIn: 600 })
                 const refresh_token = randtoken.uid(128)
 
                 await prisma.user_info.update({
@@ -96,7 +96,7 @@ module.exports = {
                 data.password = await bcrypt.hash(data.password, 8)
             }
 
-            const cid = await prisma.user_info.findOne({
+            const cid = await prisma.user_info.findUnique({
                 where: {
                     username: data.username
                 }

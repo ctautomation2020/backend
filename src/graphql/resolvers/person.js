@@ -9,7 +9,7 @@ module.exports={
 
         async person(parent, args, {prisma,req}, info){
             const Person_ID = getPersonID(req)
-            return await prisma.person.findOne({
+            return await prisma.person.findUnique({
                 where: {
                     Person_ID
                 }

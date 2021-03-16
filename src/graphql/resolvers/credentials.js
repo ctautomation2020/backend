@@ -5,7 +5,7 @@ module.exports= {
     Query:{
 
         async login(parent,{data},{prisma},info){
-            const user = await prisma.credentials.findOne({where:{
+            const user = await prisma.credentials.findUnique({where:{
                 Username:data.Username
             }})
             if(!user)
@@ -46,7 +46,7 @@ module.exports= {
                 data.Password = await bcrypt.hash(data.Password,8)
             }
             const {Person_ID,...refData} = data
-            const cid = await prisma.credentials.findOne({where:{
+            const cid = await prisma.credentials.findUnique({where:{
                 Person_ID:data.Person_ID
             }})
             return await prisma.credentials.update({

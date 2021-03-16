@@ -76,7 +76,7 @@ module.exports={
     },
     course_attendance: {
         async student(parent, {data}, {prisma}, info) {
-            return await prisma.student.findOne({
+            return await prisma.student.findUnique({
 
                 where:{
                     Register_No: parent.reg_no

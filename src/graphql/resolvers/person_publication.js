@@ -1,7 +1,7 @@
 module.exports={
     Query:{
         async publication(parent, args, {prisma}, info) {
-            return await prisma.person_publication.findOne({
+            return await prisma.person_publication.findUnique({
                 where:{
                     Publication_ID: args.data.Publication_ID
                 }

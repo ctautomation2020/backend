@@ -8,11 +8,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model alumni {
+  Register_No   Int     @id
+  Working_Org   String  @db.VarChar(255)
+  Designation   String  @db.VarChar(255)
+  Alumni_Status Int
+  student       student @relation(fields: [Register_No], references: [Register_No])
+}
+
 model course_artimat {
   cartimat_id Int         @id @default(autoincrement())
-  course_code String
+  course_code String      @db.VarChar(15)
   conum       Int
-  costmt      String
+  costmt      String      @db.VarChar(255)
   po1         Int
   po2         Int
   po3         Int
@@ -35,13 +43,13 @@ model course_artimat {
 
 model course_assesseval {
   cassesseval_id                                                               Int                    @id @default(autoincrement())
-  course_code                                                                  String
+  course_code                                                                  String                 @db.VarChar(15)
   group_ref                                                                    Int
   session_ref                                                                  Int
   assess_num                                                                   Int
-  question_num                                                                 String
+  question_num                                                                 String                 @db.VarChar(10)
   reg_no                                                                       Int
-  mark                                                                         Float
+  mark                                                                         Float                  @db.Float
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_course_assesseval_group_refToperson_reference_table   person_reference_table @relation("course_assesseval_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   student                                                                      student                @relation(fields: [reg_no], references: [Register_No])
@@ -55,18 +63,18 @@ model course_assesseval {
 
 model course_assessment {
   cassess_id                                                                   Int                    @id @default(autoincrement())
-  course_code                                                                  String
+  course_code                                                                  String                 @db.VarChar(15)
   group_ref                                                                    Int
   session_ref                                                                  Int
   assess_num                                                                   Int
-  question_num                                                                 String
-  question_stmt                                                                String?
-  question_img                                                                 String?
+  question_num                                                                 String                 @db.VarChar(10)
+  question_stmt                                                                String?                @db.LongText
+  question_img                                                                 String?                @db.VarChar(100)
   blooms_level                                                                 Int
   co_num                                                                       Int
   marks                                                                        Int
-  entry_date                                                                   DateTime
-  section                                                                      String
+  entry_date                                                                   DateTime               @db.DateTime(0)
+  section                                                                      String                 @db.VarChar(128)
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_course_assessment_group_refToperson_reference_table   person_reference_table @relation("course_assessment_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   person_reference_table_course_assessment_session_refToperson_reference_table person_reference_table @relation("course_assessment_session_refToperson_reference_table", fields: [session_ref], references: [Reference_ID])
@@ -78,13 +86,13 @@ model course_assessment {
 
 model course_assigneval {
   cassigneval_id                                                               Int                    @id @default(autoincrement())
-  course_code                                                                  String
+  course_code                                                                  String                 @db.VarChar(15)
   group_ref                                                                    Int
   session_ref                                                                  Int
   assign_num                                                                   Int
   question_num                                                                 Int
   reg_no                                                                       Int
-  mark                                                                         Float
+  mark                                                                         Float                  @db.Float
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_course_assigneval_group_refToperson_reference_table   person_reference_table @relation("course_assigneval_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   student                                                                      student                @relation(fields: [reg_no], references: [Register_No])
@@ -98,17 +106,17 @@ model course_assigneval {
 
 model course_assignment {
   cassign_id                                                                   Int                    @id @default(autoincrement())
-  course_code                                                                  String
+  course_code                                                                  String                 @db.VarChar(15)
   group_ref                                                                    Int
   session_ref                                                                  Int
-  entry_date                                                                   DateTime
+  entry_date                                                                   DateTime               @db.Date
   assign_num                                                                   Int
-  question_num                                                                 String
-  question_stmt                                                                String?
-  question_img                                                                 String?
+  question_num                                                                 String                 @db.VarChar(10)
+  question_stmt                                                                String?                @db.LongText
+  question_img                                                                 String?                @db.VarChar(100)
   co_num                                                                       Int
   marks                                                                        Int
-  deadline                                                                     DateTime
+  deadline                                                                     DateTime               @db.Date
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_course_assignment_group_refToperson_reference_table   person_reference_table @relation("course_assignment_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   person_reference_table_course_assignment_session_refToperson_reference_table person_reference_table @relation("course_assignment_session_refToperson_reference_table", fields: [session_ref], references: [Reference_ID])
@@ -120,13 +128,13 @@ model course_assignment {
 
 model course_attendance {
   cattend_id                                                                   Int                    @id @default(autoincrement())
-  course_code                                                                  String
+  course_code                                                                  String                 @db.VarChar(15)
   group_ref                                                                    Int
   session_ref                                                                  Int
   reg_no                                                                       Int
-  date                                                                         DateTime
+  date                                                                         DateTime               @db.Date
   period                                                                       Int
-  presence                                                                     String                 @default("P")
+  presence                                                                     String                 @default("P") @db.Char(1)
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_course_attendance_group_refToperson_reference_table   person_reference_table @relation("course_attendance_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   student                                                                      student                @relation(fields: [reg_no], references: [Register_No])
@@ -140,7 +148,7 @@ model course_attendance {
 
 model course_cacomp {
   ccacomp_id                                                               Int                    @id @default(autoincrement())
-  course_code                                                              String
+  course_code                                                              String                 @db.VarChar(15)
   group_ref                                                                Int
   session_ref                                                              Int
   type                                                                     Int
@@ -159,7 +167,7 @@ model course_cacomp {
 
 model course_evaluation {
   ceval_id                                                                     Int                    @id @default(autoincrement())
-  course_code                                                                  String
+  course_code                                                                  String                 @db.VarChar(15)
   group_ref                                                                    Int
   session_ref                                                                  Int
   type                                                                         Int
@@ -167,7 +175,7 @@ model course_evaluation {
   marks_obtained                                                               Int
   reg_no                                                                       Int
   number                                                                       Int
-  weighted_mark                                                                Float?
+  weighted_mark                                                                Float?                 @db.Float
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_course_evaluation_group_refToperson_reference_table   person_reference_table @relation("course_evaluation_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   student                                                                      student                @relation(fields: [reg_no], references: [Register_No])
@@ -183,12 +191,12 @@ model course_evaluation {
 
 model course_extcalc {
   cextcalc_id  Int    @id @default(autoincrement())
-  course_code  String
+  course_code  String @db.VarChar(15)
   group_ref    Int
   session_ref  Int
   reg_num      Int
-  question_num String
-  marks        Float
+  question_num String @db.VarChar(10)
+  marks        Float  @db.Float
 
   @@index([course_code], name: "code_fk13_idx")
   @@index([group_ref], name: "group_fk13_idx")
@@ -198,13 +206,13 @@ model course_extcalc {
 
 model course_extcomp {
   cextcomp_id      Int    @id @default(autoincrement())
-  course_code      String
+  course_code      String @db.VarChar(15)
   group_ref        Int
   session_ref      Int
-  question_num     String
+  question_num     String @db.VarChar(10)
   question_co      Int
   question_mark    Int
-  question_section String
+  question_section String @db.Char(1)
 
   @@index([course_code], name: "code_fk12_idx")
   @@index([group_ref], name: "group_fk12_idx")
@@ -213,13 +221,13 @@ model course_extcomp {
 
 model course_internalcalc {
   cintcalc_id                                                                    Int                    @id @default(autoincrement())
-  course_code                                                                    String
+  course_code                                                                    String                 @db.VarChar(15)
   group_ref                                                                      Int
   session_ref                                                                    Int
   reg_no                                                                         Int
-  ca                                                                             Float
-  midterm                                                                        Float
-  total_marks                                                                    Float
+  ca                                                                             Float                  @db.Float
+  midterm                                                                        Float                  @db.Float
+  total_marks                                                                    Float                  @db.Float
   course_list                                                                    course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_course_internalcalc_group_refToperson_reference_table   person_reference_table @relation("course_internalcalc_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
   student                                                                        student                @relation(fields: [reg_no], references: [Register_No])
@@ -233,13 +241,13 @@ model course_internalcalc {
 
 model course_lessonplan {
   clp_id                                                                       Int                    @id @default(autoincrement())
-  course_code                                                                  String
+  course_code                                                                  String                 @db.VarChar(15)
   group_ref                                                                    Int
   session_ref                                                                  Int
-  actual_date                                                                  DateTime
+  actual_date                                                                  DateTime               @db.Date
   period                                                                       Int
   course_ctopic_id                                                             Int
-  references                                                                   String?
+  references                                                                   String?                @db.VarChar(255)
   course_list                                                                  course_list            @relation(fields: [course_code], references: [course_code])
   course_topic                                                                 course_topic           @relation(fields: [course_ctopic_id], references: [ctopic_id])
   person_reference_table_course_lessonplan_group_refToperson_reference_table   person_reference_table @relation("course_lessonplan_group_refToperson_reference_table", fields: [group_ref], references: [Reference_ID])
@@ -252,13 +260,13 @@ model course_lessonplan {
 }
 
 model course_list {
-  course_code                String                       @id
+  course_code                String                       @id @db.VarChar(15)
   stream                     Int
   regulation                 Int
   semester                   Int
-  title                      String
+  title                      String                       @db.VarChar(55)
   credit                     Int
-  objectives                 String?
+  objectives                 String?                      @db.MediumText
   course_artimat             course_artimat[]
   course_assesseval          course_assesseval[]
   course_assessment          course_assessment[]
@@ -276,7 +284,7 @@ model course_list {
 
 model course_registered_students {
   cregst_id                                                                             Int                    @id @default(autoincrement())
-  course_code                                                                           String
+  course_code                                                                           String                 @db.VarChar(15)
   reg_no                                                                                Int
   semester                                                                              Int
   group_ref                                                                             Int
@@ -294,10 +302,10 @@ model course_registered_students {
 
 model course_topic {
   ctopic_id         Int                 @id @default(autoincrement())
-  course_code       String
+  course_code       String              @db.VarChar(15)
   module_num        Int
-  topic_num         String
-  topic             String
+  topic_num         String              @db.VarChar(10)
+  topic             String              @db.VarChar(100)
   conum             Int
   course_lessonplan course_lessonplan[]
 
@@ -307,29 +315,29 @@ model course_topic {
 model person {
   Person_ID                                                                Int                         @id
   Prefix_Ref                                                               Int?
-  First_Name                                                               String?
-  Last_Name                                                                String?
+  First_Name                                                               String?                     @db.VarChar(50)
+  Last_Name                                                                String?                     @db.VarChar(50)
   Gender_Ref                                                               Int?
-  DOB                                                                      DateTime?
+  DOB                                                                      DateTime?                   @db.Date
   Designation                                                              Int?
   Community_Ref                                                            Int?
-  Caste                                                                    String?
-  Primary_MailID                                                           String?
-  Secondary_MailID                                                         String?
-  Aadhar_Card                                                              Int?
-  PAN_Card                                                                 String?
-  Passport_Number                                                          String?
-  Primary_ContactNumber                                                    String?
-  Secondary_ContactNumber                                                  String?
-  Intercom_Number                                                          String?
-  Alias_Name                                                               String?
-  Address_Line1                                                            String?
-  Address_Line2                                                            String?
-  Address_Line3                                                            String?
-  Address_Line4                                                            String?
-  Photo                                                                    String?
+  Caste                                                                    String?                     @db.VarChar(50)
+  Primary_MailID                                                           String?                     @db.VarChar(50)
+  Secondary_MailID                                                         String?                     @db.VarChar(50)
+  Aadhar_Card                                                              BigInt?
+  PAN_Card                                                                 String?                     @db.VarChar(10)
+  Passport_Number                                                          String?                     @db.VarChar(10)
+  Primary_ContactNumber                                                    String?                     @db.VarChar(15)
+  Secondary_ContactNumber                                                  String?                     @db.VarChar(15)
+  Intercom_Number                                                          String?                     @db.VarChar(5)
+  Alias_Name                                                               String?                     @db.VarChar(5)
+  Address_Line1                                                            String?                     @db.VarChar(250)
+  Address_Line2                                                            String?                     @db.VarChar(250)
+  Address_Line3                                                            String?                     @db.VarChar(45)
+  Address_Line4                                                            String?                     @db.VarChar(45)
+  Photo                                                                    String?                     @db.VarChar(255)
   Marital_Status_Ref                                                       Int?
-  Room_Num                                                                 String?
+  Room_Num                                                                 String?                     @db.VarChar(6)
   person_reference_table_person_Community_RefToperson_reference_table      person_reference_table?     @relation("person_Community_RefToperson_reference_table", fields: [Community_Ref], references: [Reference_ID])
   person_reference_table_person_DesignationToperson_reference_table        person_reference_table?     @relation("person_DesignationToperson_reference_table", fields: [Designation], references: [Reference_ID])
   person_reference_table_person_Gender_RefToperson_reference_table         person_reference_table?     @relation("person_Gender_RefToperson_reference_table", fields: [Gender_Ref], references: [Reference_ID])
@@ -366,13 +374,13 @@ model person {
 model person_academic {
   Academic_ID                                                                   Int                     @id @default(autoincrement())
   Person_ID                                                                     Int
-  Course_Code                                                                   String?
-  Session                                                                       String?
+  Course_Code                                                                   String?                 @db.VarChar(7)
+  Session                                                                       String?                 @db.VarChar(20)
   Semester                                                                      Int?
-  Group                                                                         String?
+  Group                                                                         String?                 @db.VarChar(2)
   Degree_Ref                                                                    Int?
   Branch_Ref                                                                    Int?
-  Class_Time                                                                    DateTime?
+  Class_Time                                                                    DateTime?               @db.Time(0)
   Class_Type_Ref                                                                Int?
   person_reference_table_person_academic_Branch_RefToperson_reference_table     person_reference_table? @relation("person_academic_Branch_RefToperson_reference_table", fields: [Branch_Ref], references: [Reference_ID])
   person_reference_table_person_academic_Class_Type_RefToperson_reference_table person_reference_table? @relation("person_academic_Class_Type_RefToperson_reference_table", fields: [Class_Type_Ref], references: [Reference_ID])
@@ -390,11 +398,11 @@ model person_academic {
 model person_additional_duties {
   Duty_ID       Int       @id @default(autoincrement())
   Person_ID     Int
-  Duty_Allotted String?
-  Organization  String?
-  Description   String?
-  Start_Date    DateTime?
-  End_Date      DateTime?
+  Duty_Allotted String?   @db.VarChar(45)
+  Organization  String?   @db.VarChar(100)
+  Description   String?   @db.VarChar(255)
+  Start_Date    DateTime? @db.Date
+  End_Date      DateTime? @db.Date
   person        person    @relation(fields: [Person_ID], references: [Person_ID])
 
   @@index([Person_ID], name: "Person_ID_FK213")
@@ -403,11 +411,11 @@ model person_additional_duties {
 model person_awards {
   Award_ID     Int     @id @default(autoincrement())
   Person_ID    Int
-  Title        String?
-  Organization String?
-  Place        String?
-  Start_Year   Int?
-  Details      String?
+  Title        String? @db.VarChar(100)
+  Organization String? @db.VarChar(100)
+  Place        String? @db.VarChar(15)
+  Start_Year   Int?    @db.Year
+  Details      String? @db.VarChar(255)
   person       person  @relation(fields: [Person_ID], references: [Person_ID])
 
   @@index([Person_ID], name: "Person_ID_FK218")
@@ -415,9 +423,9 @@ model person_awards {
 
 model person_course_details {
   Course_ID       Int               @unique @default(autoincrement())
-  Course_Code     String            @unique
-  Course_Name     String?
-  Regulation      Int?
+  Course_Code     String            @unique @db.VarChar(7)
+  Course_Name     String?           @db.VarChar(50)
+  Regulation      Int?              @db.Year
   Credit          Int?
   person_academic person_academic[]
 
@@ -429,23 +437,19 @@ model person_events_attended {
   Person_ID                                                                                      Int
   Event_Type_Ref                                                                                 Int?
   Level_Ref                                                                                      Int?
-  Event_Title                                                                                    String?
-  Hosting_Organization                                                                           String?
-  Place                                                                                          String?
+  Event_Title                                                                                    String?                 @db.VarChar(100)
+  Hosting_Organization                                                                           String?                 @db.VarChar(100)
+  Place                                                                                          String?                 @db.VarChar(45)
   Participation_Status_Ref                                                                       Int?
-  Role                                                                                           String?
-  Start_Date                                                                                     DateTime?
-  End_Date                                                                                       DateTime?
-  Funding_Agency                                                                                 String?
+  Role                                                                                           String?                 @db.VarChar(45)
+  Start_Date                                                                                     DateTime?               @db.Date
+  End_Date                                                                                       DateTime?               @db.Date
+  Funding_Agency                                                                                 String?                 @db.VarChar(255)
   No_Of_Participants                                                                             Int?
-  // This type is currently not supported.
-  // Summary_File                                                                                blob?
-  // This type is currently not supported.
-  // Event_Schedule                                                                              blob?
-  // This type is currently not supported.
-  // Participants_Lists                                                                          blob?
-  // This type is currently not supported.
-  // Budget                                                                                      blob?
+  Summary_File                                                                                   Bytes?                  @db.Blob
+  Event_Schedule                                                                                 Bytes?                  @db.Blob
+  Participants_Lists                                                                             Bytes?                  @db.Blob
+  Budget                                                                                         Bytes?                  @db.Blob
   person_reference_table_person_events_attended_Event_Type_RefToperson_reference_table           person_reference_table? @relation("person_events_attended_Event_Type_RefToperson_reference_table", fields: [Event_Type_Ref], references: [Reference_ID])
   person_reference_table_person_events_attended_Level_RefToperson_reference_table                person_reference_table? @relation("person_events_attended_Level_RefToperson_reference_table", fields: [Level_Ref], references: [Reference_ID])
   person_reference_table_person_events_attended_Participation_Status_RefToperson_reference_table person_reference_table? @relation("person_events_attended_Participation_Status_RefToperson_reference_table", fields: [Participation_Status_Ref], references: [Reference_ID])
@@ -461,13 +465,13 @@ model person_experience {
   Experience_ID                                                                     Int                     @id @default(autoincrement())
   Person_ID                                                                         Int
   Designation_Ref                                                                   Int?
-  Organization                                                                      String?
-  Department                                                                        String?
-  Start_Date                                                                        DateTime?
-  End_Date                                                                          DateTime?
+  Organization                                                                      String?                 @db.VarChar(100)
+  Department                                                                        String?                 @db.VarChar(50)
+  Start_Date                                                                        DateTime?               @db.Date
+  End_Date                                                                          DateTime?               @db.Date
   Emp_Category_Ref                                                                  Int?
   Work_Nature_Ref                                                                   Int?
-  Position_Held                                                                     String?
+  Position_Held                                                                     String?                 @db.VarChar(45)
   person_reference_table_person_experience_Designation_RefToperson_reference_table  person_reference_table? @relation("person_experience_Designation_RefToperson_reference_table", fields: [Designation_Ref], references: [Reference_ID])
   person_reference_table_person_experience_Emp_Category_RefToperson_reference_table person_reference_table? @relation("person_experience_Emp_Category_RefToperson_reference_table", fields: [Emp_Category_Ref], references: [Reference_ID])
   person                                                                            person                  @relation(fields: [Person_ID], references: [Person_ID])
@@ -483,11 +487,11 @@ model person_guestlecture {
   GuestLecture_ID        Int                     @id @default(autoincrement())
   Person_ID              Int
   Level_Ref              Int?
-  Topic                  String?
-  Programme              String?
-  Organization           String?
-  Place                  String?
-  Start_Date             DateTime?
+  Topic                  String?                 @db.VarChar(100)
+  Programme              String?                 @db.VarChar(100)
+  Organization           String?                 @db.VarChar(100)
+  Place                  String?                 @db.VarChar(20)
+  Start_Date             DateTime?               @db.Date
   person_reference_table person_reference_table? @relation(fields: [Level_Ref], references: [Reference_ID])
   person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
 
@@ -498,11 +502,11 @@ model person_guestlecture {
 model person_membership {
   Member_ID              Int                     @id @default(autoincrement())
   Person_ID              Int
-  Prof_Body              String?
-  Membership_NUM         String?
+  Prof_Body              String?                 @db.VarChar(45)
+  Membership_NUM         String?                 @db.VarChar(15)
   Member_Type            Int?
-  Sart_Date              DateTime?
-  End_Date               DateTime?
+  Sart_Date              DateTime?               @db.Date
+  End_Date               DateTime?               @db.Date
   person_reference_table person_reference_table? @relation(fields: [Member_Type], references: [Reference_ID])
   person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
 
@@ -513,12 +517,12 @@ model person_membership {
 model person_patents {
   Patent_ID              Int                     @id @default(autoincrement())
   Person_ID              Int
-  Title                  String?
-  Patent_Number          String?
-  Start_Date             DateTime?
-  Place                  String?
+  Title                  String?                 @db.VarChar(100)
+  Patent_Number          String?                 @db.VarChar(15)
+  Start_Date             DateTime?               @db.Date
+  Place                  String?                 @db.VarChar(15)
   Patent_Status_Ref      Int?
-  Patent_Copy            String?
+  Patent_Copy            String?                 @db.VarChar(255)
   person_reference_table person_reference_table? @relation(fields: [Patent_Status_Ref], references: [Reference_ID])
   person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
 
@@ -530,12 +534,12 @@ model person_project_allocation {
   Project_ID              Int       @id @default(autoincrement())
   Person_ID               Int
   Qualification_Level_Ref Int?
-  Batch_ID                String?
-  Reg_Num                 Int?
-  Title                   String?
-  Project_Domain          String?
-  Start_Date              DateTime?
-  End_Date                DateTime?
+  Batch_ID                String?   @db.VarChar(5)
+  Reg_Num                 BigInt?
+  Title                   String?   @db.VarChar(100)
+  Project_Domain          String?   @db.VarChar(45)
+  Start_Date              DateTime? @db.Date
+  End_Date                DateTime? @db.Date
   person                  person    @relation(fields: [Person_ID], references: [Person_ID])
 
   @@index([Person_ID], name: "Person_ID_FK213")
@@ -544,21 +548,21 @@ model person_project_allocation {
 model person_project_proposal {
   Proposal_ID                                                                             Int                     @id @default(autoincrement())
   Person_ID                                                                               Int
-  Title                                                                                   String?
+  Title                                                                                   String?                 @db.VarChar(100)
   Project_Type_Ref                                                                        Int?
-  PI_Name                                                                                 String?
-  COI1_Name                                                                               String?
+  PI_Name                                                                                 String?                 @db.VarChar(45)
+  COI1_Name                                                                               String?                 @db.VarChar(45)
   Status_Ref                                                                              Int?
-  Fund_Agency                                                                             String?
+  Fund_Agency                                                                             String?                 @db.VarChar(100)
   TotalSanctionedAmount                                                                   Float?
-  Start_Date                                                                              DateTime?
-  End_Date                                                                                DateTime?
-  Dept                                                                                    String?
-  Co_Dept                                                                                 String?
-  Co_Institution                                                                          String?
-  Abstract                                                                                String?
-  PI_Institution                                                                          String?
-  Proposal_Copy                                                                           String?
+  Start_Date                                                                              DateTime?               @db.Date
+  End_Date                                                                                DateTime?               @db.Date
+  Dept                                                                                    String?                 @db.VarChar(45)
+  Co_Dept                                                                                 String?                 @db.VarChar(45)
+  Co_Institution                                                                          String?                 @db.VarChar(100)
+  Abstract                                                                                String?                 @db.LongText
+  PI_Institution                                                                          String?                 @db.VarChar(100)
+  Proposal_Copy                                                                           String?                 @db.VarChar(255)
   person                                                                                  person                  @relation(fields: [Person_ID], references: [Person_ID])
   person_reference_table_person_project_proposal_Project_Type_RefToperson_reference_table person_reference_table? @relation("person_project_proposal_Project_Type_RefToperson_reference_table", fields: [Project_Type_Ref], references: [Reference_ID])
   person_reference_table_person_project_proposal_Status_RefToperson_reference_table       person_reference_table? @relation("person_project_proposal_Status_RefToperson_reference_table", fields: [Status_Ref], references: [Reference_ID])
@@ -573,19 +577,19 @@ model person_publication {
   Person_ID                                                                              Int
   Publication_Type_Ref                                                                   Int?
   Level_Ref                                                                              Int?
-  Paper_Title                                                                            String?
-  First_Author                                                                           String?
-  Second_Author                                                                          String?
-  Other_Authors                                                                          String?
-  Journal_Name                                                                           String?
+  Paper_Title                                                                            String?                 @db.VarChar(255)
+  First_Author                                                                           String?                 @db.VarChar(50)
+  Second_Author                                                                          String?                 @db.VarChar(50)
+  Other_Authors                                                                          String?                 @db.VarChar(255)
+  Journal_Name                                                                           String?                 @db.VarChar(255)
   Volume                                                                                 Int?
   Issue                                                                                  Int?
-  DOI                                                                                    String?
-  Year_Of_Publish                                                                        Int?
+  DOI                                                                                    String?                 @db.VarChar(50)
+  Year_Of_Publish                                                                        Int?                    @db.Year
   Start_Page_No                                                                          Int?
   End_Page_No                                                                            Int?
-  Publisher                                                                              String?
-  Impact_Factor                                                                          Float?
+  Publisher                                                                              String?                 @db.VarChar(50)
+  Impact_Factor                                                                          Float?                  @db.Float
   person_reference_table_person_publication_Level_RefToperson_reference_table            person_reference_table? @relation("person_publication_Level_RefToperson_reference_table", fields: [Level_Ref], references: [Reference_ID])
   person                                                                                 person                  @relation(fields: [Person_ID], references: [Person_ID])
   person_reference_table_person_publication_Publication_Type_RefToperson_reference_table person_reference_table? @relation("person_publication_Publication_Type_RefToperson_reference_table", fields: [Publication_Type_Ref], references: [Reference_ID])
@@ -601,14 +605,14 @@ model person_qualification {
   Qualification_Level_Ref                                                                     Int?
   Degree_Ref                                                                                  Int?
   Branch_Ref                                                                                  Int?
-  Institution                                                                                 String?
-  University                                                                                  String?
-  Start_Date                                                                                  Int?
-  End_Date                                                                                    Int?
+  Institution                                                                                 String?                 @db.VarChar(100)
+  University                                                                                  String?                 @db.VarChar(50)
+  Start_Date                                                                                  Int?                    @db.Year
+  End_Date                                                                                    Int?                    @db.Year
   Class_Obtained_Ref                                                                          Int?
-  Thesis_Title                                                                                String?
-  Specialization                                                                              String?
-  Faculty_Research                                                                            String?
+  Thesis_Title                                                                                String?                 @db.VarChar(150)
+  Specialization                                                                              String?                 @db.VarChar(45)
+  Faculty_Research                                                                            String?                 @db.VarChar(50)
   person_reference_table_person_qualification_Branch_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Branch_RefToperson_reference_table", fields: [Branch_Ref], references: [Reference_ID])
   person_reference_table_person_qualification_Class_Obtained_RefToperson_reference_table      person_reference_table? @relation("person_qualification_Class_Obtained_RefToperson_reference_table", fields: [Class_Obtained_Ref], references: [Reference_ID])
   person_reference_table_person_qualification_Degree_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Degree_RefToperson_reference_table", fields: [Degree_Ref], references: [Reference_ID])
@@ -624,9 +628,9 @@ model person_qualification {
 
 model person_reference_table {
   Reference_ID                                                                                           Int                           @id @default(autoincrement())
-  Category                                                                                               String?
-  Ref_Name                                                                                               String?
-  Description                                                                                            String?
+  Category                                                                                               String?                       @db.VarChar(25)
+  Ref_Name                                                                                               String?                       @db.VarChar(100)
+  Description                                                                                            String?                       @db.VarChar(255)
   course_assesseval_course_assesseval_group_refToperson_reference_table                                  course_assesseval[]           @relation("course_assesseval_group_refToperson_reference_table")
   course_assesseval_course_assesseval_session_refToperson_reference_table                                course_assesseval[]           @relation("course_assesseval_session_refToperson_reference_table")
   course_assessment_course_assessment_group_refToperson_reference_table                                  course_assessment[]           @relation("course_assessment_group_refToperson_reference_table")
@@ -709,9 +713,9 @@ model person_responsibility {
   Responsibility_ID      Int                     @id @default(autoincrement())
   Person_ID              Int
   Responsibility_Ref     Int?
-  Description            String?
-  Start_Date             DateTime?
-  End_Date               DateTime?
+  Description            String?                 @db.VarChar(255)
+  Start_Date             DateTime?               @db.Date
+  End_Date               DateTime?               @db.Date
   person                 person                  @relation(fields: [Person_ID], references: [Person_ID])
   person_reference_table person_reference_table? @relation(fields: [Responsibility_Ref], references: [Reference_ID])
 
@@ -722,20 +726,20 @@ model person_responsibility {
 model person_scholardetails {
   Scholar_ID                                                                                   Int                     @id @default(autoincrement())
   Person_ID                                                                                    Int
-  Reg_No                                                                                       String?
-  Scholar_Name                                                                                 String?
-  Title                                                                                        String?
+  Reg_No                                                                                       String?                 @db.VarChar(10)
+  Scholar_Name                                                                                 String?                 @db.VarChar(45)
+  Title                                                                                        String?                 @db.VarChar(100)
   Status_Ref                                                                                   Int?
   Guide_Type_Ref                                                                               Int?
   Fellowship_Received_Ref                                                                      Int?
-  Fellowship_Agency                                                                            String?
-  Fellowship_Amount                                                                            Float?
-  Year_Of_Registration                                                                         DateTime?
-  Research_Area                                                                                String?
+  Fellowship_Agency                                                                            String?                 @db.VarChar(45)
+  Fellowship_Amount                                                                            Float?                  @db.Float
+  Year_Of_Registration                                                                         DateTime?               @db.Date
+  Research_Area                                                                                String?                 @db.VarChar(45)
   Registration_Mode_Ref                                                                        Int?
-  Fellowship_Name                                                                              String?
-  Fellowship_Year                                                                              DateTime?
-  Year_Of_Completion                                                                           DateTime?
+  Fellowship_Name                                                                              String?                 @db.VarChar(45)
+  Fellowship_Year                                                                              DateTime?               @db.Date
+  Year_Of_Completion                                                                           DateTime?               @db.Date
   person_reference_table_person_reference_tableToperson_scholardetails_Fellowship_Received_Ref person_reference_table? @relation("person_reference_tableToperson_scholardetails_Fellowship_Received_Ref", fields: [Fellowship_Received_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableToperson_scholardetails_Guide_Type_Ref          person_reference_table? @relation("person_reference_tableToperson_scholardetails_Guide_Type_Ref", fields: [Guide_Type_Ref], references: [Reference_ID])
   person                                                                                       person                  @relation(fields: [Person_ID], references: [Person_ID])
@@ -752,11 +756,11 @@ model person_scholardetails {
 model person_specialization {
   Specialization_ID Int     @id @default(autoincrement())
   Person_ID         Int
-  AOS1              String?
-  AOS2              String?
-  AOS3              String?
-  AOS4              String?
-  AOS5              String?
+  AOS1              String? @db.VarChar(45)
+  AOS2              String? @db.VarChar(45)
+  AOS3              String? @db.VarChar(45)
+  AOS4              String? @db.VarChar(45)
+  AOS5              String? @db.VarChar(45)
   person            person  @relation(fields: [Person_ID], references: [Person_ID])
 
   @@index([Person_ID], name: "Person_ID_FK213")
@@ -767,9 +771,9 @@ model person_supervision {
   Person_ID                                                                        Int
   Degree_Ref                                                                       Int?
   Guide_Type_Ref                                                                   Int?
-  Reg_No                                                                           Int?
-  Start_Year                                                                       Int?
-  End_Year                                                                         Int?
+  Reg_No                                                                           BigInt?
+  Start_Year                                                                       Int?                    @db.Year
+  End_Year                                                                         Int?                    @db.Year
   Status_Ref                                                                       Int?
   person_reference_table_person_reference_tableToperson_supervision_Degree_Ref     person_reference_table? @relation("person_reference_tableToperson_supervision_Degree_Ref", fields: [Degree_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableToperson_supervision_Guide_Type_Ref person_reference_table? @relation("person_reference_tableToperson_supervision_Guide_Type_Ref", fields: [Guide_Type_Ref], references: [Reference_ID])
@@ -785,13 +789,13 @@ model person_supervision {
 model person_travel_history {
   Travel_ID    Int       @id @default(autoincrement())
   Person_ID    Int
-  Title        String?
-  Start_Date   DateTime?
-  End_Date     DateTime?
-  Organization String?
-  Place        String?
-  Agency       String?
-  Purpose      String?
+  Title        String?   @db.VarChar(100)
+  Start_Date   DateTime? @db.Date
+  End_Date     DateTime? @db.Date
+  Organization String?   @db.VarChar(100)
+  Place        String?   @db.VarChar(15)
+  Agency       String?   @db.VarChar(100)
+  Purpose      String?   @db.VarChar(150)
   person       person    @relation(fields: [Person_ID], references: [Person_ID])
 
   @@index([Person_ID], name: "Person_ID_FK216")
@@ -799,41 +803,41 @@ model person_travel_history {
 
 model staff_list {
   staff_id Int    @id
-  name     String
+  name     String @db.VarChar(55)
 }
 
 model student {
   Register_No                                                                      Int                           @id
-  First_Name                                                                       String?
-  Middle_Name                                                                      String?
-  Last_Name                                                                        String?
+  First_Name                                                                       String?                       @db.VarChar(50)
+  Middle_Name                                                                      String?                       @db.VarChar(50)
+  Last_Name                                                                        String?                       @db.VarChar(50)
   Gender_Ref                                                                       Int?
-  DOB                                                                              DateTime?
+  DOB                                                                              DateTime?                     @db.Date
   Community_Ref                                                                    Int?
-  Caste                                                                            String?
-  MailID                                                                           String?
-  Aadhar_Card                                                                      String?
-  Primary_ContactNumber                                                            String?
-  Secondary_ContactNumber                                                          String?
-  Address_Line1                                                                    String?
-  Address_Line2                                                                    String?
-  Address_Line3                                                                    String?
-  Address_Line4                                                                    String?
-  Correspondence_Address                                                           String?
-  Photo                                                                            String?
+  Caste                                                                            String?                       @db.VarChar(50)
+  MailID                                                                           String?                       @db.VarChar(50)
+  Aadhar_Card                                                                      String?                       @db.VarChar(15)
+  Primary_ContactNumber                                                            String?                       @db.VarChar(15)
+  Secondary_ContactNumber                                                          String?                       @db.VarChar(15)
+  Address_Line1                                                                    String?                       @db.VarChar(250)
+  Address_Line2                                                                    String?                       @db.VarChar(250)
+  Address_Line3                                                                    String?                       @db.VarChar(45)
+  Address_Line4                                                                    String?                       @db.VarChar(45)
+  Correspondence_Address                                                           String?                       @db.VarChar(255)
+  Photo                                                                            String?                       @db.VarChar(255)
   Residential_Type_Ref                                                             Int?
   FA                                                                               Int?
   Programme_Ref                                                                    Int?
   Branch_Ref                                                                       Int?
   Registration_Mode_Ref                                                            Int?
   Blood_Group_Ref                                                                  Int?
-  GATE_Cutoff_Mark                                                                 Float?
-  Admission_Date                                                                   DateTime?
+  GATE_Cutoff_Mark                                                                 Float?                        @db.Float
+  Admission_Date                                                                   DateTime?                     @db.Date
   Admission_Category_Ref                                                           Int?
   Scholarship_Received_Ref                                                         Int?
-  Scholarship_Details                                                              String?
+  Scholarship_Details                                                              String?                       @db.VarChar(255)
   NSS_NSO_YRC_Volunteer_Ref                                                        Int?
-  Hostel_Block_Room                                                                String?
+  Hostel_Block_Room                                                                String?                       @db.VarChar(45)
   person_reference_table_person_reference_tableTostudent_Admission_Category_Ref    person_reference_table?       @relation("person_reference_tableTostudent_Admission_Category_Ref", fields: [Admission_Category_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableTostudent_Blood_Group_Ref           person_reference_table?       @relation("person_reference_tableTostudent_Blood_Group_Ref", fields: [Blood_Group_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableTostudent_Branch_Ref                person_reference_table?       @relation("person_reference_tableTostudent_Branch_Ref", fields: [Branch_Ref], references: [Reference_ID])
@@ -877,13 +881,13 @@ model student {
 model student_awards {
   Award_ID                                                                         Int                     @id @default(autoincrement())
   Register_No                                                                      Int
-  Award_Name                                                                       String?
-  Organizer_Name                                                                   String?
+  Award_Name                                                                       String?                 @db.VarChar(255)
+  Organizer_Name                                                                   String?                 @db.VarChar(255)
   Award_Type_Ref                                                                   Int?
   Award_Category_Ref                                                               Int?
-  Place_of_Event                                                                   String?
-  Certificate_Copy                                                                 String?
-  Award_Date                                                                       DateTime?
+  Place_of_Event                                                                   String?                 @db.VarChar(50)
+  Certificate_Copy                                                                 String?                 @db.VarChar(255)
+  Award_Date                                                                       DateTime?               @db.Date
   person_reference_table_person_reference_tableTostudent_awards_Award_Category_Ref person_reference_table? @relation("person_reference_tableTostudent_awards_Award_Category_Ref", fields: [Award_Category_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableTostudent_awards_Award_Type_Ref     person_reference_table? @relation("person_reference_tableTostudent_awards_Award_Type_Ref", fields: [Award_Type_Ref], references: [Reference_ID])
   student                                                                          student                 @relation(fields: [Register_No], references: [Register_No])
@@ -897,11 +901,11 @@ model student_endsemmarks {
   Mark_ID                Int                     @id @default(autoincrement())
   Register_No            Int
   Semester               Int
-  Course_Code            String?
+  Course_Code            String?                 @db.VarChar(15)
   Session_Ref            Int?
-  Grade                  String
+  Grade                  String                  @db.VarChar(3)
   Credits                Int?
-  Entry_Date             DateTime?
+  Entry_Date             DateTime?               @db.Date
   course_list            course_list?            @relation(fields: [Course_Code], references: [course_code])
   student                student                 @relation(fields: [Register_No], references: [Register_No])
   person_reference_table person_reference_table? @relation(fields: [Session_Ref], references: [Reference_ID])
@@ -914,14 +918,14 @@ model student_endsemmarks {
 model student_events_participated {
   Event_ID                                                                                          Int                     @id @default(autoincrement())
   Register_No                                                                                       Int
-  Event_Name                                                                                        String?
+  Event_Name                                                                                        String?                 @db.VarChar(50)
   Event_Type_Ref                                                                                    Int?
   Participation_Type_Ref                                                                            Int?
   Team_Size                                                                                         Int?
-  Event_Organizer                                                                                   String?
-  Event_Date                                                                                        DateTime?
-  Prize_Won_Details                                                                                 String?
-  Certificate_Copy                                                                                  String?
+  Event_Organizer                                                                                   String?                 @db.VarChar(50)
+  Event_Date                                                                                        DateTime?               @db.Date
+  Prize_Won_Details                                                                                 String?                 @db.VarChar(255)
+  Certificate_Copy                                                                                  String?                 @db.VarChar(255)
   person_reference_table_person_reference_tableTostudent_events_participated_Event_Type_Ref         person_reference_table? @relation("person_reference_tableTostudent_events_participated_Event_Type_Ref", fields: [Event_Type_Ref], references: [Reference_ID])
   person_reference_table_person_reference_tableTostudent_events_participated_Participation_Type_Ref person_reference_table? @relation("person_reference_tableTostudent_events_participated_Participation_Type_Ref", fields: [Participation_Type_Ref], references: [Reference_ID])
   student                                                                                           student                 @relation(fields: [Register_No], references: [Register_No])
@@ -934,22 +938,22 @@ model student_events_participated {
 model student_family_details {
   Family_ID                     Int     @id @default(autoincrement())
   Register_No                   Int
-  Father_Name                   String?
-  Mother_Name                   String?
-  Father_ContactNumber          String?
-  Mother_ContactNumber          String?
-  Father_MailID                 String?
-  Mother_MailID                 String?
-  Father_Occupation             String?
-  Mother_Occupation             String?
-  Father_Affilation             String?
-  Mother_Affilation             String?
-  Father_Company                String?
-  Mother_Company                String?
-  Parents_Annual_Income         Int?
-  Local_Guardian_Name           String?
-  Local_Guardian_Address        String?
-  Local_Guardian_Contact_Number String?
+  Father_Name                   String? @db.VarChar(50)
+  Mother_Name                   String? @db.VarChar(50)
+  Father_ContactNumber          String? @db.VarChar(15)
+  Mother_ContactNumber          String? @db.VarChar(15)
+  Father_MailID                 String? @db.VarChar(50)
+  Mother_MailID                 String? @db.VarChar(15)
+  Father_Occupation             String? @db.VarChar(255)
+  Mother_Occupation             String? @db.VarChar(255)
+  Father_Affilation             String? @db.VarChar(50)
+  Mother_Affilation             String? @db.VarChar(50)
+  Father_Company                String? @db.VarChar(50)
+  Mother_Company                String? @db.VarChar(50)
+  Parents_Annual_Income         BigInt?
+  Local_Guardian_Name           String? @db.VarChar(50)
+  Local_Guardian_Address        String? @db.VarChar(255)
+  Local_Guardian_Contact_Number String? @db.VarChar(15)
   student                       student @relation(fields: [Register_No], references: [Register_No])
 
   @@index([Register_No], name: "Register_Num_FK")
@@ -959,8 +963,8 @@ model student_gpa {
   Gpa_ID      Int     @id @default(autoincrement())
   Register_No Int
   Semester    Int
-  GPA         Float
-  Grade_Sheet String
+  GPA         Float   @db.Float
+  Grade_Sheet String  @db.VarChar(255)
   student     student @relation(fields: [Register_No], references: [Register_No])
 
   @@index([Register_No], name: "Register_No")
@@ -969,15 +973,15 @@ model student_gpa {
 model student_higherstudies {
   HigherStudies_ID       Int                     @id @default(autoincrement())
   Register_No            Int
-  University             String?
-  Degree                 String?
-  Specialization         String?
+  University             String?                 @db.VarChar(255)
+  Degree                 String?                 @db.VarChar(50)
+  Specialization         String?                 @db.VarChar(50)
   Admission_Mode_Ref     Int?
-  Score                  Float?
-  Country                String?
-  Location               String?
-  LOR_Details            String?
-  Score_Card_Copy        String
+  Score                  Float?                  @db.Float
+  Country                String?                 @db.VarChar(45)
+  Location               String?                 @db.VarChar(45)
+  LOR_Details            String?                 @db.VarChar(255)
+  Score_Card_Copy        String                  @db.VarChar(255)
   person_reference_table person_reference_table? @relation(fields: [Admission_Mode_Ref], references: [Reference_ID])
   student                student                 @relation(fields: [Register_No], references: [Register_No])
 
@@ -988,14 +992,14 @@ model student_higherstudies {
 model student_internship {
   Internship_ID                                                                         Int                     @id @default(autoincrement())
   Register_No                                                                           Int
-  Company                                                                               String?
-  Title                                                                                 String
-  Order_Copy                                                                            String?
-  Address                                                                               String?
-  Start_Date                                                                            DateTime?
-  End_Date                                                                              DateTime?
+  Company                                                                               String?                 @db.VarChar(255)
+  Title                                                                                 String                  @db.VarChar(255)
+  Order_Copy                                                                            String?                 @db.VarChar(255)
+  Address                                                                               String?                 @db.VarChar(255)
+  Start_Date                                                                            DateTime?               @db.Date
+  End_Date                                                                              DateTime?               @db.Date
   Stiphend_Option_Ref                                                                   Int?
-  Stiphend_Amount                                                                       Float?
+  Stiphend_Amount                                                                       Float?                  @db.Float
   Selection_Mode_Ref                                                                    Int?
   student                                                                               student                 @relation(fields: [Register_No], references: [Register_No])
   person_reference_table_person_reference_tableTostudent_internship_Selection_Mode_Ref  person_reference_table? @relation("person_reference_tableTostudent_internship_Selection_Mode_Ref", fields: [Selection_Mode_Ref], references: [Reference_ID])
@@ -1009,14 +1013,14 @@ model student_internship {
 model student_placement {
   Placement_ID                 Int                     @id @default(autoincrement())
   Register_No                  Int
-  Company                      String?
-  Package                      Float?
-  Appointment_Order_Copy       String?
-  Location                     String?
-  Designation                  String?
-  Appointment_OrderNum         String?
-  Appointment_Letter_IssueDate DateTime?
-  Joining_Date                 DateTime?
+  Company                      String?                 @db.VarChar(255)
+  Package                      Float?                  @db.Float
+  Appointment_Order_Copy       String?                 @db.VarChar(255)
+  Location                     String?                 @db.VarChar(45)
+  Designation                  String?                 @db.VarChar(45)
+  Appointment_OrderNum         String?                 @db.VarChar(45)
+  Appointment_Letter_IssueDate DateTime?               @db.Date
+  Joining_Date                 DateTime?               @db.Date
   Placement_Type_Ref           Int?
   person_reference_table       person_reference_table? @relation(fields: [Placement_Type_Ref], references: [Reference_ID])
   student                      student                 @relation(fields: [Register_No], references: [Register_No])
@@ -1028,10 +1032,10 @@ model student_placement {
 model subj_allot {
   sallot_id                                                             Int                    @id @default(autoincrement())
   staff_id                                                              Int
-  course_code                                                           String
+  course_code                                                           String                 @db.VarChar(15)
   group_ref                                                             Int
   session_ref                                                           Int
-  class_room                                                            String?
+  class_room                                                            String?                @db.VarChar(15)
   student_count                                                         Int?
   course_list                                                           course_list            @relation(fields: [course_code], references: [course_code])
   person_reference_table_person_reference_tableTosubj_allot_group_ref   person_reference_table @relation("person_reference_tableTosubj_allot_group_ref", fields: [group_ref], references: [Reference_ID])
@@ -1047,19 +1051,11 @@ model subj_allot {
 model user_info {
   user_ID       Int       @id @default(autoincrement())
   username      Int       @unique
-  user_role     String?
-  password      String?
-  status        String?
-  create_time   DateTime? @default(now())
-  refresh_token String?
-  updated_time  DateTime? @default(now())
+  user_role     String?   @db.VarChar(10)
+  password      String?   @db.VarChar(256)
+  status        String?   @db.VarChar(10)
+  create_time   DateTime? @default(now()) @db.Timestamp(0)
+  refresh_token String?   @db.VarChar(128)
+  updated_time  DateTime? @default(now()) @db.Timestamp(0)
   person        person?
-}
-
-model alumni {
-  Register_No   Int     @id
-  Working_Org   String
-  Designation   String
-  Alumni_Status Int
-  student       student @relation(fields: [Register_No], references: [Register_No])
 }
