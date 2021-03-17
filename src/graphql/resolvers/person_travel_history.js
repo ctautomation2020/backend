@@ -35,7 +35,7 @@ module.exports={
                 }
             })
         },
-        async updatePersonTravelhistory(parent, {data}, {prisma}, info) {
+        async updatePersonTravelhistory(parent, {data}, {prisma,auth,req}, info) {
             const {Travel_ID, ...noref_data} = data
             const ref_data = noref_data
             const Person_ID = auth(req,2)
@@ -50,7 +50,7 @@ module.exports={
             })
         },
 
-        async deletePersonTravelhistory(parent, {data}, {prisma}, info) { 
+        async deletePersonTravelhistory(parent, {data}, {prisma,auth,req}, info) { 
             const Person_ID = auth(req,2)
             return await prisma.person_travel_history.delete({
                 where:{
