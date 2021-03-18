@@ -23,7 +23,7 @@ module.exports = {
         async createPersonAward(parent, {data}, {prisma,auth,req}, info) {
             const Person_ID = auth(req,2)
       
-            const {File, ...no_refdata} = data
+            // const {File, ...no_refdata} = data
             const award =  await prisma.person_awards.create({
                 data:{
                     person:{
@@ -31,25 +31,25 @@ module.exports = {
                             Person_ID:Person_ID
                         }
                     },
-                    ...no_refdata
+                    ...data
                 }
             })
 
-            const { createReadStream, filename } = await data.File;
+            // const { createReadStream, filename } = await data.File;
 
-            if (!fs.existsSync(path.join(__dirname, "../../public", Person_ID.toString()))){
-                fs.mkdirSync(path.join(__dirname, "../../public", Person_ID.toString()));
-            }
+            // if (!fs.existsSync(path.join(__dirname, "../../public", Person_ID.toString()))){
+            //     fs.mkdirSync(path.join(__dirname, "../../public", Person_ID.toString()));
+            // }
 
-            const ext = path.extname(filename)
+            // const ext = path.extname(filename)
 
-            const name = "Award" + award.Award_ID + ext
+            // const name = "Award" + award.Award_ID + ext
 
-            await new Promise(res =>
-                createReadStream()
-                .pipe(fs.createWriteStream(path.join(__dirname, "../../public/", Person_ID.toString(), name)))
-                .on("close", res)
-            );
+            // await new Promise(res =>
+            //     createReadStream()
+            //     .pipe(fs.createWriteStream(path.join(__dirname, "../../public/", Person_ID.toString(), name)))
+            //     .on("close", res)
+            // );
 
             return award;
         },
@@ -76,22 +76,22 @@ module.exports = {
                 }
             })
         },
-        uploadPersonAward: async (_, { file }) => {
-            const { createReadStream, filename } = await file;
+        // uploadPersonAward: async (_, { file }) => {
+        //     const { createReadStream, filename } = await file;
       
             
-            await new Promise(res =>
-                createReadStream()
-                .pipe(fs.createWriteStream(path.join(__dirname, "../awards", filename)))
-                .on("close", res)
-            );
+        //     await new Promise(res =>
+        //         createReadStream()
+        //         .pipe(fs.createWriteStream(path.join(__dirname, "../awards", filename)))
+        //         .on("close", res)
+        //     );
       
-            //files.push(filename);
-            console.log(createReadStream)
+        //     //files.push(filename);
+        //     console.log(createReadStream)
 
 
-            return true;
-          }
+        //     return true;
+        //   }
     }
 
 }

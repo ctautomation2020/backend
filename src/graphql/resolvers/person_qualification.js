@@ -50,11 +50,12 @@ module.exports = {
                     }
                 }
             }
+            
             return await prisma.person_qualification.create({
                 data:{
                     person:{
                         connect:{
-                            Person_ID:data.Person_ID
+                            Person_ID:Person_ID
                         }
                     },
                     ...ref_data

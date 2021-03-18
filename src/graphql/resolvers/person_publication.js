@@ -42,7 +42,7 @@ module.exports={
                 data:{
                     person:{
                         connect:{
-                            Person_ID:data.Person_ID
+                            Person_ID:Person_ID
                         }
                     },
                     ...ref_data

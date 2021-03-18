@@ -81,7 +81,6 @@ type Mutation {
   createPersonAward(data: awardInput!): person_award!
   updatePersonAward(data: awardUpdateInput!): person_award!
   deletePersonAward(data: awardDeleteInput!): person_award!
-  uploadPersonAward(file: Upload!): Boolean
   createPersonExperience(data: experienceInput!): person_experience!
   updatePersonExperience(data: experienceUpdateInput!): person_experience!
   deletePersonExperience(data: experienceDeleteInput!): person_experience!
@@ -640,7 +639,6 @@ input awardInput {
   Place: String
   Start_Year: Int
   Details: String
-  File: Upload
 }
 
 input awardUpdateInput {
@@ -726,7 +724,6 @@ type Person_Publication {
 
 input Person_PublicationInput {
   Publication_ID: Int
-  Person_ID: Int!
   Publication_Type_Ref: Int
   Level_Ref: Int
   Paper_Title: String
@@ -794,7 +791,6 @@ type Person_Qualification {
 
 input Person_QualificationInput {
   Qualification_ID: Int
-  Person_ID: Int!
   Qualification_Level_Ref: Int
   Degree_Ref: Int
   Branch_Ref: Int

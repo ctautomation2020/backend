@@ -7,7 +7,7 @@ type Mutation {
     createPersonAward(data: awardInput!): person_award!
     updatePersonAward(data: awardUpdateInput!): person_award!
     deletePersonAward(data: awardDeleteInput!): person_award!
-    uploadPersonAward(file: Upload!): Boolean                                       
+    # uploadPersonAward(file: Upload!): Boolean                                       
 }
 
 type person_award {             
@@ -34,7 +34,7 @@ input awardInput {
     Place: String
     Start_Year: Int
     Details: String
-    File: Upload
+    # File: Upload
 }
 
 input awardUpdateInput {

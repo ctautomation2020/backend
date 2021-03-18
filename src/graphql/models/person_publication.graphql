@@ -31,7 +31,7 @@ type Person_Publication {
 
 input Person_PublicationInput {
   Publication_ID: Int                    
-  Person_ID: Int!
+  
   Publication_Type_Ref: Int
   Level_Ref: Int
   Paper_Title: String
