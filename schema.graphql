@@ -97,6 +97,7 @@ type Mutation {
   auth_refreshToken(data: refreshToken_infoInput!): loginPayload
   auth_updateUser(data: updateUser_infoInput!): user_infoPayload
   auth_logout: String
+  auth_forgotPassword: Boolean
 }
 
 type course_assessment {
@@ -911,7 +912,7 @@ type user_info {
 input createUser_infoInput {
   username: Int!
   password: String!
-  user_role: Int
+  user_role: Int!
   status: String
 }
 

@@ -324,7 +324,7 @@ model person {
   Caste                                                                    String?                     @db.VarChar(50)
   Primary_MailID                                                           String?                     @db.VarChar(50)
   Secondary_MailID                                                         String?                     @db.VarChar(50)
-  Aadhar_Card                                                              BigInt?
+  Aadhar_Card                                                              Float?
   PAN_Card                                                                 String?                     @db.VarChar(10)
   Passport_Number                                                          String?                     @db.VarChar(10)
   Primary_ContactNumber                                                    String?                     @db.VarChar(15)
@@ -1051,7 +1051,7 @@ model subj_allot {
 model user_info {
   user_ID       Int       @id @default(autoincrement())
   username      Int       @unique
-  user_role     String?   @db.VarChar(10)
+  user_role     Int?
   password      String?   @db.VarChar(256)
   status        String?   @db.VarChar(10)
   create_time   DateTime? @default(now()) @db.Timestamp(0)

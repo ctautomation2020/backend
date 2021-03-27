@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 var randtoken = require('rand-token');
+const mailserver = require('../auth/mailserver')
 
 module.exports = {
     Query: {
 
         async auth_login(parent, { data }, { prisma }, info) {
+
             const user = await prisma.user_info.findUnique({
                 where: {
                     username: data.username
@@ -91,7 +93,9 @@ module.exports = {
 
         },
 
-        async auth_updateUser(parent, { data }, { prisma }, info) {
+        async auth_updateUser(parent, { data }, { prisma, auth, req }, info) {
+            const username = auth(req, 1)
+
             if (data.password) {
                 data.password = await bcrypt.hash(data.password, 8)
             }
@@ -112,7 +116,7 @@ module.exports = {
         },
 
         async auth_logout(parent, { data }, { prisma, auth, req }, info) {
-            const username = auth(req,1)
+            const username = auth(req, 1)
             if (username) {
                 await prisma.user_info.update({
                     where: {
@@ -126,11 +130,84 @@ module.exports = {
                 return "successfully logged out"
             }
 
-            else{
+            else {
                 throw new Error("invalid auth")
             }
-        }
+        },
 
+        async auth_forgotPassword(parent, { data }, { prisma, auth, req }, info) {
+            const username = auth(req, 1)
+            let flag = true
+            const new_password = randtoken.uid(12)
+            const crypt_password = await bcrypt.hash(new_password, 8)
+            const cid = await prisma.user_info.findUnique({
+                where: {
+                    username: username
+                }
+            })
+            if(cid.user_role==1){
+                const user = await prisma.student.findUnique({
+                    where: {
+                        Register_No:username
+                    }
+                })
+                await prisma.user_info.update({
+                    where: {
+                        user_ID: cid.user_ID
+                    },
+                    data: {
+                        password:crypt_password
+                    }
+                })
+                
+    
+                let mail_data = {
+                    email: user.MailID,
+                    subject: "test",
+                    name: "CT DataCenter",
+                    content: `Your new password is ${new_password}`
+    
+                }
+                
+                
+                flag =  await mailserver.sendMail(mail_data)
+                
+                
+                
+
+            }
+
+            else{
+                const user = await prisma.person.findUnique({
+                    where: {
+                        Person_ID:username
+                    }
+                })
+                await prisma.user_info.update({
+                    where: {
+                        user_ID: cid.user_ID
+                    },
+                    data: {
+                        password:crypt_password
+                    }
+                })
+                
+    
+                let mail_data = {
+                    email: user.Primary_MailID,
+                    subject: "test",
+                    name: "CT DataCenter",
+                    content: `Your new password is ${new_password}`
+    
+                }
+                flag = await mailserver.sendMail(mail_data)
+                
+            }
+            
+            return flag?true:false
+
+
+        }
 
 
     }
