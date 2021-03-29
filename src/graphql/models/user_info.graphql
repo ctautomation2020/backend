@@ -7,7 +7,7 @@ type Mutation{
     auth_refreshToken(data:refreshToken_infoInput!): loginPayload
     auth_updateUser(data:updateUser_infoInput!): user_infoPayload
     auth_logout: String
-    auth_forgotPassword: Boolean
+    auth_forgotPassword(data:forgotPasswordInput!): Boolean
 }
 
 type user_info {
@@ -57,3 +57,6 @@ input refreshToken_infoInput{
   refresh_token: String!
 }
 
+input forgotPasswordInput{
+  username:Int!
+}

@@ -19,6 +19,7 @@ type person_travel_history {
     Start_Date: String
     End_Date: String
     Agency: String
+    path: String
 
 }
 
@@ -38,6 +39,7 @@ input travelInput {
     Start_Date: String
     End_Date: String
     Agency: String
+    path: String
     
 }
 
@@ -49,6 +51,7 @@ input travelUpdateInput {
     Start_Date: String
     End_Date: String
     Agency: String
+    path: String
     
 }
 

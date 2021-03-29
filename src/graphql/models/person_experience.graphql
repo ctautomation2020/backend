@@ -21,6 +21,7 @@ type person_experience {
     Emp_Category_Ref: Int
     Work_Nature_Ref: Int
     Position_Held: String
+    path: String
 }
 
 input experienceQueryInput {
@@ -40,6 +41,7 @@ input experienceInput {
     Emp_Category_Ref: Int
     Work_Nature_Ref: Int
     Position_Held: String
+    path: String
 }
 
 input experienceUpdateInput {
@@ -52,6 +54,7 @@ input experienceUpdateInput {
     Emp_Category_Ref: Int
     Work_Nature_Ref: Int
     Position_Held: String
+    path: String
 }
 
 input experienceDeleteInput {

@@ -24,6 +24,7 @@ type Person_Qualification {
   Thesis_Title: String
   Specialization: String
   Faculty_Research: String
+  path: String
 }
 
 input Person_QualificationInput {
@@ -40,6 +41,7 @@ input Person_QualificationInput {
   Thesis_Title: String
   Specialization: String
   Faculty_Research: String
+  path: String
 }
 
 input Person_QualificationUpdateInput {      
@@ -56,6 +58,7 @@ input Person_QualificationUpdateInput {
   Thesis_Title: String
   Specialization: String
   Faculty_Research: String
+  path: String
 }
 
 input Qualification_InputQuery {

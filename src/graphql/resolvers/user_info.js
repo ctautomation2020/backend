@@ -136,7 +136,7 @@ module.exports = {
         },
 
         async auth_forgotPassword(parent, { data }, { prisma, auth, req }, info) {
-            const username = auth(req, 1)
+            const username = data.username
             let flag = true
             const new_password = randtoken.uid(12)
             const crypt_password = await bcrypt.hash(new_password, 8)

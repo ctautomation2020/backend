@@ -27,6 +27,7 @@ type Person_Publication {
   End_Page_No: Int
   Publisher: String
   Impact_Factor: Float
+  path: String
 }
 
 input Person_PublicationInput {
@@ -47,6 +48,7 @@ input Person_PublicationInput {
   End_Page_No: Int
   Publisher: String
   Impact_Factor: Float
+  path: String
 }
 
 input Person_PublicationUpdateInput {
@@ -67,6 +69,7 @@ input Person_PublicationUpdateInput {
   End_Page_No: Int
   Publisher: String
   Impact_Factor: Float
+  path: String
 }
 
 input Person_PublicationDeleteInput{

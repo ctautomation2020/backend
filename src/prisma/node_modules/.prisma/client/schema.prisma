@@ -416,6 +416,7 @@ model person_awards {
   Place        String? @db.VarChar(15)
   Start_Year   Int?    @db.Year
   Details      String? @db.VarChar(255)
+  path         String? @db.VarChar(128)
   person       person  @relation(fields: [Person_ID], references: [Person_ID])
 
   @@index([Person_ID], name: "Person_ID_FK218")
@@ -472,6 +473,7 @@ model person_experience {
   Emp_Category_Ref                                                                  Int?
   Work_Nature_Ref                                                                   Int?
   Position_Held                                                                     String?                 @db.VarChar(45)
+  path                                                                              String?                 @db.VarChar(128)
   person_reference_table_person_experience_Designation_RefToperson_reference_table  person_reference_table? @relation("person_experience_Designation_RefToperson_reference_table", fields: [Designation_Ref], references: [Reference_ID])
   person_reference_table_person_experience_Emp_Category_RefToperson_reference_table person_reference_table? @relation("person_experience_Emp_Category_RefToperson_reference_table", fields: [Emp_Category_Ref], references: [Reference_ID])
   person                                                                            person                  @relation(fields: [Person_ID], references: [Person_ID])
@@ -590,6 +592,7 @@ model person_publication {
   End_Page_No                                                                            Int?
   Publisher                                                                              String?                 @db.VarChar(50)
   Impact_Factor                                                                          Float?                  @db.Float
+  path                                                                                   String?                 @db.VarChar(128)
   person_reference_table_person_publication_Level_RefToperson_reference_table            person_reference_table? @relation("person_publication_Level_RefToperson_reference_table", fields: [Level_Ref], references: [Reference_ID])
   person                                                                                 person                  @relation(fields: [Person_ID], references: [Person_ID])
   person_reference_table_person_publication_Publication_Type_RefToperson_reference_table person_reference_table? @relation("person_publication_Publication_Type_RefToperson_reference_table", fields: [Publication_Type_Ref], references: [Reference_ID])
@@ -613,6 +616,7 @@ model person_qualification {
   Thesis_Title                                                                                String?                 @db.VarChar(150)
   Specialization                                                                              String?                 @db.VarChar(45)
   Faculty_Research                                                                            String?                 @db.VarChar(50)
+  path                                                                                        String?                 @db.VarChar(128)
   person_reference_table_person_qualification_Branch_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Branch_RefToperson_reference_table", fields: [Branch_Ref], references: [Reference_ID])
   person_reference_table_person_qualification_Class_Obtained_RefToperson_reference_table      person_reference_table? @relation("person_qualification_Class_Obtained_RefToperson_reference_table", fields: [Class_Obtained_Ref], references: [Reference_ID])
   person_reference_table_person_qualification_Degree_RefToperson_reference_table              person_reference_table? @relation("person_qualification_Degree_RefToperson_reference_table", fields: [Degree_Ref], references: [Reference_ID])
@@ -796,6 +800,7 @@ model person_travel_history {
   Place        String?   @db.VarChar(15)
   Agency       String?   @db.VarChar(100)
   Purpose      String?   @db.VarChar(150)
+  path         String?   @db.VarChar(128)
   person       person    @relation(fields: [Person_ID], references: [Person_ID])
 
   @@index([Person_ID], name: "Person_ID_FK216")
