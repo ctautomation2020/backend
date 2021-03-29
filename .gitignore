@@ -1,3 +1,3 @@
-/node_modules
+/node_modules/
 *.log
-./src/prisma/node_modules
+./src/prisma/node_modules/

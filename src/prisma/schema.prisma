@@ -338,6 +338,7 @@ model person {
   Photo                                                                    String?                     @db.VarChar(255)
   Marital_Status_Ref                                                       Int?
   Room_Num                                                                 String?                     @db.VarChar(6)
+  profilePic_path                                                          String?                     @db.VarChar(128)
   person_reference_table_person_Community_RefToperson_reference_table      person_reference_table?     @relation("person_Community_RefToperson_reference_table", fields: [Community_Ref], references: [Reference_ID])
   person_reference_table_person_DesignationToperson_reference_table        person_reference_table?     @relation("person_DesignationToperson_reference_table", fields: [Designation], references: [Reference_ID])
   person_reference_table_person_Gender_RefToperson_reference_table         person_reference_table?     @relation("person_Gender_RefToperson_reference_table", fields: [Gender_Ref], references: [Reference_ID])

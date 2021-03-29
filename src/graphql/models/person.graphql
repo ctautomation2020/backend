@@ -39,6 +39,7 @@ type Person {
     Room_Num: String
     #references
     Person_Qualification: [Person_Qualification!]!
+    profilePic_path: String
 
 }
 
@@ -75,6 +76,7 @@ input createPersonInput {
     #Photo                                                                 binary?
     Marital_Status_Ref: Int
     Room_Num: String
+    profilePic_path: String
 }
 
 input updatePersonInput {      
@@ -106,4 +108,5 @@ input updatePersonInput {
     #Photo                                                                 binary?
     Marital_Status_Ref: Int
     Room_Num: String
+    profilePic_path: String
 }
